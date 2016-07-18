@@ -23,7 +23,6 @@ class LatticeList:
         self.sfarr      = array('d')    # Array of imported salt fractions
         self.latlist    = []            # List of imported lattices
         print ("New MSBR lattice collection created!")
-        return
 
 
     def read_data(self, infilename, maxnlat=0):     # Read lattices from the input file
@@ -74,18 +73,25 @@ class LatticeList:
         return 
 
 
-    def find_lattices(self, l, sf):     # Find all lattices with l & sf
-        found_lattices = []
+    def find_lattice_numbers(self, l, sf):     # Find all lattice IDs with l & sf
+        found_lattice_numbers = []
         for lat_i in range(self.nlat):
             if (self.latlist[lat_i].l == l and self.latlist[lat_i].sf == sf):
-                found_lattices.append(lat_i)
+                found_lattice_numbers.append(lat_i)
+        if(len(found_lattice_numbers)>0):
+            return found_lattice_numbers
+        else:
+            return -1
 
-        if(len(found_lattices>0)):                  # Print header if we have output
-            print(" i  lat#   l[cm]    sf   r2")
-        for i, lat_i in enumerate(found_lattices):  # Print output
-            print(" %2d " % i + "%5d " % lat_i + \
-            "  %05.2f " % self.latlist[lat_i].l + "  %05.3f " % self.latlist[lat_i].sf + "  %7.4f" % self.latlist[lat_i].r2 )
-        return
+    def find_lattices(self, l, sf):     # Find all lattices with l & sf
+        found_lattices = []
+        for lat in self.latlist:
+            if (lat.l == l and lat.sf == sf):
+                found_lattices.append(lat)
+        if(len(found_lattices)>0):
+            return found_lattices
+        else:
+            return -1
 
 
     def lat_exists(self, l, sf, r2):    # Did we already read this lattice in?
@@ -108,7 +114,21 @@ class LatticeList:
     def print_lattice(self,lat_i):          # Prints nth lattice
         print ("Lattice # ",lat_i)
         self.latlist[lat_i].printme()
-        return 
+        return
+
+    
+    def print_lattices(self, l, sf):        # Print all lattices with l & sf
+        found_lattice_numbers = []
+        for lat_i in range(self.nlat):
+            if (self.latlist[lat_i].l == l and self.latlist[lat_i].sf == sf):
+                found_lattice_numbers.append(lat_i)
+
+        if(len(found_lattice_numbers)>0):                  # Print header if we have output
+            print(" i  lat#   l[cm]    sf   r2")
+        for i, lat_i in enumerate(found_lattice_numbers):  # Print output
+            print(" %2d " % i + "%5d " % lat_i + \
+            "  %05.2f " % self.latlist[lat_i].l + "  %05.3f " % self.latlist[lat_i].sf + "  %7.4f" % self.latlist[lat_i].r2 )
+        return
 
 
     def fit_all_lattices(self):             # Runs fit() method for all lattices in the list

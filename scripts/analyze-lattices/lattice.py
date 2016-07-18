@@ -130,13 +130,15 @@ class Lattice:
         self.fit_done = True
         return
     
-    def get_k_at_cr(self, cr):          # Find KEFF corresponding to particular CR using fits
-        if(self.fit_done):
+    def get_k_at_cr(self, cr, extrapolate=1):   # Find KEFF corresponding to particular CR using fits
+        if(self.fit_done):                      # extrapolate=1|0: do|not use extrapolated relBAs
             # Find relBA for the required CR from the fit
             my_relBA = (cr - self.CR_fit_p[0]) / self.CR_fit_p[1]
             if (my_relBA < min(self.relBA) or my_relBA > max(self.relBA)):  # Extrapolation warning
                 print("Warning, relBA corresponding to CR= ", cr, "is ", \
-                    my_relBA,", which is out of interpolation bounds!")            
+                    my_relBA,", which is out of interpolation bounds!")
+                if not extrapolate:
+                    return -0.1
             return self.eval_fit_k(my_relBA)    # Return corresponding KEFF based on fit functions
         else:
             print("Error, no fit data found!")
