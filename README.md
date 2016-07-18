@@ -1,2 +1,5 @@
 # MSBR-ORNL-4528
-ORNL-4528 is ORNL's the last two-fluid MSBR thorium iso-breeder concept.
+
+Code related to analysis of two-fluid MSBR thorium isobreeder concept inspired bu ORNL-4528.
+
+Ondrej Chvala, ondrejch@gmail.com
