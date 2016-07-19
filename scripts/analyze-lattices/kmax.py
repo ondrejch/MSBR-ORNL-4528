@@ -54,15 +54,11 @@ class MaxKforCR:
     
     def plot_relative_r2(self):
         pass
-        
-    
-#from kmax import MaxKforCR
-##mk = MaxKforCR("/home/o/UTK/research/Flibe/4528/data/run1_nlat_8938.pickle")
+            
 
-    
-
-#--------------- test code ----------------
+#--------------- Test code ----------------
 if __name__ == '__main__':    
-    #from kmax import MaxKforCR
+    # from kmax import MaxKforCR
     mk = MaxKforCR("/home/ondrejch/msbr-scan/data/run1_nlat_8938.pickle")
+    # mk.calculate_kmap(0.95,0)
     
