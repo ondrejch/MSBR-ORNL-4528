@@ -17,6 +17,10 @@ cd ${PBS_O_WORKDIR}
 
 sss2 -omp 4 msbr.inp
 
+# We do not need this file, safe disk pace
+rm msbr.inp.out
+
+# Extract useful data
 awk 'BEGIN{ORS="\t"} /ANA_KEFF/ || /CONVERSION/ {print $7" "$8;}' msbr.inp_res.m > done.out
 grep MSBR msbr.inp | sed -e s/[a-Z,\"]//g  >> done.out
 
