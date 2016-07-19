@@ -23,7 +23,7 @@ class MaxKforCR:
         self.lats = pickle.load(fin)
         #self.crarr = array('d')
         print("The [l,sf] grid is ", len(self.lats.larr), " x ", len(self.lats.sfarr))
-        self.kmap   = np.zeros(( len(self.lats.larr), len(self.lats.sfarr) ), dtype='float32' )  # k [l, sf] , dtype=np.float32
+        self.kmap   = np.zeros(( len(self.lats.larr), len(self.lats.sfarr) ), dtype='float32' )  # k [l, sf]
         self.latmap = np.zeros(( len(self.lats.larr), len(self.lats.sfarr) ), dtype='int32'   )  # lattice number [l, sf]
         
         
@@ -44,6 +44,8 @@ class MaxKforCR:
        
        
     def plot_kmap(self):
+        plt.imshow(mk.kmap, cmap='viridis')
+        pls.show()
         pass
     
     
@@ -54,7 +56,9 @@ class MaxKforCR:
         pass
         
     
-    
+#from kmax import MaxKforCR
+##mk = MaxKforCR("/home/o/UTK/research/Flibe/4528/data/run1_nlat_8938.pickle")
+
     
 
 #--------------- test code ----------------
