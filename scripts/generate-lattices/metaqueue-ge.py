@@ -17,7 +17,7 @@ sleeptimer    = 60          # Check every 60 seconds
 
 # Paths
 qsubcommand  = "/data/home/ochvala/play/scripts/qsub.sh"  # Location of qsub.sh script
-jobdir       = "/data/home/ochvala/play/job3"
+jobdir       = "/lustre/scratch/ochvala/job3"
 
 # Get number of running and queued jobs
 def get_qsub_stats(): 
