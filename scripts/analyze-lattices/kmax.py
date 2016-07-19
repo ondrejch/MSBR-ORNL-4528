@@ -56,3 +56,9 @@ class MaxKforCR:
     
     
     
+
+#--------------- test code ----------------
+if __name__ == '__main__':    
+    #from kmax import MaxKforCR
+    mk = MaxKforCR("/home/ondrejch/msbr-scan/data/run1_nlat_8938.pickle")
+    

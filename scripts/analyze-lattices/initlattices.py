@@ -160,7 +160,7 @@ class LatticeList:
         return
 
 
-# --------------- test code ----------------
+# --------------- Test code ----------------
 if __name__ == '__main__':
     print("This module loads and initializes list of MSBR lattices.")
     input("Press Ctrl+C to quit, or enter else to test it. ")
@@ -169,3 +169,4 @@ if __name__ == '__main__':
     msbrs.print_lattice(100)
     msbrs.latlist[100].fit()
     msbrs.latlist[100].print_fit()
+
