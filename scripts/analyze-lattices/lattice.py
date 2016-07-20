@@ -74,7 +74,7 @@ class Lattice:
         plt.errorbar(self.relBA,self.CR,  self.CRerr,   color="blue", marker="+", ls="none")
         plt.title("Lattice size: %5.2f" % self.l +" cm, sf: %5.3f" % self.sf + ", r2: %7.4f" % self.r2 +" cm")
         plt.xlabel("relative blanket fraction")
-        plt.ylabel("k_{eff} red, CR blue")
+        plt.ylabel(r"k$_{eff}$ red, CR blue")
         plt.grid(True)
 
         if(self.fit_done):      # Plot fit lines 
