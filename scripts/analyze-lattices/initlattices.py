@@ -148,13 +148,13 @@ class LatticeList:
         plt.figure(1)
         plt.subplot(211)
         #plt.xlabel("\chi^2")
-        plt.title("Histogram of chi^2 of KEFF fit")
+        plt.title(r"Histogram of $\chi^2$ of KEFF fit")
         plt.hist(chi2_k, n_hist_bins, normed=0, facecolor='red', alpha=0.75)
         
         plt.subplot(212)
 
-        plt.title("Histogram of chi^2 of CR fit")
-        plt.xlabel("reduced chi^2")
+        plt.title(r"Histogram of $\chi^2$ of CR fit")
+        plt.xlabel(r"reduced $\chi^2$")
         plt.hist(chi2_cr, n_hist_bins, normed=0, facecolor='blue', alpha=0.75)
         plt.show()
         return
