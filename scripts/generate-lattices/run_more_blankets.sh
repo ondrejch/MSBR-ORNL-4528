@@ -21,7 +21,7 @@ do
 #    echo $NEWBASE
     for relBA in $newRelBA
     do 
-        DECKDIR=${NEWBASE}/$relBA
+        DECKDIR=${NEWBASE}/b$relBA
         if ! [ -s ${DECKDIR}/${DECKFILENAME} ]      # Check if non-zero deck already exists
         then
             echo  $DECKDIR
