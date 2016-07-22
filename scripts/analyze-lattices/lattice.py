@@ -78,7 +78,7 @@ class Lattice:
         plt.grid(True)
 
         if(self.fit_done):      # Plot fit lines 
-            x = np.linspace(0.8, 1.2, num=100, endpoint=True)
+            x = np.linspace(min(self.relBA), max(self.relBA ), num=200, endpoint=True)
             plt.plot(x, self.eval_fit_k(x), color="#ee3030", ls="-", \
                 label="p0 = %6.4f" % self.KEFF_fit_p[0] + ", p1 = %6.4f" % self.KEFF_fit_p[1] + \
                 ", p2 = %6.4f" % self.KEFF_fit_p[2]) 
