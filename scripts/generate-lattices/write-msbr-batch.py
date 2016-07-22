@@ -42,23 +42,23 @@ for l in defs.apothems:
                     continue
 
                 # Turn values to strings to ensure uniqueness
-                l     = format(l,    '05.3f')
-                l2    = format(l2,   '08.6f')
-                sf    = format(sf,   '05.3f')
-                r1    = format(r1,   '09.6f')
-                r2    = format(r2,   '09.6f')
-                r3    = format(r3,   '09.6f')
-                relBA = format(relBA,'04.3f')
+                sl     = format(l,    '05.3f')
+                sl2    = format(l2,   '08.6f')
+                ssf    = format(sf,   '05.3f')
+                sr1    = format(r1,   '09.6f')
+                sr2    = format(r2,   '09.6f')
+                sr3    = format(r3,   '09.6f')
+                srelBA = format(relBA,'04.3f')
 
                 if(debug==5):                               # just print values
-                    print(l, sf, relBA, r1, r2, r3)
+                    print(sl, ssf, srelBA, sr1, sr2, sr3)
                     continue
  
                 # Make the deck
-                s2_deck = ornl4528deck.write_deck(l, sf, relBA, l2, r1, r2, r3)
+                s2_deck = ornl4528deck.write_deck(sl, ssf, srelBA, sl2, sr1, sr2, sr3)
                 
                 # Deck directory
-                dirname = defs.jobdir + '/l%s/sf%s/gr%s/b%s/' % (l, sf, r2, relBA)
+                dirname = defs.jobdir + '/l%s/sf%s/gr%s/b%s/' % (sl, ssf, sr2, srelBA)
                 print(dirname)
 
                 fails = os.system('mkdir -p ' + dirname)
