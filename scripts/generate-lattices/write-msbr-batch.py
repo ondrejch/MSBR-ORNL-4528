@@ -42,7 +42,7 @@ for l in defs.apothems:
                     continue
 
                 # Turn values to strings to ensure uniqueness
-                sl     = format(l,    '05.3f')
+                sl     = format(l,    '06.3f')
                 sl2    = format(l2,   '08.6f')
                 ssf    = format(sf,   '05.3f')
                 sr1    = format(r1,   '09.6f')
