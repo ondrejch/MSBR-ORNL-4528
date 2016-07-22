@@ -41,7 +41,7 @@ def get_qsub_stats():
 
 # Get list of jobs to run
 try:
-    list_jobs2run = subprocess.check_output("find " + jobdir + " -name msbr.inp| sed s/msbr.inp$//g",shell=True).splitlines()
+    list_jobs2run = subprocess.check_output("find " + jobdir + " -name msbr.inp| sed s/msbr.inp$//g | sort",shell=True).splitlines()
 except subprocess.CalledProcessError as e:
     if e.returncode > 1:
         raise
