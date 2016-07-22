@@ -63,7 +63,7 @@ while not finished:
     if(ijobsubmax == no_jobs2run):
         finished = True
     else: 
-        print("Submitted ",ijob," jobs. Running ", running_jobs," and queued ", queued_jobs, "jobs")
+        print("Submitted ",ijob," jobs; running ", running_jobs," and queued ", queued_jobs, "jobs.")
         time.sleep(sleeptimer)
 
 print ("All done")
