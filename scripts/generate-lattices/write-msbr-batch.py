@@ -28,7 +28,7 @@ for l in defs.apothems:
         
         r1 = math.sqrt(hexarea*sf/(2.0*math.pi))            # r1 
 
-        for relr2 in range(defs.r2sizes):
+        for relr2 in defs.r2sizes:
             r2 = (l-1.5 - r1+0.5)*relr2 + (r1+0.5)
 
             blanketA0 =  defs.blanketfraction * r1**2 *math.pi  # area of the blanket annular hex
@@ -41,23 +41,24 @@ for l in defs.apothems:
                 if(l2-r3 < 1.0):                # minimum graphite thickness check
                     continue
 
-                if(debug==5):                               # just print values
-                    print(l, sf, slit, relBA, r1, r2, r3)
-                    continue
-                
                 # Turn values to strings to ensure uniqueness
-                format(l, "%05.3f")
-                format(l2,"%08.6f")
-                format(sf,"%05.3f")
-                format(r1,"%09.6f")
-                format(r2,"%09.6f")
-                format(r3,"%09.6f")
-                format(relBA, "%04.3f")
+                sl     = format(l,    '05.3f')
+                sl2    = format(l2,   '08.6f')
+                ssf    = format(sf,   '05.3f')
+                sr1    = format(r1,   '09.6f')
+                sr2    = format(r2,   '09.6f')
+                sr3    = format(r3,   '09.6f')
+                srelBA = format(relBA,'04.3f')
+
+                if(debug==5):                               # just print values
+                    print(sl, ssf, srelBA, sr1, sr2, sr3)
+                    continue
  
-                # Make the deck                
-                s2_deck = ornl4528deck.write_deck(l, sf, relBA, l2, r1, r2, r3)
+                # Make the deck
+                s2_deck = ornl4528deck.write_deck(sl, ssf, srelBA, sl2, sr1, sr2, sr3)
                 
-                dirname = defs.jobdir + 'l'+l + '/sf'+sf + '/gr'+r2  + '/b'+relBA + '/'
+                # Deck directory
+                dirname = defs.jobdir + '/l%s/sf%s/gr%s/b%s/' % (sl, ssf, sr2, srelBA)
                 print(dirname)
 
                 fails = os.system('mkdir -p ' + dirname)
