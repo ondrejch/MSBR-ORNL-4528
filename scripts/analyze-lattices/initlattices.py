@@ -40,7 +40,7 @@ class LatticeList:
                 sf    = float(_sf)
                 relba = float(_relba)
                 r1    = float(_r1)
-                r2    = float(_r2)
+                r2    = 1e-4*float(int(float(_r2)*1e4)) # floating point rounding
                 r3    = float(_r3)
                 kerr  = kerr  * k       # Absolute errors
                 crerr = crerr * cr
@@ -95,7 +95,7 @@ class LatticeList:
 
 
     def lat_exists(self, l, sf, r2):    # Did we already read this lattice in?
-        lattice_found = 0
+        lattice_found = 0               # TODO: implement this more efficiently.
         for lat_i in range(self.nlat):
             if (self.latlist[lat_i].exists(l, sf, r2)):
                 lattice_found = lat_i
