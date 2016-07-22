@@ -6,7 +6,7 @@
 # GNU/GPL
 
 def write_surfaces(l, l2, r1, r2, r3):
-#   print ("l ",l,"  sf ",sf ,"  slit ",slit,"   rs ",r1," ",r2," ",r3," ",r4," ",r5," ",r6)
+#   print ("l ",l,"  sf ",sf ,"   rs ",r1," ",r2," ",r3)
 
     surfaces = '''
 %______________surface definitions__________________________________

@@ -40,7 +40,8 @@ class LatticeList:
                 sf    = float(_sf)
                 relba = float(_relba)
                 r1    = float(_r1)
-                r2    = 1e-4*float(int(float(_r2)*1e4)) # floating point rounding
+                #r2    = 1e-4*float(int(float(_r2)*1e4)) # floating point rounding
+                r2    = float(_r2)
                 r3    = float(_r3)
                 kerr  = kerr  * k       # Absolute errors
                 crerr = crerr * cr

@@ -28,8 +28,8 @@ for l in defs.apothems:
         
         r1 = math.sqrt(hexarea*sf/(2.0*math.pi))            # r1 
 
-        for mcrun in range(defs.mcruns):
-            r2 = random.uniform( r1 + 0.5, l - 1.5 )
+        for relr2 in range(defs.r2sizes):
+            r2 = (l-1.5 - r1+0.5)*relr2 + (r1+0.5)
 
             blanketA0 =  defs.blanketfraction * r1**2 *math.pi  # area of the blanket annular hex
             for relBA in defs.relblanketA:         # loop over relative slit sizes
@@ -44,11 +44,20 @@ for l in defs.apothems:
                 if(debug==5):                               # just print values
                     print(l, sf, slit, relBA, r1, r2, r3)
                     continue
+                
+                # Turn values to strings to ensure uniqueness
+                format(l, "%05.3f")
+                format(l2,"%08.6f")
+                format(sf,"%05.3f")
+                format(r1,"%09.6f")
+                format(r2,"%09.6f")
+                format(r3,"%09.6f")
+                format(relBA, "%04.3f")
  
-                # Make the deck
+                # Make the deck                
                 s2_deck = ornl4528deck.write_deck(l, sf, relBA, l2, r1, r2, r3)
                 
-                dirname = defs.jobdir + 'l%05.2f/' % l + 'sf%05.3f/' % sf + 'gr%07.4f/' % r2  + 'b%04.3f/' % relBA
+                dirname = defs.jobdir + 'l'+l + '/sf'+sf + '/gr'+r2  + '/b'+relBA + '/'
                 print(dirname)
 
                 fails = os.system('mkdir -p ' + dirname)
