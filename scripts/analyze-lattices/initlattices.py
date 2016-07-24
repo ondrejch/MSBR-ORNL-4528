@@ -5,7 +5,6 @@
 # 2016-07-16
 # GNU/GPL
 
-import math
 from array import array
 import matplotlib.pyplot as plt
 
@@ -39,10 +38,9 @@ class LatticeList:
                 l     = float(_l)
                 sf    = float(_sf)
                 relba = float(_relba)
-                r1    = float(_r1)
-                #r2    = 1e-4*float(int(float(_r2)*1e4)) # floating point rounding
+                #r1    = float(_r1)
                 r2    = float(_r2)
-                r3    = float(_r3)
+                #r3    = float(_r3)
                 kerr  = kerr  * k       # Absolute errors
                 crerr = crerr * cr
 
@@ -104,9 +102,9 @@ class LatticeList:
 
 
     def print_lattice(self, l, sf, r2): # Print lattice with specified parameters
-        lat_i = lat_exists(self, l, sf, r2)
+        lat_i = self.lat_exists(self, l, sf, r2)
         if(lat_i):
-            print_lattice(lat_i)
+            self.print_lattice(lat_i)
         else:
             print("Lattice [ %05.2f" % l + " %05.3f" % sf + " %07.4f" % r2 + " ] does not exist")
         return 

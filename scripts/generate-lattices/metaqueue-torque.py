@@ -8,7 +8,6 @@
 import subprocess
 import sys
 import os
-import re
 import time
 
 minqueuedjobs = 300         # Submit batch once the number of queued jobs drops below this number
@@ -55,7 +54,7 @@ ijobsubmax = -999
 finished = False
 while not finished:
     (running_jobs, queued_jobs) = get_qsub_stats()
-    if (running_jobs < 0) || (queued_jobs < 0):
+    if ((running_jobs < 0) or (queued_jobs < 0)):
         print("Cannot communicate with the scheduler, sleeping")
         time.sleep(sleeptimer)
         continue

@@ -59,7 +59,7 @@ rgb 74 74 74
 5010.{lib} -0.199
 5011.{lib} -0.801
 
-%  TODO: Hastelloy
+% Hastelloy
 mat hastelloy -8.86 tmp 973
 rgb 250 170 170
  28058.{lib}  -0.472120   %  Ni
