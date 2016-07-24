@@ -44,7 +44,7 @@ class MaxKforCR:
        
        
     def plot_kmap(self):
-        plt.imshow(mk.kmap, cmap='viridis')
+        plt.imshow(self.kmap, cmap='viridis')
         plt.show()
         pass
     
