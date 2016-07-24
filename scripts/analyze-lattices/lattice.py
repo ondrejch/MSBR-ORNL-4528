@@ -135,13 +135,14 @@ class Lattice:
             # Find relBA for the required CR from the fit
             my_relBA = (cr - self.CR_fit_p[0]) / self.CR_fit_p[1]
             if (my_relBA < min(self.relBA) or my_relBA > max(self.relBA)):  # Extrapolation warning
-                print("Wrn, lat [%5.2f" % self.l +", %5.3f" % self.sf + ", %7.4f" % self.r2, \
+                print("Wrn, lat [%5.2f" % self.l +", %5.3f" % self.sf + ", %7.4f ] " % self.r2, \
                       "relBA for CR= ", cr, "is %7.4f" % my_relBA," - out of interp. range!")
                 if not extrapolate:
                     return -0.1
             return self.eval_fit_k(my_relBA)    # Return corresponding KEFF based on fit functions
         else:
-            print("Error, no fit data found!")
+            print("Error, no fit data found for lat [%5.2f" % self.l +", %5.3f" % self.sf + \
+                   ", %7.4f ]" % self.r2)
             return -1
 
         
