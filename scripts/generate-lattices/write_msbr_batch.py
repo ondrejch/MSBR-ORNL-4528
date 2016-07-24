@@ -37,7 +37,7 @@ for l in defs.apothems:
                 slit = l - l2
             
                 r3 = math.sqrt( r1**2 + r2**2 )
-                if(l2-r3 < 1.0):                # minimum graphite thickness check
+                if l2-r3 < 1.0 :                # minimum graphite thickness check
                     continue
 
                 # Turn values to strings to ensure uniqueness
@@ -49,7 +49,7 @@ for l in defs.apothems:
                 sr3    = format(r3,   '09.6f')
                 srelBA = format(relBA,'04.3f')
 
-                if(debug==5):                               # just print values
+                if debug==5 :                               # just print values
                     print(sl, ssf, srelBA, sr1, sr2, sr3)
                     continue
  
@@ -77,11 +77,10 @@ for l in defs.apothems:
 #                    os.system('cd ' + dirname + ';  qsub ' + defs.qsubcommand)
 
                 ideck += 1
-                if (maxdecks != 0 and ideck > maxdecks):
+                if maxdecks != 0 and ideck > maxdecks :
                     sys.exit()
 
                 if not (ideck % sleepevery):                    # zzzz
                     time.sleep(sleepseconds)
 
 print("All done.")
-

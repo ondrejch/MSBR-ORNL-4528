@@ -65,7 +65,7 @@ class Lattice:
 
 
     def plot(self):
-        if(len(self.KEFF)<2):
+        if len(self.KEFF)<2 :
             print("Error, needs at least 2 blanket configurations to plot!")
             return -1
 
@@ -77,7 +77,7 @@ class Lattice:
         plt.ylabel(r"k$_{eff}$ red, CR blue")
         plt.grid(True)
 
-        if(self.fit_done):      # Plot fit lines 
+        if self.fit_done :      # Plot fit lines 
             x = np.linspace(min(self.relBA), max(self.relBA ), num=200, endpoint=True)
             plt.plot(x, self.eval_fit_k(x), color="#ee3030", ls="-", \
                 label="p0 = %6.4f" % self.KEFF_fit_p[0] + ", p1 = %6.4f" % self.KEFF_fit_p[1] + \
@@ -94,7 +94,7 @@ class Lattice:
         return p2*x**2 + p1*x + p0
 
     def eval_fit_k(self, x):            # Returns k-fit value
-        if(self.fit_done):
+        if self.fit_done :
             return self.fit_f_k(x, self.KEFF_fit_p[0], self.KEFF_fit_p[1],self.KEFF_fit_p[2])
         else:
             return -1
@@ -103,14 +103,14 @@ class Lattice:
         return p1*x + p0
 
     def eval_fit_cr(self, x):           # Returns cr-fit value
-        if(self.fit_done):
+        if self.fit_done :
             return self.fit_f_cr(x, self.CR_fit_p[0], self.CR_fit_p[1])
         else:
             return -1
 
 
     def fit(self):                      # Fit CR(relBA) and KEFF(relBA) 
-        if(len(self.KEFF)<4):
+        if len(self.KEFF)<4 :
             print("Error, needs at least 4 blanket configurations for the fit!")
             return -1
         
@@ -131,10 +131,10 @@ class Lattice:
         return
     
     def get_k_at_cr(self, cr, extrapolate=1):   # Find KEFF corresponding to particular CR using fits
-        if(self.fit_done):                      # extrapolate=1|0: do|not use extrapolated relBAs
+        if self.fit_done :                      # extrapolate=1|0: do|not use extrapolated relBAs
             # Find relBA for the required CR from the fit
             my_relBA = (cr - self.CR_fit_p[0]) / self.CR_fit_p[1]
-            if (my_relBA < min(self.relBA) or my_relBA > max(self.relBA)):  # Extrapolation warning
+            if  my_relBA < min(self.relBA) or my_relBA > max(self.relBA) :  # Extrapolation warning
                 print("Wrn, lat [%5.2f" % self.l +", %5.3f" % self.sf + ", %7.4f ] " % self.r2, \
                       "relBA for CR= ", cr, "is %7.4f" % my_relBA," - out of interp. range!")
                 if not extrapolate:
@@ -147,7 +147,7 @@ class Lattice:
 
         
     def print_fit(self):                # Print the fit data
-        if(self.fit_done):
+        if self.fit_done :
             print ("KEFF")
             print ("p0 = ", self.KEFF_fit_p[0], ", p1 = ",self.KEFF_fit_p[1], ", p2 = ",self.KEFF_fit_p[2] )
             print ("chi2 = ",self.KEFF_chi2)

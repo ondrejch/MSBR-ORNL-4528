@@ -33,7 +33,7 @@ def get_qsub_stats():
         if e.returncode > 1:
             my_queued_jobs = -999
 
-    return ( my_running_jobs, my_queued_jobs) 
+    return ( my_running_jobs, my_queued_jobs ) 
 
 # ----------- main program starts here ----------------------
 
@@ -54,19 +54,19 @@ ijobsubmax = -999
 finished = False
 while not finished:
     (running_jobs, queued_jobs) = get_qsub_stats()
-    if ((running_jobs < 0) or (queued_jobs < 0)):
+    if (running_jobs < 0) or (queued_jobs < 0) :
         print("Cannot communicate with the scheduler, sleeping")
         time.sleep(sleeptimer)
         continue
 
-    if (queued_jobs < minqueuedjobs):
+    if queued_jobs < minqueuedjobs :
         # Submit jobs
         ijobsubmax = min(ijob+jobspercycle, no_jobs2run)
         for i in range(ijob, ijobsubmax):
             dirname = list_jobs2run[i].decode("utf-8")
             os.system('cd ' + dirname + ';  qsub ' + qsubcommand) 
         ijob = ijobsubmax
-    if(ijobsubmax == no_jobs2run):
+    if ijobsubmax == no_jobs2run :
         finished = True
     else: 
         print("Submitted ",ijob," jobs; running ", running_jobs," and queued ", queued_jobs, "jobs.")

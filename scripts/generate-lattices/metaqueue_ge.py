@@ -58,14 +58,14 @@ while not finished:
         time.sleep(sleeptimer)
         continue
     
-    if (queued_jobs < minqueuedjobs):
+    if queued_jobs < minqueuedjobs :
         # Submit jobs
         ijobsubmax = min(ijob+jobspercycle, no_jobs2run)
         for i in range(ijob, ijobsubmax):
             dirname = list_jobs2run[i].decode("utf-8")
             os.system('cd ' + dirname + ';  qsub ' + qsubcommand) 
         ijob = ijobsubmax
-    if(ijobsubmax == no_jobs2run):
+    if ijobsubmax == no_jobs2run :
         finished = True
     else: 
         print("Submitted ",ijob," jobs; running ", running_jobs," and queued ", queued_jobs, "jobs.")

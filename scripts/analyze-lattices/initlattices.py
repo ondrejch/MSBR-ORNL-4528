@@ -48,26 +48,26 @@ class LatticeList:
                 lat_i = self.lat_exists(l, sf, r2)
                 if not lat_i: 
                     self.latlist.append( Lattice(l, sf, r2) ) # If not, create new one
-                    if(self.larr.count(l)   == 0):   # Is this new hex size?
+                    if self.larr.count(l)  ==0 :   # Is this new hex size?
                         self.larr.append(l)
-                    if(self.sfarr.count(sf) == 0):   # Is this new salt fraction?
+                    if self.sfarr.count(sf)==0 :   # Is this new salt fraction?
                         self.sfarr.append(sf)
 
                     self.latlist[self.nlat].addblanket(relba, k, kerr, cr, crerr) # Add neutronic data for blanket relBA
-                    if(debug>3):
+                    if debug>3 :
                         print(self.nlat, l, sf, r2, relba, k, kerr, cr, crerr)
 
                     self.nlat = self.nlat + 1       # Increase latticeindex
-                    if(debug>0 and not (self.nlat % beep_every)):       # Heartbeat output
+                    if debug>0 and not (self.nlat % beep_every) :       # Heartbeat output
                         print(" read in ",self.nlat," lattices")
 
                 else:                               # If the lattice exists, check for relBA
-                    if(self.latlist[lat_i].relBA.count(relba) == 0):
+                    if self.latlist[lat_i].relBA.count(relba)==0 :
                         self.latlist[lat_i].addblanket(relba, k, kerr, cr, crerr) # add new blanket & neutronics data
-                    if(debug>4):
+                    if debug>4 :
                         print(lat_i,"            ",relba, k, kerr, cr, crerr)
 
-                if(maxnlat != 0 and self.nlat == maxnlat): # Exit of max number of lattices was read
+                if maxnlat != 0 and self.nlat == maxnlat : # Exit of max number of lattices was read
                     return 1
         return 
 
@@ -75,9 +75,9 @@ class LatticeList:
     def find_lattice_numbers(self, l, sf):     # Find all lattice IDs with l & sf
         found_lattice_numbers = []
         for lat_i in range(self.nlat):
-            if (self.latlist[lat_i].l == l and self.latlist[lat_i].sf == sf):
+            if self.latlist[lat_i].l == l and self.latlist[lat_i].sf == sf :
                 found_lattice_numbers.append(lat_i)
-        if(len(found_lattice_numbers)>0):
+        if len(found_lattice_numbers)>0 :
             return found_lattice_numbers
         else:
             return -1
@@ -85,9 +85,9 @@ class LatticeList:
     def find_lattices(self, l, sf):     # Find all lattices with l & sf
         found_lattices = []
         for lat in self.latlist:
-            if (lat.l == l and lat.sf == sf):
+            if lat.l == l and lat.sf == sf :
                 found_lattices.append(lat)
-        if(len(found_lattices)>0):
+        if len(found_lattices)>0:
             return found_lattices
         else:
             return -1
@@ -96,14 +96,14 @@ class LatticeList:
     def lat_exists(self, l, sf, r2):    # Did we already read this lattice in?
         lattice_found = 0               # TODO: implement this more efficiently.
         for lat_i in range(self.nlat):
-            if (self.latlist[lat_i].exists(l, sf, r2)):
+            if self.latlist[lat_i].exists(l, sf, r2) :
                 lattice_found = lat_i
         return lattice_found            # Returns lattice's index
 
 
     def print_lattice(self, l, sf, r2): # Print lattice with specified parameters
         lat_i = self.lat_exists(self, l, sf, r2)
-        if(lat_i):
+        if lat_i :
             self.print_lattice(lat_i)
         else:
             print("Lattice [ %05.2f" % l + " %05.3f" % sf + " %07.4f" % r2 + " ] does not exist")
@@ -119,10 +119,10 @@ class LatticeList:
     def print_lattices(self, l, sf):        # Print all lattices with l & sf
         found_lattice_numbers = []
         for lat_i in range(self.nlat):
-            if (self.latlist[lat_i].l == l and self.latlist[lat_i].sf == sf):
+            if self.latlist[lat_i].l == l and self.latlist[lat_i].sf == sf :
                 found_lattice_numbers.append(lat_i)
 
-        if(len(found_lattice_numbers)>0):                  # Print header if we have output
+        if len(found_lattice_numbers)>0 :                  # Print header if we have output
             print(" i  lat#   l[cm]    sf   r2")
         for i, lat_i in enumerate(found_lattice_numbers):  # Print output
             print(" %2d " % i + "%5d " % lat_i + \

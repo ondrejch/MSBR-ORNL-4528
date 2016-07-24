@@ -32,11 +32,11 @@ l2 = math.sqrt( l**2  - blanketarea / (2.0 * math.sqrt(3.0)) ) # Apothem of the 
 slit = l - l2                                       # Blanket width
 
 r3 = math.sqrt( r1**2 + r2**2 )
-if(l2-r3 < 1.0):                # minimum graphite thickness check
+if l2-r3 < 1.0 :                # minimum graphite thickness check
     print("Err: Minimum graphite thickness check < 1 cm, no deck written")
     sys.exit(-1)
 
-if(debug==5):                               # just print values
+if debug==5 :                               # just print values
     print(l, sf, slit, relBA, r1, r2, r3)
     sys.exit(0)
  
