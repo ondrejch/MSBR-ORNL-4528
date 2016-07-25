@@ -1,3 +1,5 @@
+# This is a scratch notebook
+
 from initlattices import LatticeList
 msbrs = LatticeList()
 msbrs.read_data("/home/ondrejch/msbr-scan/job1/testdata")

@@ -13,8 +13,8 @@ import time
 import defs
 import ornl4528deck
 
-debug = 1
-maxdecks = 0                        # How many decks to run, 0 no limits
+debug        = 1
+maxdecks     = 0                    # How many decks to run, 0 no limits
 sleepevery   = 1e10                 # How often sleep
 sleepseconds = 60                   # How long to sleep
 
