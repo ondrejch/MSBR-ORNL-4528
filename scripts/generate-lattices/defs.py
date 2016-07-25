@@ -6,10 +6,10 @@
 # GNU/GPL
 
 import numpy as np
+import platform
 
-qsubcommand       = "/home/ondrejch/msbr-scan/scripts/generate-lattices/qsub.sh"    # Location of qsub.sh script
-jobdir            = "/home/ondrejch/msbr-scan/jobX/"		                    # Where to run the jobs
-filename          = "msbr.inp"		        # Deck file name
+jobnumber         = 'jobX/'			# Job directory tree 
+filename          = "msbr.inp"		# Deck file name
 xsectionlibrary   = "09c"			# Cross section library 
 
 apothems        = np.arange( 6.0, 20.1,  0.5)   # Hex sizes to scan [cm *10]
@@ -18,5 +18,17 @@ blanketfraction = 1.06923                       # Blanket area over one fuel sal
 relblanketA     = np.linspace(0.8, 1.3, 31) 	# Blanket salt areas to probe relative to the predicted fraction above
 r2sizes         = np.linspace(0.0, 1.0 ,21)     # Sampling of r2
 
+if 'necluster' in platform.node() :
+	qsubcommand = "/home/ondrejch/msbr-scan/scripts/generate-lattices/qsub.sh" # Location of qsub.sh script
+	jobdir      = "/home/ondrejch/msbr-scan/" + jobnumber		               # Where to run the jobs
+elif 'sigma' in platform.node() :
+	qsubcommand = "/data/home/ochvala/play/scripts/qsub.sh"
+	jobdir      = "/lustre/scratch/ochvala/" + jobnumber
+else:
+	qsubcommand = "/bin/false"
+	jobdir      = "/tmp/" + jobnumber
+
+
 if __name__ == '__main__':
-	print ("This module contains contants for MSR lattice parameter scan.")
+	print("This module contains contants for MSR lattice parameter scan.")
+	print("	Jobdir: ", jobdir) 

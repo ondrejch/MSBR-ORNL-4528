@@ -9,14 +9,30 @@ import subprocess
 import sys
 import os
 import time
+import platform
 
 minqueuedjobs = 300         # Submit batch once the number of queued jobs drops below this number
 jobspercycle  = 1000        # How many jobs submit per run
 sleeptimer    = 60          # Check every 60 seconds
 
 # Paths
-qsubcommand  = "/data/home/ochvala/play/scripts/qsub.sh"  # Location of qsub.sh script
-jobdir       = "/lustre/scratch/ochvala/job3"
+jobnumber       = 'jobX/'   # Job directory tree 
+if 'necluster' in platform.node() :
+    qsubcommand = "/home/ondrejch/msbr-scan/scripts/generate-lattices/qsub.sh" # Location of qsub.sh script
+    jobdir      = "/home/ondrejch/msbr-scan/" + jobnumber                      # Where to run the jobs
+    checkrunning= "qstat | grep ondrejch | grep qsub.sh | grep R | wc -l"      # Shell command to get # of running jobs on Torque
+    checkqueued = "qstat | grep ondrejch | grep qsub.sh | grep Q | wc -l"      # Shell command to get # of running jobs on Torque
+elif 'sigma' in platform.node() :
+    qsubcommand = "/data/home/ochvala/play/scripts/qsub.sh"
+    jobdir      = "/lustre/scratch/ochvala/" + jobnumber
+    checkrunning= "qstat | grep ochvala | grep ornl4528 | grep ' r ' | wc -l"  # Shell command to get # of running jobs on GridEngine
+    checkqueued = "qstat | grep ochvala | grep ornl4528 | grep  qw   | wc -l"  # Shell command to get # of running jobs on GridEngine
+else:
+    qsubcommand = "/bin/false"
+    jobdir      = "/tmp/" + jobnumber
+    checkrunning= "/bin/false"
+    checkqueued = "/bin/false"
+    
 
 # Get number of running and queued jobs
 def get_qsub_stats(): 
@@ -33,13 +49,14 @@ def get_qsub_stats():
         if e.returncode > 1:
             my_queued_jobs = -999
     
-    return ( my_running_jobs, my_queued_jobs) 
+    return ( my_running_jobs, my_queued_jobs ) 
 
 # ----------- main program starts here ----------------------
 
 # Get list of jobs to run
 try:
     list_jobs2run = subprocess.check_output("find " + jobdir + " -name msbr.inp| sed s/msbr.inp$//g | sort",shell=True).splitlines()
+#    list_jobs2run = subprocess.check_output("for d in $(find " + jobdir + " -name msbr.inp| sed s/msbr.inp$//g ); do if ! [ -s $d/msbr.inp_res.m ]; then echo $d; fi ; done",shell=True).splitlines()
 except subprocess.CalledProcessError as e:
     if e.returncode > 1:
         print("Error: cannot get # of jobs to run!")
@@ -72,4 +89,3 @@ while not finished:
         time.sleep(sleeptimer)
 
 print ("All done")
-
