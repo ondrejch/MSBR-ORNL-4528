@@ -102,7 +102,7 @@ class LatticeList:
 
 
     def print_lattice(self, l, sf, r2): # Print lattice with specified parameters
-        lat_i = self.lat_exists(self, l, sf, r2)
+        lat_i = self.lat_exists(l, sf, r2)
         if lat_i :
             self.print_lattice_n(lat_i)
         else:
