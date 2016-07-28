@@ -104,13 +104,13 @@ class LatticeList:
     def print_lattice(self, l, sf, r2): # Print lattice with specified parameters
         lat_i = self.lat_exists(self, l, sf, r2)
         if lat_i :
-            self.print_lattice(lat_i)
+            self.print_lattice_n(lat_i)
         else:
             print("Lattice [ %05.2f" % l + " %05.3f" % sf + " %07.4f" % r2 + " ] does not exist")
         return 
             
 
-    def print_lattice(self,lat_i):          # Prints nth lattice
+    def print_lattice_n(self,lat_i):          # Prints nth lattice
         print ("Lattice # ",lat_i)
         self.latlist[lat_i].printme()
         return
