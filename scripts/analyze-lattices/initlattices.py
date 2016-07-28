@@ -126,7 +126,7 @@ class LatticeList:
             print(" i  lat#   l[cm]    sf   r2")
         for i, lat_i in enumerate(found_lattice_numbers):  # Print output
             print(" %2d " % i + "%5d " % lat_i + \
-            "  %05.2f " % self.latlist[lat_i].l + "  %05.3f " % self.latlist[lat_i].sf + "  %9.6f" % self.latlist[lat_i].r2 )
+            "  %05.2f " % self.latlist[lat_i].l + "  %05.3f " % self.latlist[lat_i].sf + "  %09.6f" % self.latlist[lat_i].r2 )
         return
 
 
