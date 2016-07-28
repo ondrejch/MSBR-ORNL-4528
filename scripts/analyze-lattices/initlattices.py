@@ -106,7 +106,7 @@ class LatticeList:
         if lat_i :
             self.print_lattice_n(lat_i)
         else:
-            print("Lattice [ %05.2f" % l + " %05.3f" % sf + " %07.4f" % r2 + " ] does not exist")
+            print("Lattice [ %05.2f" % l + " %05.3f" % sf + " %09.6f" % r2 + " ] does not exist")
         return 
             
 
@@ -126,7 +126,7 @@ class LatticeList:
             print(" i  lat#   l[cm]    sf   r2")
         for i, lat_i in enumerate(found_lattice_numbers):  # Print output
             print(" %2d " % i + "%5d " % lat_i + \
-            "  %05.2f " % self.latlist[lat_i].l + "  %05.3f " % self.latlist[lat_i].sf + "  %7.4f" % self.latlist[lat_i].r2 )
+            "  %05.2f " % self.latlist[lat_i].l + "  %05.3f " % self.latlist[lat_i].sf + "  %9.6f" % self.latlist[lat_i].r2 )
         return
 
 
