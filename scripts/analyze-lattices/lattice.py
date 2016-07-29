@@ -142,7 +142,7 @@ class Lattice:
             return self.eval_fit_k(my_relBA)    # Return corresponding KEFF based on fit functions
         else:
             print("Error, no fit data found for lat [%5.2f" % self.l +", %5.3f" % self.sf + \
-                   ", 09.6f ]" % self.r2)
+                   ", %09.6f ]" % self.r2)
             return -1
 
         
