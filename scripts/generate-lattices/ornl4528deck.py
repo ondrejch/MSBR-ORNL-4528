@@ -32,7 +32,7 @@ set title "ORNL MSBR unit cell, l {l}, sf {sf}, relBA {relblanket}, radii {r1} {
 set bc 3
 
 % Neutron population and criticality cycles
-set pop 10000 100 40 % 10000 neutrons, 50 cycles, 20 of them inactive
+set pop 10000 100 40 % 10000 neutrons, 100 active, 40 inactive cycles
 
 % Data Libraries
 set acelib "sss_endfb7u.sssdir"
