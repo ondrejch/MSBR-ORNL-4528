@@ -21,11 +21,16 @@ class MaxKforCR:
         print("Initializing MSBR lattices from file: ", self.infile_pickle)
         fin  = open(self.infile_pickle, "rb")
         self.lats = pickle.load(fin)
-        #self.crarr = array('d')
         print("The [l,sf] grid is ", len(self.lats.larr), " x ", len(self.lats.sfarr))
         self.kmap   = np.zeros(( len(self.lats.larr), len(self.lats.sfarr) ), dtype='float32' )  # k [l, sf]
+        self.r2map  = np.zeros(( len(self.lats.larr), len(self.lats.sfarr) ), dtype='float32' )  # r2 [l, sf]
         self.latmap = np.zeros(( len(self.lats.larr), len(self.lats.sfarr) ), dtype='int32'   )  # lattice number [l, sf]
         
+    def __repr__(self):
+        print("< MaxKforCR object")
+        print("There are ", self.lats.nlat, " lattices in the collection")
+        print("The [l,sf] grid is ", len(self.lats.larr), " x ", len(self.lats.sfarr))
+        print(">")       
         
     def calculate_kmap(self, my_cr, extrapolate=1):     # Returns kmap for specific CR
         for i in range(len(self.lats.larr)):            # Loop over hex size l
@@ -35,6 +40,7 @@ class MaxKforCR:
                 # Loop over all lattices at that (l,sf) coordinate
                 for my_lat_i in self.lats.find_lattice_numbers(my_l, my_sf):   # List of lattice numbers
                     my_lat = self.lats.latlist[my_lat_i]                # Find the actual lattice object
+                    my_r2  = mylat.r2
                     k_my_lat = my_lat.get_k_at_cr(my_cr, extrapolate)
                     #print(my_cr, my_l, my_sf, k_my_lat)
                     if k_my_lat > self.kmap[i,j] :
