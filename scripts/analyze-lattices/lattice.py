@@ -10,7 +10,6 @@ from array import array
 from scipy.optimize import curve_fit
 import numpy as np
 import matplotlib.pyplot as plt
-from enum import __repr__
 
 class Lattice:
     'MSBR lattice object'    
