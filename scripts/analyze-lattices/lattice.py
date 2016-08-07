@@ -10,6 +10,7 @@ from array import array
 from scipy.optimize import curve_fit
 import numpy as np
 import matplotlib.pyplot as plt
+from enum import __repr__
 
 class Lattice:
     'MSBR lattice object'    
@@ -31,7 +32,11 @@ class Lattice:
         self.KEFF_chi2  = -0.1          # Reduced \Chi^2 of the fit
         self.CR_chi2    = -0.1
 
-# Methods
+    def __repr__(self):
+        print("< Lattice object")
+        self.printme()
+        print(">")
+        
     def hexarea(self):                  # Area of the lattice [cm2]
         return 2.0 * math.sqrt(3.0) * self.l**2
 
@@ -61,6 +66,8 @@ class Lattice:
             print (" %2d " % i + ": %4.3f \t" % rba + \
             " %6.4f " % self.KEFF[i] + " +- %6.4f " % self.KEFFerr[i] + \
             "\t%6.4f " % self.CR[i] + " +- %6.4f"  % self.CRerr[i] )
+        if self.fit_done :
+            self.print_fit()
         return
 
 

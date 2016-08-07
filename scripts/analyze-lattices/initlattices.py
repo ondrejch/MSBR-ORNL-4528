@@ -23,7 +23,12 @@ class LatticeList:
         self.latlist    = []            # List of imported lattices
         print ("New MSBR lattice collection created!")
 
-
+    def __repr__(self):
+        print("< LatticeList object")
+        print("There are ", self.nlat, " lattices in the collection")
+        print("The [l,sf] grid is ", len(self.larr), " x ", len(self.sfarr))
+        print(">")
+        
     def read_data(self, infilename, maxnlat=0):     # Read lattices from the input file
         self.infilename = infilename                # Input data file name - merged done.out files 
         with open(self.infilename) as datafile:
