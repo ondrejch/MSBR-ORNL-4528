@@ -41,8 +41,8 @@ class MaxKforCR:
                 # Loop over all lattices at that (l,sf) coordinate
                 for my_lat_i in self.lats.find_lattice_numbers(my_l, my_sf):   # List of lattice numbers
                     my_lat   = self.lats.latlist[my_lat_i]                # Find the actual lattice object
-                    my_r2    = mylat.r2
-                    my_rel_r2= mylat.r2/mylat.l
+                    my_r2    = my_lat.r2
+                    my_rel_r2= my_lat.r2/my_lat.l
                     k_my_lat = my_lat.get_k_at_cr(my_cr, extrapolate)
                     #print(my_cr, my_l, my_sf, k_my_lat)
                     if k_my_lat > self.kmap[i,j] :
