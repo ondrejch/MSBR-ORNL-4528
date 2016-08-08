@@ -28,9 +28,9 @@ class MaxKforCR:
         self.latmap = np.zeros(( len(self.lats.larr), len(self.lats.sfarr) ), dtype='int32'   )  # lattice number [l, sf]
         
     def __repr__(self):
-        repr="< MaxKforCR object\n"
-        repr+=("There are %r lattices in the collection\n" % self.nlat)
-        repr+=("The [l,sf] grid is %r x %r >\n" % (len(self.larr), len(self.sfarr)) )
+        repr =  "< MaxKforCR object\n"
+        repr += "There are %r lattices in the collection\n" % self.lats.nlat
+        repr += "The [l,sf] grid is %r x %r >\n" % (len(self.lats.larr), len(self.lats.sfarr))
         return repr       
         
     def calculate_kmap(self, my_cr, extrapolate=1):     # Returns kmap for specific CR
