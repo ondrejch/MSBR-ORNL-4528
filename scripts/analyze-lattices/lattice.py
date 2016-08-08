@@ -32,9 +32,15 @@ class Lattice:
         self.CR_chi2    = -0.1
 
     def __repr__(self):
-        print("< Lattice object")
-        self.printme()
-        print(">")
+        repr = "< Lattice object\n"
+        repr += "Hex size: %5.2f" % self.l +" cm, salt fraction: %5.3f" % self.sf + ", r2: %7.4f" % self.r2 +" cm\n"
+        for i, rba in enumerate(self.relBA):
+            repr += " %2d " % i + ": %4.3f \t" % rba + " %6.4f " % self.KEFF[i] + " +- %6.4f " % self.KEFFerr[i] + \
+            "\t%6.4f " % self.CR[i] + " +- %6.4f\n"  % self.CRerr[i]
+        if self.fit_done :
+            repr += self.get_fit_results()
+        repr += ">"
+        return repr
         
     def hexarea(self):                  # Area of the lattice [cm2]
         return 2.0 * math.sqrt(3.0) * self.l**2
@@ -51,24 +57,11 @@ class Lattice:
 
     def addblanket(self, relBA, KEFF, KEFFerr, CR, CRerr): # Add specific blanket size & results
         self.relBA.append(relBA)
-#        self.l2.append(float(l2))
         self.KEFF.append(KEFF)
         self.KEFFerr.append(KEFFerr)
         self.CR.append(CR)
         self.CRerr.append(CRerr)
         return
-
-
-    def printme(self):                    # Prints out lattice configuration
-        print("Hex size: %5.2f" % self.l +" cm, salt fraction: %5.3f" % self.sf + ", r2: %7.4f" % self.r2 +" cm")
-        for i, rba in enumerate(self.relBA):
-            print (" %2d " % i + ": %4.3f \t" % rba + \
-            " %6.4f " % self.KEFF[i] + " +- %6.4f " % self.KEFFerr[i] + \
-            "\t%6.4f " % self.CR[i] + " +- %6.4f"  % self.CRerr[i] )
-        if self.fit_done :
-            self.print_fit()
-        return
-
 
     def plot(self):
         if len(self.KEFF)<2 :
@@ -152,20 +145,18 @@ class Lattice:
             return -1
 
         
-    def print_fit(self):                # Print the fit data
+    def get_fit_results(self):                # Print the fit data
+        repr = ""
         if self.fit_done :
-            print ("KEFF")
-            print ("p0 = ", self.KEFF_fit_p[0], ", p1 = ",self.KEFF_fit_p[1], ", p2 = ",self.KEFF_fit_p[2] )
-            print ("chi2 = ",self.KEFF_chi2)
-
-            print ("CR")
-            print ("p0 = ", self.CR_fit_p[0], ", p1 = ",self.CR_fit_p[1] )
-            print ("chi2 = ",self.CR_chi2)
-            return
+            repr += "KEFF\n"
+            repr += "p0 = %r, p1 = %r, p2 = %r\n" % (self.KEFF_fit_p[0], self.KEFF_fit_p[1], self.KEFF_fit_p[2])
+            repr += "chi2 = %r\n" % self.KEFF_chi2
+            repr += "CR\n"
+            repr += "p0 =  %r, p1 = %r\n" % (self.CR_fit_p[0], self.CR_fit_p[1])
+            repr += "chi2 = %r\n" % self.CR_chi2
         else:
-            print("Error, the lattice was not fitted!")
-            return -1
-
+            repr += "Error, the lattice was not fitted!\n"
+        return repr
 
  # --------------- test code ----------------
 if __name__ == '__main__':
