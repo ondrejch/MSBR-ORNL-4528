@@ -1,0 +1,181 @@
+Type,Name,Description,Value,Units,SI Value,Units
+Neutronics,,,,,,
+variable,dn,delta neutron concentration,,,,
+variable,dc_1,delta delayed neutron precursor concentration,,,,
+variable,dc_2,delta delayed neutron precursor concentration,,,,
+variable,dc_3,delta delayed neutron precursor concentration,,,,
+variable,dc_4,delta delayed neutron precursor concentration,,,,
+variable,dc_5,delta delayed neutron precursor concentration,,,,
+variable,dc_6,delta delayed neutron precursor concentration,,,,
+variable,c_1,delayed neutron precursor concentration,,,,
+variable,c_2,delayed neutron precursor concentration,,,,
+variable,c_3,delayed neutron precursor concentration,,,,
+variable,c_4,delayed neutron precursor concentration,,,,
+variable,c_5,delayed neutron precursor concentration,,,,
+variable,c_6,delayed neutron precursor concentration,,,,
+variable,c_10,initial delayed neutron precursor concentration,,,,
+variable,c_20,initial delayed neutron precursor concentration,,,,
+variable,c_30,initial delayed neutron precursor concentration,,,,
+variable,c_40,initial delayed neutron precursor concentration,,,,
+variable,c_50,initial delayed neutron precursor concentration,,,,
+variable,c_60,initial delayed neutron precursor concentration,,,,
+variable,n_0,initial neutron concentration,,,,
+variable,drho_fb=a_f*dt_f+a_g*dt_g+a_b*dt_b,feedback reactivity caused by temperature changes,,,,
+variable,drho_ex,external reactivity input,,,,
+constant,a_f,fuel temperature feedback coefficient,-4.540E-05,drho/°F,-8.172E-05,drho/°C
+constant,a_g,graphite temperature feedback coefficient,1.120E-05,drho/°F,2.016E-05,drho/°C
+constant,a_b,fertile temperature feedback coefficient,9.200E-06,drho/°F,1.656E-05,drho/°C
+constant,lam1,decay constant for delayed neutron precursor group 1,1.260E-02,s^-1,1.260E-02,s^-1
+constant,lam2,decay constant for delayed neutron precursor group 2,3.370E-02,s^-1,3.370E-02,s^-1
+constant,lam3,decay constant for delayed neutron precursor group 3,1.390E-01,s^-1,1.390E-01,s^-1
+constant,lam4,decay constant for delayed neutron precursor group 4,3.250E-01,s^-1,3.250E-01,s^-1
+constant,lam5,decay constant for delayed neutron precursor group 5,1.130E+00,s^-1,1.130E+00,s^-1
+constant,lam6,decay constant for delayed neutron precursor group 6,2.500E+00,s^-1,2.500E+00,s^-1
+constant,Lam,generation time,3.300E-04,s,3.300E-04,s
+constant,beta_1,delayed neutron fraction MSBR,2.290E-04,n/a,2.290E-04,n/a
+constant,beta_2,delayed neutron fraction MSBR,8.320E-04,n/a,8.320E-04,n/a
+constant,beta_3,delayed neutron fraction MSBR,7.100E-04,n/a,7.100E-04,n/a
+constant,beta_4,delayed neutron fraction MSBR,8.520E-04,n/a,8.520E-04,n/a
+constant,beta_5,delayed neutron fraction MSBR,1.710E-04,n/a,1.710E-04,n/a
+constant,beta_6,delayed neutron fraction MSBR,1.020E-04,n/a,1.020E-04,n/a
+constant,beta_t,total delayed neutron fraction MSBR,2.896E-03,n/a,2.896E-03,n/a
+constant,rho_0,reactivity change in going from stationary to circulating fuel,1.380E-03,,1.380E-03,
+constant,tau_c,core transit time,3.280E+00,s,3.280E+00,s
+constant,tau_l,external loop transit time,5.850E+00,s,5.850E+00,s
+Core upflow,,,,,,
+variable,t_g1,temperature of graphite in lump g1,,,,
+variable,t_f1,temperature of fuel salt in lump f1,,,,
+variable,t_f2,temperature of fuel salt in lump f2,,,,
+variable,t_in,temperature going into lump f1,,,,
+variable,P,thermal power,,,,
+,,mass of graphite in a lump,2.070E+04,lb,9.389E+03,kg
+,,specific heat capacity of graphite,4.230E-04,MW-s/(lb-°F),1.679E-03,MW-s/(kg-°C)
+,,fraction of power generated in graphite which is removed by fuel stream,8.900E-01,n/a,8.900E-01,n/a
+contant,mcp_g1,(mass of material) x (heat capacity of material) of graphite per lump,7.793E+00,MW-s/°F,1.403E+01,MW-s/°C
+,,mass of fuel in a lump,2.633E+02,lb,1.194E+02,kg
+,,specific heat capacity of fuel,5.800E-04,MW-s/(lb-°F),2.302E-03,MW-s/(kg-°C)
+constant,mcp_f1,(mass of material) x (heat capacity of material) of fuel salt per lump,1.527E-01,MW-s/°F,2.748E-01,MW-s/C
+constant,mcp_f2,(mass of material) x (heat capacity of material) of fuel salt per lump,1.527E-01,MW-s/°F,2.748E-01,MW-s/C
+,,heat transfer coefficient,1.438E+03,BTU/(hr-ft^2-°F),8.165E-03,MW/(m^2-°C)
+,,area,2.285E+03,ft^2,2.095E+02,m^2
+constant,hA_fg_up,(fuel to graphite heat transfer coefficient) x (heat transfer area),9.630E-01,MW/°F,1.733E+00,MW/°C
+constant,k_g1,fraction of total power generated in the graphite lump,3.300E-02,n/a,3.300E-02,n/a
+constant,k_1,fraction of the heat transferred from the graphite which goes to the first fuel lump,5.000E-01,n/a,5.000E-01,n/a
+constant,k_2,fraction of the heat transferred from the graphite which goes to the second fuel lump,5.000E-01,n/a,5.000E-01,n/a
+constant,k_f1,fraction of total power generated in lump f1,2.210E-01,n/a,2.210E-01,n/a
+constant,k_f2,fraction of total power generated in lump f2,2.210E-01,n/a,2.210E-01,n/a
+constant,tau_1,residence time in lump f1,8.400E-01,s,8.400E-01,s
+constant,tau_2,residence time in lump f2,8.400E-01,s,8.400E-01,s
+Core downflow,,,,,,
+variable,t_g2,temperature of graphite in lump g2,,,,
+variable,t_f2,temperature of fuel salt in lump f2,,,,
+variable,t_f3,temperature of fuel salt in lump f3,,,,
+variable,t_f4,temperature of fuel salt in lump f4,,,,
+variable,P,thermal power,,,,
+constant,mcp_g2,(mass of material) x (heat capacity of material) of graphite per lump,7.793E+00,MW-s/°F,1.403E+01,MW-s/°C
+constant,mcp_f3,(mass of material) x (heat capacity of material) of fuel salt per lump,1.527E-01,MW-s/°F,2.748E-01,MW-s/C
+constant,mcp_f4,(mass of material) x (heat capacity of material) of fuel salt per lump,1.527E-01,MW-s/°F,2.748E-01,MW-s/C
+constant,hA_fg_down,(fuel to graphite heat transfer coefficient) x (heat transfer area),6.240E-01,MW/°F,1.123E+00,MW/°C
+constant,k_g2,fraction of total power generated in the graphite lump,3.300E-02,n/a,3.300E-02,n/a
+constant,k_3,fraction of the heat transferred from the graphite which goes to the third fuel lump,5.000E-01,n/a,5.000E-01,n/a
+constant,k_4,fraction of the heat transferred from the graphite which goes to the fourth fuel lump,5.000E-01,n/a,5.000E-01,n/a
+constant,k_f3,fraction of total power generated in lump f3,2.210E-01,n/a,2.210E-01,n/a
+constant,k_f4,fraction of total power generated in lump f4,2.210E-01,n/a,2.210E-01,n/a
+constant,tau_3,residence time in lump f3,8.400E-01,s,8.400E-01,s
+constant,tau_4,residence time in lump f4,8.400E-01,s,8.400E-01,s
+Fertile stream,,,,,,
+variable,t_g3,temperature of graphite in lump g3,,,,
+variable,t_b1,temperature of the blanket salt in lump b1,,,,
+variable,t_b2,temperature of the blanket salt in lump b2,,,,
+variable,t_bin,temperature going into blanket salt lump b1,,,,
+variable,P,thermal power,,,,
+constant,mcp_g3,(mass of material) x (heat capacity of material) x (fraction transferring heat to fertile stream),1.936E+00,MW-s/°F,3.485E+00,MW-s/°C
+constant,mcp_b1,(mass of material) x (heat capacity of material) of blanket salt per lump,9.628E-01,MW-s/°F,1.733E+00,MW-s/C
+constant,mcp_b2,(mass of material) x (heat capacity of material) of blanket salt per lump,9.628E-01,MW-s/°F,1.733E+00,MW-s/C
+constant,hA_bg,(salt to graphite heat transfer coefficient) x (heat transfer area),5.856E-01,MW/°F,1.054E+00,MW/°C
+constant,k_g3,fraction of total power generated in the graphite lump,8.140E-03,n/a,8.140E-03,n/a
+constant,k_1b,fraction of the heat transferred from the graphite which goes to blanket salt lump b1,5.000E-01,n/a,5.000E-01,n/a
+constant,k_2b,fraction of the heat transferred from the graphite which goes to blanket salt lump b2,5.000E-01,n/a,5.000E-01,n/a
+constant,k_b1,fraction of total power generated in lump b1,8.500E-03,n/a,8.500E-03,n/a
+constant,k_b2,fraction of total power generated in lump b2,8.500E-03,n/a,8.500E-03,n/a
+constant,tau_b1,residence time in lump b1,7.000E+00,s,7.000E+00,s
+constant,tau_b2,residence time in lump b2,7.000E+00,s,7.000E+00,s
+Primary heat exchanger,,,,,,
+variable,t_p1,tempreature of the fuel salt in lump 1 of the primary heat exchanger,,,,
+variable,t_p2,tempreature of the fuel salt in lump 2 of the primary heat exchanger,,,,
+variable,t_pl,temperature of the fuel salt in the mixing plenum,,,,
+variable,t_p3,tempreature of the fuel salt in lump 3 of the primary heat exchanger,,,,
+variable,t_p4,tempreature of the fuel salt in lump 4 of the primary heat exchanger,,,,
+variable,t_t1,temperature of the salt in heat transfer lump 1,,,,
+variable,t_t2,temperature of the salt in heat transfer lump 2,,,,
+variable,t_s1,temperature of the coolant salt in lump 1 of the primary heat exchanger,,,,
+variable,t_s2,temperature of the coolant salt in lump 2 of the primary heat exchanger,,,,
+variable,t_s3,temperature of the coolant salt in lump 3 of the primary heat exchanger,,,,
+variable,t_s4,temperature of the coolant salt in lump 4 of the primary heat exchanger,,,,
+variable,t_pin,temperature of the fuel salt entering the heat exchanger,,,,
+variable,t_sin,temperature of the coolant salt entering the heat exchanger,,,,
+constant,hA_p1,heat transfer coefficient x area for fuel salt lump 1,1.650E+00,MW/°F,2.970E+00,MW/°C
+constant,hA_p2,heat transfer coefficient x area for fuel salt lump 2,1.650E+00,MW/°F,2.970E+00,MW/°C
+constant,hA_p3,heat transfer coefficient x area for fuel salt lump 3,1.650E+00,MW/°F,2.970E+00,MW/°C
+constant,hA_p4,heat transfer coefficient x area for fuel salt lump 4,1.650E+00,MW/°F,2.970E+00,MW/°C
+constant,hA_s1,heat transfer coefficient x area for coolant salt lump 1,3.300E+00,MW/°F,5.940E+00,MW/°C
+constant,hA_s2,heat transfer coefficient x area for coolant salt lump 2,3.300E+00,MW/°F,5.940E+00,MW/°C
+constant,hA_s3,heat transfer coefficient x area for coolant salt lump 3,3.300E+00,MW/°F,5.940E+00,MW/°C
+constant,hA_s4,heat transfer coefficient x area for coolant salt lump 4,3.300E+00,MW/°F,5.940E+00,MW/°C
+constant,mcp_p1,mass of material x specific heat for fuel salt lump p1,8.700E-01,MW-s/(lb-°F),3.452E+00,MW-s/(kg-°C)
+constant,mcp_p2,mass of material x specific heat for fuel salt lump p2,8.700E-01,MW-s/(lb-°F),3.452E+00,MW-s/(kg-°C)
+constant,mcp_p3,mass of material x specific heat for fuel salt lump p3,8.700E-01,MW-s/(lb-°F),3.452E+00,MW-s/(kg-°C)
+constant,mcp_p4,mass of material x specific heat for fuel salt lump p4,8.700E-01,MW-s/(lb-°F),3.452E+00,MW-s/(kg-°C)
+constant,mcp_t1,mass of material x specific heat for heat transfer lump t1,1.200E+00,MW-s/°F,2.160E+00,MW-s/°C
+constant,mcp_t2,mass of material x specific heat for heat transfer lump t2,1.200E+00,MW-s/°F,2.160E+00,MW-s/°C
+constant,mcp_s1,mass of material x specific heat for coolant salt lump s1,3.750E+00,MW-s/°F,6.750E+00,MW-s/°C
+constant,mcp_s2,mass of material x specific heat for coolant salt lump s2,3.750E+00,MW-s/°F,6.750E+00,MW-s/°C
+constant,mcp_s3,mass of material x specific heat for coolant salt lump s3,3.750E+00,MW-s/°F,6.750E+00,MW-s/°C
+constant,mcp_s4,mass of material x specific heat for coolant salt lump s4,3.750E+00,MW-s/°F,6.750E+00,MW-s/°C
+constant,tau_p1,residence time in lump p1,5.000E-01,s,5.000E-01,s
+constant,tau_p2,residence time in lump p2,5.000E-01,s,5.000E-01,s
+constant,tau_pl,residence time in lump pl,1.000E+00,s,1.000E+00,s
+constant,tau_p3,residence time in lump p3,5.000E-01,s,5.000E-01,s
+constant,tau_p4,residence time in lump p4,5.000E-01,s,5.000E-01,s
+constant,tau_s1,residence time in lump s1,1.900E+00,s,1.900E+00,s
+constant,tau_s2,residence time in lump s2,1.900E+00,s,1.900E+00,s
+constant,tau_s3,residence time in lump s3,1.900E+00,s,1.900E+00,s
+constant,tau_s4,residence time in lump s4,1.900E+00,s,1.900E+00,s
+Fertile heat exchanger,,,,,,
+variable,t_pbin,temperature of blanket salt entering the fertile heat exchanger,,,,
+variable,t_pb1,temperature of the blanket salt in lump pb1 of the fertile heat exchanger,,,,
+variable,t_pb2,temperature of the blanket salt in lump pb2 of the fertile heat exchanger,,,,
+variable,t_tb,temperature in heat transfer lump pb of the fertile heat exchanger,,,,
+variable,t_s5,temperature of the coolant salt in lump s5 of the fertile heat exchanger,,,,
+variable,t_s6,temperature of the coolant salt in lump s6 of the fertile heat exchanger,,,,
+variable,t_s5in,temperature of coolant salt entering the fertile heat exchanger,,,,
+constant,hA_pb1,heat transfer coefficient x area for blanket salt lump pb1,4.000E-01,MW/°F,7.200E-01,MW/°C
+constant,hA_pb2,heat transfer coefficient x area for blanket salt lump pb2,4.000E-01,MW/°F,7.200E-01,MW/°C
+constant,hA_pb,average heat transfer coefficient x area for blanket salt in fertile heat exchanger,,,,
+constant,hA_s,average heat transfer coefficient x area for coolant salt in fertile heat exchanger,,,,
+constant,hA_s5,heat transfer coefficient x area for coolant salt lump s5,4.000E-01,MW/°F,7.200E-01,MW/°C
+constant,hA_s6,heat transfer coefficient x area for coolant salt lump s6,4.000E-01,MW/°F,7.200E-01,MW/°C
+constant,mcp_pb1,mass of material x specific heat for blanket salt node pb1,2.200E-01,MW-s/°F,3.960E-01,MW-s/°C
+constant,mcp_pb2,mass of material x specific heat for blanket salt node pb2,2.200E-01,MW-s/°F,3.960E-01,MW-s/°C
+constant,mcp_s5,mass of material x specific heat for coolant salt node s5,1.500E+00,MW-s/°F,2.700E+00,MW-s/°C
+constant,mcp_s6,mass of material x specific heat for coolant salt node s6,1.500E+00,MW-s/°F,2.700E+00,MW-s/°C
+constant,mcp_tb,mass of material x specific heat for heat transfer node tb,2.900E-01,MW-s/°F,5.220E-01,MW-s/°C
+constant,tau_pb1,residence time in lump pb1,8.000E-01,s,8.000E-01,s
+constant,tau_pb2,residence time in lump pb2,8.000E-01,s,8.000E-01,s
+constant,tau_s5,residence time in lump s5,7.400E-01,s,7.400E-01,s
+constant,tau_s6,residence time in lump s6,7.400E-01,s,7.400E-01,s
+Boiler and reheater,,,,,,
+variable,t_bin,salt temperature at boiler inlet,,,,
+variable,t_b,temperature of salt in the boiler,,,,
+variable,t_rin,salt temperature at reheater inlet,,,,
+variable,t_r,temperature of salt in the reheater,,,,
+variable,p_b,power removed from salt in the bioler,0.87P,,,
+variable,p_r,power removed from salt in the reheater,0.13P,,,
+,m_b,mass of salt in the boiler,4.240E+04,lb,1.923E+04,kg
+,cp_b,specific heat of salt in the boiler,4.320E-04,MW-s/(lb-°F),1.714E-03,MW-s/(kg-°C)
+constant,mcp_b,mass x specific heat of salt in the boiler,18.3168,MW-s/°F,3.297E+01,MW-s/°C
+,m_r,mass of salt in the reheater,1.350E+04,lb,6.123E+03,kg
+,cp_r,specific heat of salt in the reheater,4.320E-04,MW-s/(lb-°F),1.714E-03,MW-s/(kg-°C)
+constant,mcp_r,mass x specific heat of salt in the reheater,5.832E+00,MW-s/°F,1.050E+01,MW-s/°C
+constant,tau_b,residence time of salt in the boiler,1.040E+01,s,1.040E+01,s
+constant,tau_r,residence time of salt in the rehehater,2.200E+01,s,2.200E+01,s
