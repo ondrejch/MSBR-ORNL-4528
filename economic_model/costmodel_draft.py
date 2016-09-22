@@ -65,28 +65,37 @@ for hourlyload in np.nditer(plant_load):
 # output data calculation
 reactor_thermal_power = load_avg / heat_eff          # [W_th]
 thermal_storage_size  = (load_var/2.0) / storage_eff # [W_th * hours]
-generator_size        = load_max                     # [We]
+turbine_size          = load_max                     # [Wt_h]
+generator_size        = load_max*heat_eff            # [W_e]
 solar_contribution    = sum(solar_gen)/sum(grid_load)# fraction of solar electricity on the grid
 
 # print output
-print("Reactor power:    {:10.3e} W_th" .format(reactor_thermal_power))
-print("Thermal storage:  {:10.3e} W_th * h".format(thermal_storage_size))
-print("Generator size:   {:10.3e} W_e".format(generator_size))
-print("Solar ontribution:    {:6.2f} %".format(100.0*solar_contribution))
+out_text ="*** Component sizes ***\n"
+out_text+="Grid size:        {:10.3e} W_th\n" .format(grid_size)
+out_text+="Reactor power:    {:10.3e} W_th\n" .format(reactor_thermal_power)
+out_text+="Thermal storage:  {:10.3e} W_th * h\n".format(thermal_storage_size)
+out_text+="Turbine size:     {:10.3e} W_th\n".format(turbine_size)
+out_text+="Generator size:   {:10.3e} W_e\n".format(generator_size)
+out_text+="Solar contribution:   {:6.2f} %".format(100.0*solar_contribution)
+print(out_text)
 
 # plots
-plt.plot(range(24), grid_load, label="Grid",  color="darkred",linestyle="-")
-plt.plot(range(24), solar_gen, label="Solar", color="darkorange",linestyle="-") 
-plt.plot(range(24), plant_load,label="Powerplant", color="blue",linestyle="-")
+#my_xax_max = 
+fig= plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(range(24), grid_load, label="Grid load", color="darkred",   linestyle="-", lw=3)
+ax.plot(range(24), solar_gen, label="Solar",     color="darkorange",linestyle="-", lw=2) 
+ax.plot(range(24), plant_load,label="Powerplant",color="blue",      linestyle="-", lw=2)
 plt.xlim(-.1, 23.1)
 plt.ylim(-.1, 1.05*max(max(grid_load),max(solar_gen)))
 plt.title("Example grid with {:4.1f} % PV solar integration".format(100.0*solar_fract))
 plt.xlabel("Time [hours]")
 plt.ylabel("Power [W]")
-plt.legend(loc="best",fontsize="medium")
+ax.legend(loc="best",fontsize="medium")
 plt.xticks([0,4,8,12,16,20])
-plt.grid(True)
-#plt.text(0.08, 0.03, "
+ax.grid(True)
+plt.text(0.02, 0.02, out_text, horizontalalignment='left', verticalalignment='bottom', \
+    transform=ax.transAxes, family="monospace",fontsize="large")
 plt.show()
 
 
