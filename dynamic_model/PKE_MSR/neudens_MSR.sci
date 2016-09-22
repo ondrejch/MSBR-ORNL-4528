@@ -38,11 +38,11 @@ if (strcmp("U233",x,'i')==0) then
 end
 
 
-// Decay constants for the corresponding decay groups
+// Decay constants for the corresponding decay groups [1/seconds]
 lam = [0.0126,0.0337,0.139,0.325,1.13,2.50]';
 
 
-// Mean neutron generation time
+// Mean neutron generation time [seconds]
 L = 0.00033;
 
 
