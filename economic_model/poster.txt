@@ -1,0 +1,8 @@
+Economic model is to show companies an estimate of the cost and profit for building a reactor.
+In order to make estimate of profit, we should:
+First: knowing the size of turbine, power plant and grid load based on the given table of hourly energy consumption based on the eia hourly grid source given. 
+Second: calculate the cost to make the facility (need to know price of the solar panel, salt solution, and turbine). Our goal is to find the most efficient way for clean energy both in term of economic and labor resource. 
+Third: price for the energy produced. What would be the fair price and how is it compare to our energy spends for now?
+Fourth: economic model. Take account for more economic factors that would affect the selling and the price of the energy such as demanding, supply transportation… Etc.
+Last: Is building plant profitable?  Calculating profit refer to the first four steps. 
+
