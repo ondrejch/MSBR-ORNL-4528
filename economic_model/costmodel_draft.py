@@ -44,11 +44,11 @@ for hour in range(0,24):
         solar_gen[hour] = solar_fract * grid_size * np.sin(sun_phase)
     my_reduced_load = grid_load[hour] - solar_gen[hour]   # solar load reduces plant load
     if my_reduced_load >= 0:
-		plant_load[hour]   = my_reduced_load
-		solar_excess[hour] = 0.0
-	else: 
-		plant_load[hour]   = 0.0
-		solar_excess[hour] = -1.0*my_reduced_load
+        plant_load[hour]   = my_reduced_load
+        solar_excess[hour] = 0.0
+    else: 
+        plant_load[hour]   = 0.0
+        solar_excess[hour] = -1.0*my_reduced_load
 		
 #    print (hour," ", grid_load[hour], solar_gen[hour], plant_load[hour])
 
