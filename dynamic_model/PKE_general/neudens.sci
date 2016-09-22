@@ -121,12 +121,12 @@ sol = ode("rk4",y0,t0,t,list(neudens,react,source,bet,B,lam,L));
 clf(); // clear the graphics window
 
 plot(t,sol(1,:)',"k-","thickness",2);
-xlabel("$t$","font_size",4);
+xlabel("$\rm Time \ [sec]$","font_size",4);
 ylabel("$n(t)$","font_size",4);
 legend("$n(t)$",2);
 
 xset('window',1);
 plot(t,sol(2:7,:)',"thickness",2);
-xlabel("$t$","font_size",4);
-ylabel("$C_i(t)$","font_size",4);
+xlabel("$\rm Time \ [sec]$","font_size",4);
+ylabel("$\rm Precursor \ concentrations \ C_i(t)$","font_size",4);
 legend(["$C_1$";"$C_2$";"$C_3$";"$C_4$";"$C_5$";"$C_6$"],2);
