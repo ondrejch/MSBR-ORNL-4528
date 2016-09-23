@@ -31,7 +31,7 @@ grid_load = np.loadtxt("dat.csv", usecols=(2,))
 grid_load /= scipy.amax(grid_load) # normalized max grid_load to 1
 grid_load *= grid_size             # normalized max grid_load to grid_size
 
-# add solar, plant load is difference between grid load and solar generation
+# add solar; plant load is difference between grid load and solar generation
 solar_gen   = np.copy(grid_load)    # create array for solar generation
 plant_load  = np.copy(grid_load)    # create array for plant load
 solar_excess= np.copy(grid_load)    # create array for excessive solar
@@ -48,10 +48,15 @@ for hour in range(0,24):
         solar_excess[hour] = 0.0
     else: 
         plant_load[hour]   = 0.0
-        solar_excess[hour] =-1.0*my_reduced_load
+        solar_excess[hour] =-1.0*my_reduced_load # count solar excess separately
 #    print (hour," ", grid_load[hour], solar_gen[hour], plant_load[hour])
 
-max_ramp_up_rate = 0.0              # maximum ramp up rate of the turbine
+# calculate maximum ramp up rate of the turbine [We/h]
+max_ramp_up_rate = 0.0
+for hour in range(0,23):            # forward differentiation
+    my_ramp_rate = (plant_load[hour+1] - plant_load[hour]) / 1.0
+    if my_ramp_rate > max_ramp_up_rate:
+        max_ramp_up_rate = my_ramp_rate
 
 # averages for reactor sizing
 load_avg = scipy.average(plant_load)    # normalized average [W_e]
@@ -71,26 +76,27 @@ generator_size        = load_max                        # [W_e]
 solar_contribution    = sum(solar_gen)/sum(grid_load)   # fraction of solar electricity on the grid
 
 # print output
-out_text ="*** Component sizes ***\n"
-out_text+="Grid size:        {:10.3e} W_e\n"    .format(grid_size)
-out_text+="Reactor power:    {:10.3e} W_th\n"   .format(reactor_thermal_power)
-out_text+="Thermal storage:  {:10.3e} W_th h\n" .format(thermal_storage_size)
-out_text+="Turbine size:     {:10.3e} W_th\n"   .format(turbine_size)
-out_text+="Generator size:   {:10.3e} W_e\n"    .format(generator_size)
-out_text+="Solar contribution:   {:6.2f} %"     .format(100.0*solar_contribution)
+out_text ="*** Calculated data ***\n"
+out_text+="For grid size of  {:10.3e} W_e\n"   .format(grid_size)
+out_text+=" reactor power:   {:10.3e} W_th\n"  .format(reactor_thermal_power)
+out_text+=" thermal storage: {:10.3e} W_th*h\n".format(thermal_storage_size)
+out_text+=" turbine size:    {:10.3e} W_th\n"  .format(turbine_size)
+out_text+=" generator size:  {:10.3e} W_e\n"   .format(generator_size)
+out_text+=" maximum ramp up: {:10.3e} W_e/h\n" .format(max_ramp_up_rate)
+out_text+=" solar contribution:  {:6.2f} %"    .format(100.0*solar_contribution)
 print(out_text)
 
 # plots
 fig= plt.figure()
 ax = fig.add_subplot(111)
-ax.plot(range(24), grid_load, label="Grid load", color="darkred",   linestyle="-", lw=3)
-ax.plot(range(24), solar_gen, label="Solar",     color="darkorange",linestyle="-", lw=2) 
-ax.plot(range(24), plant_load,label="Powerplant",color="blue",      linestyle="-", lw=2)
+ax.plot(range(24), grid_load, label="Grid load", color="darkred",   linestyle="-", lw=4)
+ax.plot(range(24), solar_gen, label="Solar",     color="darkorange",linestyle="-", lw=3)
+ax.plot(range(24), plant_load,label="MSiBR plant",color="green",      linestyle="-", lw=3)
 plt.xlim(-.1, 23.1)
 plt.ylim(-.1, 1.05*max(max(grid_load),max(solar_gen)))
-plt.title("Example grid with {:4.1f} % PV solar integration".format(100.0*solar_fract))
+plt.title("Example grid with {:4.1f}% PV solar integration".format(100.0*solar_fract))
 plt.xlabel("Time [hours]")
-plt.ylabel("Power [W_e]")
+plt.ylabel(r"Power [W$_e$]")
 ax.legend(loc="best",fontsize="medium")
 plt.xticks([0,4,8,12,16,20])
 ax.grid(True)
