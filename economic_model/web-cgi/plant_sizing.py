@@ -7,6 +7,8 @@
 #
 import numpy as np
 import scipy
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 
@@ -97,7 +99,7 @@ def plant_size(
 
 # plots
     if do_plots :
-        fig= plt.figure()
+        fig= plt.figure()        
         ax = fig.add_subplot(111)
         ax.plot(range(24), grid_load, label="Grid load", color="darkred",   linestyle="-", lw=4)
         ax.plot(range(24), solar_gen, label="Solar",     color="darkorange",linestyle="-", lw=3)
@@ -113,8 +115,7 @@ def plant_size(
         plt.text(0.02, 0.02, out_text, horizontalalignment='left', verticalalignment='bottom', \
             transform=ax.transAxes, family="monospace",fontsize="large")
 
-#plt.show()
-        fig.savefig(dir_figs+"/mygrid.png")   # Write figure into a file instead of displaying it
+        fig.savefig(dir_figures+"/mygrid.png")   # Write figure into a file instead of displaying it
         plt.close()
     
     out_text = out_text.format(**locals())
