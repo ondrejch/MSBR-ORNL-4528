@@ -1,6 +1,6 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # 
-# Script to calculate economic paramters of MSiBR model
+# Script to calculate economic parameters of MSiBR model
 # Draft version.
 #
 # Ondrej Chvala, <ochvala@utk.edu>, 2016-09-19
@@ -13,32 +13,32 @@ import argparse
 # Command line argument parsing
 parser = argparse.ArgumentParser(description='MSiBR economic model.')
 parser.add_argument('grid_size', metavar='gridsize', type=float, nargs='?', default=1e9,
-	help='Size of the electric grid modelled, default = 1e9 W_e')
+    help='Size of the electric grid modelled, default = 1e9 W_e')
 parser.add_argument('storage_eff', metavar='storeff', type=float, nargs='?', default=0.95,
-	help='Round trip efficiency of thermal storage, default 0.95')
+    help='Round trip efficiency of thermal storage, default 0.95')
 parser.add_argument('heat_eff', metavar='heateff', type=float, nargs='?', default=0.45,
-	help='Power conversion efficiency, default = 0.45')
+    help='Power conversion efficiency, default = 0.45')
 parser.add_argument('solar_fract', metavar='solarfrac', type=float, nargs='?', default=0.15,
-	help='Solar fraction of the grid size, default = 0.15')
+    help='Solar fraction of the grid size, default = 0.15')
 
 # Assign command line arguments
-args        =  vars(parser.parse_args())
+args        = vars(parser.parse_args())
 grid_size   = args['grid_size']    # grid max load [W_e]
 storage_eff = args['storage_eff']  # round-trip thermal storage efficiency
 heat_eff    = args['heat_eff']     # efficiency of the power conversion W_th -> W_e
 solar_fract = args['solar_fract']  # solar fraction of peak grid load
 
 # input costs
-reactor_costs = 3.0     # [USD/W_thermal]
-storage_cost  = 0.1     # [USD/W_thermal]
-solar_cost    = 10.0    # [USD/peak_W_electric]
+reactor_costs = 3.0      # [USD/W_thermal]
+storage_cost  = 0.1      # [USD/W_thermal]
+solar_cost    = 10.0     # [USD/peak_W_electric]
 
 # constants
 solar_hour_start =  7.50 # Sun shines from 
 solar_hour_end   = 18.50 # Sun shines until
         
 # load the 3rd column as work data
-#grid_load = np.loadtxt("dat.csv", usecols=(2,))
+# grid_load = np.loadtxt("dat.csv", usecols=(2,))
 grid_load = np.array([ 16091., 15248., 14836., 14629., 14825., 15944.,
   17230., 17736., 18892., 20392., 21913., 23394., 24676., 25493.,
   25946., 26024., 25920., 25235., 24245., 24099., 23131.,
@@ -121,7 +121,7 @@ plt.text(0.02, 0.02, out_text, horizontalalignment='left', verticalalignment='bo
     transform=ax.transAxes, family="monospace",fontsize="large")
 
 #plt.show()
-fig.savefig("mygrid.png")	# Write figure into a file instead of displaying it
+fig.savefig("mygrid.png")   # Write figure into a file instead of displaying it
 plt.close()
 
 
