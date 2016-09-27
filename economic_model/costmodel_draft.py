@@ -49,9 +49,9 @@ grid_load /= scipy.amax(grid_load) # normalized max grid_load to 1
 grid_load *= grid_size             # normalized max grid_load to grid_size
 
 # add solar; plant load is difference between grid load and solar generation
-solar_gen   = np.copy(grid_load)    # create array for solar generation
-plant_load  = np.copy(grid_load)    # create array for plant load
-solar_excess= np.copy(grid_load)    # create array for excessive solar
+solar_gen   = np.copy(grid_load)   # create array for solar generation
+plant_load  = np.copy(grid_load)   # create array for plant load
+solar_excess= np.copy(grid_load)   # create array for excessive solar
 for hour in range(0,24):
     if hour <= solar_hour_start or hour >= solar_hour_end: 
         solar_gen[hour] = 0.0
@@ -70,18 +70,18 @@ for hour in range(0,24):
 
 # calculate maximum ramp up rate of the turbine [We/h]
 max_ramp_up_rate = 0.0
-for hour in range(0,23):            # forward differentiation
+for hour in range(0,23):           # forward differentiation
     my_ramp_rate = (plant_load[hour+1] - plant_load[hour]) / 1.0
     if my_ramp_rate > max_ramp_up_rate:
         max_ramp_up_rate = my_ramp_rate
 
 # averages for reactor sizing
-load_avg = scipy.average(plant_load)    # normalized average [W_e]
-load_max = scipy.amax(plant_load)       # normalized max load, equals grid_size [W_e]
+load_avg = scipy.average(plant_load) # normalized average [W_e]
+load_max = scipy.amax(plant_load)    # normalized max load, equals grid_size [W_e]
 
 # load variability over the 24 hours
 # we need to store half of the variability
-load_var = 0.0                          # [W_e]
+load_var = 0.0                       # [W_e]
 for hourlyload in np.nditer(plant_load): 
     load_var += abs(hourlyload-load_avg)
 
