@@ -12,19 +12,21 @@ for i=1,2,...6
 
 #}
 ################################################################################
+clear all;
 
 # Ask for user unput on fuel type. Options: U233, U235 or MSBR; case insensitive.
-x=[""]; # initialize string array
+%x=[""]; # initialize string array
 
-while (strcmp(x,""))
-    x=input("Select fuel. Options are U233, U235, or MSBR   ","s");
-    if (strcmpi("U233",x)==1 || strcmpi("U235",x)==1 || strcmpi("MSBR",x)==1)
-        break
-    else
-        disp("Please try again!")
-        x=[""]
-    endif
-endwhile
+%while (strcmp(x,""))
+%    x=input("Select fuel. Options are U233, U235, or MSBR   ","s");
+%    if (strcmpi("U233",x)==1 || strcmpi("U235",x)==1 || strcmpi("MSBR",x)==1)
+%        break
+%    else
+%        disp("Please try again!")
+%        x=[""]
+%    endif
+%endwhile
+x='U233';
 
 
 # Decay constants for the corresponding decay groups
@@ -36,8 +38,8 @@ global L = 0.00033;
 
 # Transit time of fuel in external loop and core respectively.
 global t_L = 5.85;
-global t_C = 3.28;
-
+global t_C = 1;%3.28;
+global lag=[t_L, t_L, t_L, t_L, t_L, t_L, t_L]';
 
 # Calculate the big term from rho_0 equation.
 function rho_0=bigterm(bet,lam,L,t_L,t_C)
@@ -87,8 +89,8 @@ global tmax       = input_data(nrows,1); # length of time for which to evaluate 
 
 
 # Initial y and t values
-y0 = [nt,Ct(1),Ct(2),Ct(3),Ct(4),Ct(5),Ct(6)]';
-t0 = [0,0];
+global y0 = [nt,Ct(1),Ct(2),Ct(3),Ct(4),Ct(5),Ct(6)]';
+global t0 = 0;
 
 # Get reactivity value from input file for some t. 
 function rho=react(t)
@@ -128,7 +130,6 @@ function S=source(t)
   endif
 endfunction
 
-
 function ndot=neudens(t,y,yd,react,rho_0,source,bet,B,lam,L,t_L,t_C)
   ndot(1) = source(t) + ((((rho_0+react(t))-B)/L)*y(1)) + (lam(1)*y(2)) + ...
   (lam(2)*y(3)) + (lam(3)*y(4)) + (lam(4)*y(5)) + (lam(5)*y(6)) + (lam(6)*y(7));
@@ -149,9 +150,10 @@ endfunction
 
 # ODE solution stored in a matrix of 7 x (tmax*dt)
 vopt = odeset ("RelTol", 1e-5, "AbsTol", 1e-5, "NormControl","on", "InitialStep"...
-               ,1e-4, "MaxStep",0.01);%, "OutputFcn", @odeplot);
+               ,1e-3, "MaxStep",0.1);#,"OutputFcn", @odeplot);
 
-sol = ode45d(@(t,y,yd) neudens(t,y,yd,@react,rho_0,@source,bet,B,lam,L,t_L,t_C),[0 tmax],y0,t_L,y0,vopt);
+global sol = ode45d(@(t,y,yd) neudens(t,y,yd,@react,rho_0,@source,bet,B,lam,L,t_L,t_C),...
+                    [0,tmax],y0,lag,ones(7,7),vopt);
 
 tsol = sol.x; ysol = sol.y;
 
