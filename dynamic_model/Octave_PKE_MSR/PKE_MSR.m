@@ -13,7 +13,9 @@ for i=1,2,...6
 #}
 ################################################################################
 
-clear all; # clear workspace.
+
+clear all;        # clear workspace.
+pkg load odepkg;  # load odepkg.
 
 
 # Ask for user input on fuel type. Options: U233, U235 or MSBR; case insensitive.
@@ -41,7 +43,7 @@ global L = 0.00033;
 # Transit time of fuel in external loop and core respectively.
 global t_L = 5.85;
 global t_C = 3.28;
-global lag = [0, t_L, t_L, t_L, t_L, t_L, t_L]';
+#global lag = [0, t_L, t_L, t_L, t_L, t_L, t_L]';
 
 
 # Calculate the big term from rho_0 equation.
@@ -185,11 +187,20 @@ ysol = sol.y;
 
 
 # Plot figure 1, n(t) vs t.
-clf()
-figure(1)
-plot(tsol,ysol(:,1));
+clf('reset');
+figure(1);
+F1 = plot(tsol,ysol(:,1));
+X1 = xlabel('time (in s)');
+set(X1,'FontName','Times New Roman','fontsize',14);
+Y1 = ylabel('Reactor Power (rel.)');
+set(Y1,'FontName','Times New Roman','fontsize',14);
 
 
 # Plot figure 2, C_i(t) vs t. 
 figure(2)
-plot(tsol,ysol(:,2:7));
+F2 = plot(tsol,ysol(:,2:7));
+X2 = xlabel('time (in s)');
+set(X2,'FontName','Times New Roman','fontsize',14);
+Y2 = ylabel('C_i(t)');
+set(Y2,'FontName','Times New Roman','fontsize',14);
+legend('C_1','C_2','C_3','C_4','C_5','C_6');
