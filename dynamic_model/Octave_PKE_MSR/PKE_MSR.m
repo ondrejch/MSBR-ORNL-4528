@@ -190,16 +190,16 @@ ysol = sol.y;
 clf('reset');
 figure(1);
 F1 = plot(tsol,ysol(:,1));
-X1 = xlabel('time (in s)');
+X1 = xlabel('Time [s]');
 set(X1,'FontName','Times New Roman','fontsize',14);
-Y1 = ylabel('Reactor Power (rel.)');
+Y1 = ylabel('Reactor Power [relative power]');
 set(Y1,'FontName','Times New Roman','fontsize',14);
 
 
 # Plot figure 2, C_i(t) vs t. 
 figure(2)
 F2 = plot(tsol,ysol(:,2:7));
-X2 = xlabel('time (in s)');
+X2 = xlabel('Time [s]');
 set(X2,'FontName','Times New Roman','fontsize',14);
 Y2 = ylabel('C_i(t)');
 set(Y2,'FontName','Times New Roman','fontsize',14);
