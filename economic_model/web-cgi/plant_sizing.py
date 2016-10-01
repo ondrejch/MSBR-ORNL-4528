@@ -18,6 +18,7 @@ def plant_size(
     heat_eff    = 0.45,
     solar_fract = 0.15, 
     do_plots    = 0,
+    text_in_fig = 1,
     dir_figures = '.') :
     '''Calculates size of the plants components and related parameters
     Inputs: 
@@ -26,10 +27,11 @@ def plant_size(
         heat_eff    = 0.45  # efficiency of the power conversion W_th -> W_e
         solar_fract = 0.15  # solar fraction of peak grid load
         do_plots    = 0     # make plots or not
+        text_in_fig = 1     # add output text to the figure
         dir_figures = '.'   # directory for plots
     Outputs:
         out_text: output text with sizes '''
-
+   
 # constants
     solar_hour_start =  7.50 # Sun shines from 
     solar_hour_end   = 18.50 # Sun shines until
@@ -101,9 +103,9 @@ def plant_size(
     if do_plots :
         fig= plt.figure()        
         ax = fig.add_subplot(111)
-        ax.plot(range(24), grid_load, label="Grid load", color="darkred",   linestyle="-", lw=4)
-        ax.plot(range(24), solar_gen, label="Solar",     color="darkorange",linestyle="-", lw=3)
-        ax.plot(range(24), plant_load,label="MSiBR plant",color="green",      linestyle="-", lw=3)
+        ax.plot(range(24), grid_load, label="Grid load",  color="darkred",   linestyle="-", lw=4)
+        ax.plot(range(24), solar_gen, label="Solar",      color="darkorange",linestyle="-", lw=3)
+        ax.plot(range(24), plant_load,label="MSiBR plant",color="green",     linestyle="-", lw=3)
         plt.xlim(-.1, 23.1)
         plt.ylim(-.1, 1.05*max(max(grid_load),max(solar_gen)))
         plt.title("Example grid with {:4.1f}% PV solar integration".format(100.0*solar_fract))
@@ -112,9 +114,9 @@ def plant_size(
         ax.legend(loc="best",fontsize="medium")
         plt.xticks([0,4,8,12,16,20])
         ax.grid(True)
-        plt.text(0.02, 0.02, out_text, horizontalalignment='left', verticalalignment='bottom', \
-            transform=ax.transAxes, family="monospace",fontsize="large")
-
+        if text_in_fig :
+            plt.text(0.02, 0.02, out_text, horizontalalignment='left', verticalalignment='bottom', \
+                transform=ax.transAxes, family="monospace",fontsize="large")
         fig.savefig(dir_figures+"/mygrid.png")   # Write figure into a file instead of displaying it
         plt.close()
     

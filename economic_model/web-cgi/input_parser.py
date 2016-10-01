@@ -21,7 +21,9 @@ parser.add_argument('solar_fract', metavar='solarfrac', type=float, nargs='?', d
     help='Solar fraction of the grid size, default = 0.15')
 parser.add_argument('do_plot', metavar='plot', choices=[0,1], nargs='?', default=0,
     help='Write out the PNG of the plot [1|0], default = 0')
-
+parser.add_argument('text_in_fig', metavar='plot', choices=[0,1], nargs='?', default=0,
+    help='Add output data as text to the plot [1|0], default = 1')
+    
 # Assign command line arguments
 args        = vars(parser.parse_args())
 grid_size   = args['grid_size']    # grid max load [W_e]
@@ -29,9 +31,10 @@ storage_eff = args['storage_eff']  # round-trip thermal storage efficiency
 heat_eff    = args['heat_eff']     # efficiency of the power conversion W_th -> W_e
 solar_fract = args['solar_fract']  # solar fraction of peak grid load
 do_plot     = args['do_plot']      # make plot or not 1|0 
+text_in_fig = args['text_in_fig']  # add text to fig 1|0 
 
 # Run the model
-model_sizes = plant_size(grid_size, storage_eff, heat_eff, solar_fract, do_plot)
+model_sizes = plant_size(grid_size, storage_eff, heat_eff, solar_fract, do_plot, text_in_fig)
 
 # Print output to screen
 print(model_sizes)
