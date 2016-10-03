@@ -79,12 +79,12 @@ endif
 
 # Initial values for n(t) and C_i(t).
 nt    = 1.0;
-Ct(1) = (bet(1)/(L*lam(1)))*nt;
-Ct(2) = (bet(2)/(L*lam(2)))*nt;
-Ct(3) = (bet(3)/(L*lam(3)))*nt;
-Ct(4) = (bet(4)/(L*lam(4)))*nt;
-Ct(5) = (bet(5)/(L*lam(5)))*nt;
-Ct(6) = (bet(6)/(L*lam(6)))*nt;
+Ct(1) = ((bet(1)*nt)/L)*(1/(lam(1) - (exp(-lam(1)*t_L) - 1)/t_C));
+Ct(2) = ((bet(2)*nt)/L)*(1/(lam(2) - (exp(-lam(2)*t_L) - 1)/t_C));
+Ct(3) = ((bet(3)*nt)/L)*(1/(lam(3) - (exp(-lam(3)*t_L) - 1)/t_C));
+Ct(4) = ((bet(4)*nt)/L)*(1/(lam(4) - (exp(-lam(4)*t_L) - 1)/t_C));
+Ct(5) = ((bet(5)*nt)/L)*(1/(lam(5) - (exp(-lam(5)*t_L) - 1)/t_C));
+Ct(6) = ((bet(6)*nt)/L)*(1/(lam(6) - (exp(-lam(6)*t_L) - 1)/t_C));
 
 
 # Read in input file. Formatted as time, reactivity, source.
@@ -164,14 +164,16 @@ function ndot=neudens(t,y,yd,react,rho_0,source,bet,B,lam,L,t_L,t_C)
 endfunction
 
 
-# ODE solution stored in a struct.
+# Options for the DDE solver. Passed to as struct to [opt], see below.
 vopt = odeset ("RelTol", 1e-5, "AbsTol", 1e-5, "NormControl", "on", ...
                "InitialStep", 1e-4, "MaxStep", 0.01);#,"OutputFcn", @odeplot);
 
 
 # Integrate ODEs for given time using the ode45d (mod RK 4,5) routine in odepkg. 
 # Used under the GNU GPL for research purposes.  
-# The time lags are passed to the solver as a vector. History is passed as an 
+# Function definition as follows:
+# [sol] = ode45d (@function, timeslot, initial values, timelags, history, [opt]) 
+# The timelags are passed to the solver as a vector. History is passed as an 
 # mxn matrix where X_i,j is the history of the ith component at the jth lag. 
 # For our case there's only one lag, t_L, and the history vector is a 7x1 column
 # vector equivalent to the initial condition. 
@@ -190,16 +192,16 @@ ysol = sol.y;
 clf('reset');
 figure(1);
 F1 = plot(tsol,ysol(:,1));
-X1 = xlabel('Time [s]');
+X1 = xlabel('time (in s)');
 set(X1,'FontName','Times New Roman','fontsize',14);
-Y1 = ylabel('Reactor Power [relative power]');
+Y1 = ylabel('Reactor Power (rel.)');
 set(Y1,'FontName','Times New Roman','fontsize',14);
 
 
 # Plot figure 2, C_i(t) vs t. 
 figure(2)
 F2 = plot(tsol,ysol(:,2:7));
-X2 = xlabel('Time [s]');
+X2 = xlabel('time (in s)');
 set(X2,'FontName','Times New Roman','fontsize',14);
 Y2 = ylabel('C_i(t)');
 set(Y2,'FontName','Times New Roman','fontsize',14);
