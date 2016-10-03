@@ -13,6 +13,9 @@ for i=1,2,...6
 #}
 ################################################################################
 
+clear all;        # clear workspace.
+pkg load odepkg;  # load odepkg.
+
 # Ask for user unput on fuel type. Options: U233, U235 or MSBR; case insensitive.
 x=[""]; # initialize string array
 
