@@ -55,7 +55,7 @@ function rho_0=bigterm(bet,lam,L,t_L,t_C)
     global t_L;
     global t_C;
     for i = 1:6
-        rho_0 += (bet(i)/(1 + ((1/(lam(i)*t_C))*(1-(exp(-lam(i)*t_L))))));
+        rho_0 += bet(i)/(1.0 + (1.0-exp(-lam(i)*t_L))/(lam(i)*t_C));
     end
 endfunction
 
@@ -79,12 +79,12 @@ endif
 
 # Initial values for n(t) and C_i(t).
 nt    = 1.0;
-Ct(1) = ((bet(1)*nt)/L)*(1/(lam(1) - (exp(-lam(1)*t_L) - 1)/t_C));
-Ct(2) = ((bet(2)*nt)/L)*(1/(lam(2) - (exp(-lam(2)*t_L) - 1)/t_C));
-Ct(3) = ((bet(3)*nt)/L)*(1/(lam(3) - (exp(-lam(3)*t_L) - 1)/t_C));
-Ct(4) = ((bet(4)*nt)/L)*(1/(lam(4) - (exp(-lam(4)*t_L) - 1)/t_C));
-Ct(5) = ((bet(5)*nt)/L)*(1/(lam(5) - (exp(-lam(5)*t_L) - 1)/t_C));
-Ct(6) = ((bet(6)*nt)/L)*(1/(lam(6) - (exp(-lam(6)*t_L) - 1)/t_C));
+Ct(1) = ((bet(1)*nt)/L)*(1.0/(lam(1) - (exp(-lam(1)*t_L) - 1.0)/t_C));
+Ct(2) = ((bet(2)*nt)/L)*(1.0/(lam(2) - (exp(-lam(2)*t_L) - 1.0)/t_C));
+Ct(3) = ((bet(3)*nt)/L)*(1.0/(lam(3) - (exp(-lam(3)*t_L) - 1.0)/t_C));
+Ct(4) = ((bet(4)*nt)/L)*(1.0/(lam(4) - (exp(-lam(4)*t_L) - 1.0)/t_C));
+Ct(5) = ((bet(5)*nt)/L)*(1.0/(lam(5) - (exp(-lam(5)*t_L) - 1.0)/t_C));
+Ct(6) = ((bet(6)*nt)/L)*(1.0/(lam(6) - (exp(-lam(6)*t_L) - 1.0)/t_C));
 
 
 # Read in input file. Formatted as time, reactivity, source.
@@ -95,7 +95,7 @@ global tmax       = input_data(nrows,1); # length of time to evaluate equations.
 
 # Initial y and t values
 global y0 = [nt,Ct(1),Ct(2),Ct(3),Ct(4),Ct(5),Ct(6)]';
-global t0 = 0;
+global t0 = -30; # We start at -30sec to avoid small fluctuations at the biginning.
 
 
 # Get reactivity value from input file for some t. 
@@ -165,7 +165,7 @@ endfunction
 
 
 # Options for the DDE solver. Passed to as struct to [opt], see below.
-vopt = odeset ("RelTol", 1e-5, "AbsTol", 1e-5, "NormControl", "on", ...
+vopt = odeset ("RelTol", 1e-7, "AbsTol", 1e-7, "NormControl", "on", ...
                "InitialStep", 1e-4, "MaxStep", 0.01);#,"OutputFcn", @odeplot);
 
 
@@ -180,7 +180,7 @@ vopt = odeset ("RelTol", 1e-5, "AbsTol", 1e-5, "NormControl", "on", ...
 # Ref: http://octave.sourceforge.net/odepkg/function/odepkg_examples_dde.html
 # http://www.runet.edu/~thompson/webddes/tutorial.pdf
 sol = ode45d(@(t,y,yd) neudens(t,y,yd,@react,rho_0,@source,bet,B,lam, ...
-             L,t_L,t_C), [0 tmax], y0, t_L, y0, vopt);
+             L,t_L,t_C), [t0 tmax], y0, t_L, y0, vopt);
 
 
 # Saving the solution for t and y, where y1 is n(t) and y2:y7 are C_i(t).            
