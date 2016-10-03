@@ -1,3 +1,5 @@
+NOTE: PLEASE DO NOT PUSH BINARY FILES INTO A REPOSITORY.
+
 Economic model is to show companies an estimate of the cost and profit for building a reactor.
 In order to make estimate of profit, we should:
 First: knowing the size of turbine, power plant and grid load based on the given table of hourly energy consumption based on the eia hourly grid source given. 
