@@ -4,11 +4,11 @@ stacksize('max');
 // EXTERNAL REACTIVITY AND SOURCE INPUTS
 
 // Create the variable to load from
-R.time   = [0]'; //the values must be in a column vector
-R.values = [0]';
+R.time   = [0,50,100,150,200,250,300,350,400,450,500,550,600]'; //the values must be in a column vector
+R.values = [0,6e-4,0,-6e-4,0,6e-4,0,-6e-4,0,6e-4,0,-6e-4,0]';
 
-S.time   = [0]'; //the values must be in a column vector
-S.values = [0]';
+S.time   = [0,50,100,150,200,250,300,350,400,450,500,550,600]'; //the values must be in a column vector
+S.values = [0,0,0,0,0,0,0,0,0,0,0,0,0]';
 
 
 // FUEL PARAMETERS
@@ -56,7 +56,10 @@ y0    = [nt;Ct]'; // Initial conditions
 
 
 // CORE HEAT TRANSFER PARAMETERS
-
+W_f  = 1.414E3;  // fuel flow rate (kg/s)
+m_f  = 494.0;    // fuel mass in core (kg)
+nn_f = 4;        // number of fuel nodes in core
+mn_f = m_f/nn_f; // fuel mass per node (kg)
 
 // Feedback co-efficients
 a_f   = -8.172E-05; // fuel temperature feedback coefficient in drho/°C
@@ -92,8 +95,8 @@ k_1      = 5.000E-01; // fraction of heat transferred from graphite which goes t
 k_2      = 5.000E-01; // fraction of heat transferred from graphite which goes to second fuel lump
 k_f1     = 2.210E-01; // fraction of total power generated in lump f1
 k_f2     = 2.210E-01; // fraction of total power generated in lump f2
-tau_1    = 8.400E-01; // residence time in lump f1
-tau_2    = 8.400E-01; // residence time in lump f2
+tau_1    = mn_f/W_f;  // 8.400E-01; // residence time in lump f1
+tau_2    = mn_f/W_f;  // 8.400E-01; // residence time in lump f2
 
 
 // Core downflow
@@ -106,8 +109,8 @@ k_3      = 5.000E-01; // fraction of heat transferred from graphite which goes t
 k_4      = 5.000E-01; // fraction of heat transferred from graphite which goes to fourth fuel lump
 k_f3     = 2.210E-01; // fraction of total power generated in lump f3
 k_f4     = 2.210E-01; // fraction of total power generated in lump f4
-tau_3    = 8.400E-01; // residence time in lump f3
-tau_4    = 8.400E-01; // residence time in lump f4
+tau_3    = mn_f/W_f;  // 8.400E-01; // residence time in lump f3
+tau_4    = mn_f/W_f;  // 8.400E-01; // residence time in lump f4
 
 
 // Fertile stream
@@ -123,33 +126,34 @@ k_b2     = 8.500E-03; // fraction of total power generated in lump b2
 tau_b1   = 6.998E+00; // residence time in lump b1
 tau_b2   = 6.998E+00; // residence time in lump b2
 
-
-// PRIMARY HEAT EXCHANGER
-
-mcp_p1   = 3.452E+00;
-mcp_p2   = 3.452E+00;
-mcp_p3   = 3.452E+00;
-mcp_p4   = 3.452E+00;
-mcp_t1   = 2.160E+00;
-mcp_t2   = 2.160E+00;
-mcp_s1   = 6.750E+00;
-mcp_s2   = 6.750E+00;
-mcp_s3   = 6.750E+00;
-mcp_s4   = 6.750E+00;
-hA_p1    = 2.970E+00;
-hA_p2    = 2.970E+00;
-hA_p3    = 2.970E+00;
-hA_p4    = 2.970E+00;
-hA_s1    = 5.940E+00;
-hA_s2    = 5.940E+00;
-hA_s3    = 5.940E+00;
-hA_s4    = 5.940E+00;
-tau_p1   = 5.000E-01;
-tau_p2   = 5.000E-01;
-tau_pl   = 1.000E+00;
-tau_p3   = 5.000E-01;
-tau_p4   = 5.000E-01;
-tau_s1   = 1.900E+00;
-tau_s2   = 1.900E+00;
-tau_s3   = 1.900E+00;
-tau_s4   = 1.900E+00;
+//
+//// PRIMARY HEAT EXCHANGER
+//
+//mcp_p1   = 3.452E+00;
+//mcp_p2   = 3.452E+00;
+//mcp_p3   = 3.452E+00;
+//mcp_p4   = 3.452E+00;
+//mcp_t1   = 2.160E+00;
+//mcp_t2   = 2.160E+00;
+//mcp_s1   = 6.750E+00;
+//mcp_s2   = 6.750E+00;
+//mcp_s3   = 6.750E+00;
+//mcp_s4   = 6.750E+00;
+//hA_p1    = 2.970E+00;
+//hA_p2    = 2.970E+00;
+//hA_p3    = 2.970E+00;
+//hA_p4    = 2.970E+00;
+//hA_s1    = 5.940E+00;
+//hA_s2    = 5.940E+00;
+//hA_s3    = 5.940E+00;
+//hA_s4    = 5.940E+00;
+//tau_p1   = 5.000E-01;
+//tau_p2   = 5.000E-01;
+//tau_pl   = 1.000E+00;
+//tau_p3   = 5.000E-01;
+//tau_p4   = 5.000E-01;
+//tau_s1   = 1.900E+00;
+//tau_s2   = 1.900E+00;
+//tau_s3   = 1.900E+00;
+//tau_s4   = 1.900E+00;
+//
