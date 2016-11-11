@@ -167,8 +167,8 @@ T0_s1  = Ts_in + 36.25; % in °C
 T0_s2  = Ts_in + 2*36.25; % in °C
 T0_s3  = Ts_in + 3*36.25; % in °C
 T0_s4  = 599.4444; % in °C
-A = 2*4.584E+02; % area for heat transfer (primary and secondary, m^2)
-h_overall=0.975*P/A/((Tp_in+T0_p4)/2-(Ts_in+T0_s4)/2)*2;
+A_phe = 2*4.584E+02; % area for heat transfer (primary and secondary, m^2)
+h_overall=0.975*P/A_phe/((Tp_in+T0_p4)/2-(Ts_in+T0_s4)/2)*2;
 
 h_p = 1.306E-02; % heat transfer coefficient from primary to tubes
 h_s = 2.555E-02; % heat transfer coefficient from tubes to secondary
@@ -178,10 +178,10 @@ mcp_p2   = mn_p*cp_p; % (mass of material x heat capacity of material) of fuel s
 mcp_p3   = mn_p*cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
 mcp_p4   = mn_p*cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
 
-hA_p1 = h_p*A/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
-hA_p2 = h_p*A/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
-hA_p3 = h_p*A/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
-hA_p4 = h_p*A/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
+hA_p1 = h_p*A_phe/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
+hA_p2 = h_p*A_phe/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
+hA_p3 = h_p*A_phe/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
+hA_p4 = h_p*A_phe/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
 
 
 % Tubes - DONE
@@ -195,10 +195,10 @@ mcp_s2   = mn_s*cp_s; % (mass of material x heat capacity of material) of coolan
 mcp_s3   = mn_s*cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
 mcp_s4   = mn_s*cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
 
-hA_s1 = h_s*A/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
-hA_s2 = h_s*A/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
-hA_s3 = h_s*A/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
-hA_s4 = h_s*A/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
+hA_s1 = h_s*A_phe/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
+hA_s2 = h_s*A_phe/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
+hA_s3 = h_s*A_phe/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
+hA_s4 = h_s*A_phe/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
 
 %% Fertile Salt Heat Exchanger
 % Secondary
@@ -227,13 +227,13 @@ T0_s6 = 607.22;
 T0_pb1 = 648.88;
 T0_pb2 = 676.66; % fertile exit temp deg C
 T0_t3 =  633.6967; % tube temp
-%% Reheater Parameters
+%% Boiler and Reheater Parameters
 mn_ms = mn_m; % mass salt in mixing node (kg)
 p_b = 0.87*P; % power removed by boiler (MW)
 p_r = 0.13*P; % power removed by reheater (MW)
 
-tau_r = 10.43; % resident time in reheater (sec)
-tau_b = 22.09; % resident time in boiler (sec)
+tau_r = 22.09; % resident time in reheater (sec)
+tau_b = 10.43; % resident time in boiler (sec)
 
 W_sb = (1-0.133)*W_s; % Coolant salt flow through boiler (kg/s)
 W_sr = 0.133*W_s; % Coolant salt flow through reheater (kg/s)
@@ -250,4 +250,13 @@ tau_fehx_b = 13.5; % (sec) fertile hx to boiler
 tau_fehx_r = 17.3; % (sec) fertile hx to reheater
 tau_b_fhx = 4.2; % (sec) boiler to fuel hx
 tau_r_fhx = 11.1; % (sec) reheater to fuel hx
+
+%% Useful calculations
+% Core Power
+corepower = W_f*cp_p*(msbr_core_mux(end,22)-msbr_core_mux(end,1));
+coolantpower = W_s*cp_s*(msbr_phe_mux(end,13)-msbr_phe_mux(end,2));
+
+
+
+
 

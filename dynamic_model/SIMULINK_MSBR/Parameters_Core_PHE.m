@@ -58,7 +58,7 @@ reacttime = [0 50 100];
 
 react = timeseries(reactdata,reacttime);
 
-ts_max = 1e-3; % maximum timestep (s)
+ts_max = 1e-2; % maximum timestep (s)
 % ts_max = 'auto';
 
 % CORE HEAT TRANSFER PARAMETERS
