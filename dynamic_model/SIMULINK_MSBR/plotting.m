@@ -1,4 +1,4 @@
-figure;plot(tout,msbr_core_mux(:,4),tout,power_demand);legend('Core Power','Demand Power');
+figure;plot(tout,msbr_core_mux(:,4),tout,power_demand);grid on;legend('Core Power','Demand Power','location','southeast');
 figure;plot(tout,msbr_core_mux(:,[5 7 9 11 13 15]));
 figure;plot(tout,msbr_core_mux(:,[17 20 23]));
 figure;plot(tout,msbr_core_mux(:,[18 19 21 22]));

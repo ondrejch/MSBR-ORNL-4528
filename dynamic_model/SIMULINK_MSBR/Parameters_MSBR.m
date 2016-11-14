@@ -35,7 +35,7 @@ source = timeseries(sourcedata,sourcetime);
 
 % REACTIVITY INSERTION
 % No reactivity insertion
-simtime = 2000;
+simtime = 8000;
 reactdata = [0 0 0];
 reacttime = [0 50 100];
 % Periodic 60 PCM for 50 seconds
@@ -58,7 +58,7 @@ reacttime = [0 50 100];
 
 react = timeseries(reactdata,reacttime);
 
-ts_max = 'auto'; %1e-2; % maximum timestep (s)
+ts_max = 1e-2; % maximum timestep (s)
 
 
 % CORE HEAT TRANSFER PARAMETERS
@@ -255,10 +255,10 @@ tau_r_fhx = 11.1; % (sec) reheater to fuel hx
 
 %% Useful calculations
 % Core Power
-corepower = W_f*cp_p*(msbr_core_mux(end,22)-msbr_core_mux(end,1))
-coolantpower = W_s*cp_s*(msbr_phe_mux(end,13)-msbr_phe_mux(end,2))
-heatsinkpower = W_s*cp_s*(msbr_br_mux(end,1)-msbr_br_mux(end,9))
-fertpower = W_s*cp_s*(msbr_phe_mux(end,13)-msbr_phe_mux(end,2))
+% corepower = W_f*cp_p*(msbr_core_mux(end,22)-msbr_core_mux(end,1))
+% coolantpower = W_s*cp_s*(msbr_phe_mux(end,13)-msbr_phe_mux(end,2))
+% heatsinkpower = W_s*cp_s*(msbr_br_mux(end,1)-msbr_br_mux(end,9))
+% fertpower = W_s*cp_s*(msbr_phe_mux(end,13)-msbr_phe_mux(end,2))
 
 
 
