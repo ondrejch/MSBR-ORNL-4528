@@ -1,4 +1,4 @@
-figure;plot(tout,msbr_core_mux(:,4));
+figure;plot(tout,msbr_core_mux(:,4),tout,power_demand);legend('Core Power','Demand Power');
 figure;plot(tout,msbr_core_mux(:,[5 7 9 11 13 15]));
 figure;plot(tout,msbr_core_mux(:,[17 20 23]));
 figure;plot(tout,msbr_core_mux(:,[18 19 21 22]));
@@ -12,3 +12,6 @@ figure(5);title('Fertile Temperatures');xlabel('Time (s)');ylabel('Temperature (
 
 
 figure;plot(tout,msbr_br_mux(:,[3 6 7 8 9]));legend('Tb','Tr','tauR','tauB','mix');
+figure;plot(tout,msbr_core_mux(:,3));
+
+figure;plot(tout,rho_ext)

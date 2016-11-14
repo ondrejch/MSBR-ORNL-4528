@@ -35,18 +35,18 @@ source = timeseries(sourcedata,sourcetime);
 
 % REACTIVITY INSERTION
 % No reactivity insertion
-simtime = 1000;
-reactdata = [0 0 0];
-reacttime = [0 50 100];
+% simtime = 1000;
+% reactdata = [0 0 0];
+% reacttime = [0 50 100];
 % Periodic 60 PCM for 50 seconds
 % simtime = 500;
 % periodic = [0, 0; 50, 6e-4; 100, 0; 150, -6e-4; 200, 0; 250, 6e-4; 300, 0; 350, -6e-4; 400, 0]; 
 % reactdata = periodic(:,2);
 % reacttime = periodic(:,1);
 % % Step up 60 pcm 
-% simtime = 100;
-% reactdata = [0 6e-4];
-% reacttime = [0 50];
+simtime = 1000;
+reactdata = [0 6e-4];
+reacttime = [0 500];
 % % Step down -60 pcm for 10 sec
 % simtime = 100;
 % reactdata = [0 -6e-4];
@@ -58,7 +58,7 @@ reacttime = [0 50 100];
 
 react = timeseries(reactdata,reacttime);
 
-ts_max = 1e-3; % maximum timestep (s)
+ts_max = 1e0; % maximum timestep (s)
 % ts_max = 'auto';
 
 % CORE HEAT TRANSFER PARAMETERS
@@ -253,8 +253,8 @@ tau_r_fhx = 11.1; % (sec) reheater to fuel hx
 
 %% Useful calculations
 % Core Power
-corepower = W_f*cp_p*(msbr_core_mux(end,22)-msbr_core_mux(end,1));
-coolantpower = W_s*cp_s*(msbr_phe_mux(end,13)-msbr_phe_mux(end,2));
+% corepower = W_f*cp_p*(msbr_core_mux(end,22)-msbr_core_mux(end,1));
+% coolantpower = W_s*cp_s*(msbr_phe_mux(end,13)-msbr_phe_mux(end,2));
 
 
 

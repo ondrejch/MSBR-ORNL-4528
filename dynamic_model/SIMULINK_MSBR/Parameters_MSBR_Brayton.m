@@ -35,18 +35,18 @@ source = timeseries(sourcedata,sourcetime);
 
 % REACTIVITY INSERTION
 % No reactivity insertion
-simtime = 1000;
-reactdata = [0 0 0];
-reacttime = [0 50 100];
+% simtime = 1000;
+% reactdata = [0 0 0];
+% reacttime = [0 50 100];
 % Periodic 60 PCM for 50 seconds
 % simtime = 500;
 % periodic = [0, 0; 50, 6e-4; 100, 0; 150, -6e-4; 200, 0; 250, 6e-4; 300, 0; 350, -6e-4; 400, 0]; 
 % reactdata = periodic(:,2);
 % reacttime = periodic(:,1);
-% Step up 60 pcm 
-% simtime = 1000;
-% reactdata = [0 6e-4];
-% reacttime = [0 500];
+% % Step up 60 pcm 
+simtime = 1000;
+reactdata = [0 6e-4];
+reacttime = [0 500];
 % % Step down -60 pcm for 10 sec
 % simtime = 100;
 % reactdata = [0 -6e-4];
@@ -58,7 +58,7 @@ reacttime = [0 50 100];
 
 react = timeseries(reactdata,reacttime);
 
-ts_max = 1e-3; % maximum timestep (s)
+ts_max = 1e0; % maximum timestep (s)
 % ts_max = 'auto';
 
 % CORE HEAT TRANSFER PARAMETERS
@@ -167,18 +167,21 @@ T0_s1  = Ts_in + 36.25; % in °C
 T0_s2  = Ts_in + 2*36.25; % in °C
 T0_s3  = Ts_in + 3*36.25; % in °C
 T0_s4  = 599.4444; % in °C
+A_phe = 2*4.584E+02; % area for heat transfer (primary and secondary, m^2)
+h_overall=0.975*P/A_phe/((Tp_in+T0_p4)/2-(Ts_in+T0_s4)/2)*2;
 
-
+h_p = 1.306E-02; % heat transfer coefficient from primary to tubes
+h_s = 2.555E-02; % heat transfer coefficient from tubes to secondary
 % Primary Side - DONE
 mcp_p1   = mn_p*cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
 mcp_p2   = mn_p*cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
 mcp_p3   = mn_p*cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
 mcp_p4   = mn_p*cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
 
-hA_p1 = 0.75*3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
-hA_p2 = 0.75*3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
-hA_p3 = 0.75*3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
-hA_p4 = 0.75*3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
+hA_p1 = h_p*A_phe/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
+hA_p2 = h_p*A_phe/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
+hA_p3 = h_p*A_phe/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
+hA_p4 = h_p*A_phe/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
 
 
 % Tubes - DONE
@@ -192,12 +195,51 @@ mcp_s2   = mn_s*cp_s; % (mass of material x heat capacity of material) of coolan
 mcp_s3   = mn_s*cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
 mcp_s4   = mn_s*cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
 
-hA_s1 = 0.75*5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
-hA_s2 = 0.75*5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
-hA_s3 = 0.75*5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
-hA_s4 = 0.75*5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
+hA_s1 = h_s*A_phe/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
+hA_s2 = h_s*A_phe/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
+hA_s3 = h_s*A_phe/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
+hA_s4 = h_s*A_phe/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
 
+%% Fertile Salt Heat Exchanger
+% Secondary
+tau_s5 = 7.446E-01;
+tau_s6 = 7.446E-01;
+mcp_s5   = 2.632E+00; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
+mcp_s6   = 2.632E+00; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
+hA_s5 = 7.150E-01; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
+hA_s6 = 7.150E-01; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
 
+% Primary
+tau_pb = 7.983E-01;
+hA_pb1 = 7.150E-01; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
+hA_pb2 = 7.150E-01; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
+mcp_pb1   = 3.967E-01; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
+mcp_pb2   = 3.967E-01; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
+
+% Tubes
+cp_t = 5.873E-04; % heat capacity of tubes
+m_t = 8.754E+02; % mass tubes
+mcp_t3   = m_t*cp_t; % (mass of material x heat capacity of material) of tubes per lump in MW-s/°C
+
+% Initial conditions
+T0_s5 = 603.33;
+T0_s6 = 607.22;
+T0_pb1 = 648.88;
+T0_pb2 = 676.66; % fertile exit temp deg C
+T0_t3 =  633.6967; % tube temp
+%% Brayton sCO2 Heat Exchanger
+
+mn_ms = mn_m; % mass salt in mixing node (kg)
+p_b = 0.87*P; % power removed by boiler (MW)
+p_r = 0.13*P; % power removed by reheater (MW)
+
+tau_r = 22.09; % resident time in reheater (sec)
+tau_b = 10.43; % resident time in boiler (sec)
+
+W_sb = (1-0.133)*W_s; % Coolant salt flow through boiler (kg/s)
+W_sr = 0.133*W_s; % Coolant salt flow through reheater (kg/s)
+mb_cpb = 3.297E+01;
+mr_cpr = 1.050E+01;
 %% Pure time delays between components
 
 tau_fhx_c = 1.22; % (sec) delay from fuel hx to core
@@ -209,4 +251,13 @@ tau_fehx_b = 13.5; % (sec) fertile hx to boiler
 tau_fehx_r = 17.3; % (sec) fertile hx to reheater
 tau_b_fhx = 4.2; % (sec) boiler to fuel hx
 tau_r_fhx = 11.1; % (sec) reheater to fuel hx
+
+%% Useful calculations
+% Core Power
+% corepower = W_f*cp_p*(msbr_core_mux(end,22)-msbr_core_mux(end,1));
+% coolantpower = W_s*cp_s*(msbr_phe_mux(end,13)-msbr_phe_mux(end,2));
+
+
+
+
 
