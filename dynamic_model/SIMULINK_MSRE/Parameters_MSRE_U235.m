@@ -14,7 +14,7 @@ source = timeseries(sourcedata,sourcetime);
 % REACTIVITY INSERTION
 % No reactivity insertion
 simtime = 100;
-reactdata = [0 0E-4];
+reactdata = [0 2E-4];
 reacttime = [0 1500];
 % Periodic 60 PCM for 50 seconds
 % simtime = 500;
@@ -42,11 +42,11 @@ tau_l  = 16.73; % ORNL-TM-0728 %16.44; % (s)
 tau_c  = 8.46; % ORNL-TM-0728 %8.460; % (s)
 P      = 8; % Thermal Power in MW ORNL-TM-1070, p.2
 n_frac0 = 1; % initial fractional nuetron density n/n0 (n/cm^3/s)
-% Lam  = 2.400E-04;  % mean generation time ORNL-TM-1070 p.15 U235
-Lam    = 4.0E-04;  % mean generation time ORNL-TM-1070 p.15 U233
-lam    = [1.260E-02, 3.370E-02, 1.390E-01, 3.250E-01, 1.130E+00, 2.500E+00];
-% beta = [0.000215,0.00142,0.00127,0.00257,0.00075,0.00027]; % U235
-beta   = [0.00023,0.00079,0.00067,0.00073,0.00013,0.00009]; % U233
+Lam  = 2.400E-04;  % mean generation time ORNL-TM-1070 p.15 U235
+% Lam    = 4.0E-04;  % mean generation time ORNL-TM-1070 p.15 U233
+lam    = [1.240E-02, 3.05E-02, 1.11E-01, 3.01E-01, 1.140E+00, 3.014E+00];
+beta = [0.000223,0.001457,0.001307,0.002628,0.000766,0.00023]; % U235
+% beta   = [0.00023,0.00079,0.00067,0.00073,0.00013,0.00009]; % U233
 beta_t = sum(beta); % total delayed neutron fraction MSRE
 rho_0  = beta_t - bigterm(beta,lam,tau_l,tau_c); % reactivity change in going from stationary to circulating fuel
 C0(1)  = ((beta(1))/Lam)*(1.0/(lam(1) - (exp(-lam(1)*tau_l) - 1.0)/tau_c));
@@ -56,20 +56,20 @@ C0(4)  = ((beta(4))/Lam)*(1.0/(lam(4) - (exp(-lam(4)*tau_l) - 1.0)/tau_c));
 C0(5)  = ((beta(5))/Lam)*(1.0/(lam(5) - (exp(-lam(5)*tau_l) - 1.0)/tau_c));
 C0(6)  = ((beta(6))/Lam)*(1.0/(lam(6) - (exp(-lam(6)*tau_l) - 1.0)/tau_c));
 % Feedback co-efficients
-a_f    = -6.13E-5*(9/5); % U233 -8.460E-05; % U235 (drho/°C) fuel salt temperature-reactivity feedback coefficient ORNL-TM-1647 p.3 % -5.904E-05; % ORNL-TM-0728 p. 101 %
-a_g    = -3.23E-5*(9/5); % U233 -4.680E-05; % U235 (drho/°C) graphite temperature-reactivity feedback coefficient ORNL-TM-1647 p.3 % -6.624E-05; % ORNL-TM-0728 p.101
+a_f    = -8.71E-05; % U235 (drho/°C) fuel salt temperature-reactivity feedback coefficient ORNL-TM-1647 p.3 % -5.904E-05; % ORNL-TM-0728 p. 101 %
+a_g    = -6.66E-05; % U235 (drho/°C) graphite temperature-reactivity feedback coefficient ORNL-TM-1647 p.3 % -6.624E-05; % ORNL-TM-0728 p.101
 
 %% CORE HEAT TRANSFER PARAMETERS
 % FUEL PARAMETERS - DONE
 vdot_f   = 7.5708E-02; % ORNL-TM-0728 % 7.571e-2; % vol. flow rate (m^3/s) ORNL-TM-1647 p.3, ORNL-TM-0728 p.12
-rho_f    = 2.1465E+03; % (partially enriched U-235)ORNL-TM-0728 p.8 2.243E+03; % (Th-U) density of fuel salt (kg/m^3) ORNL-TM-0728 p.8
-W_f      = vdot_f*rho_f; % 182.78; % calcd from m_dot*cp*delT=P; vdot_f*rho_f; % fuel flow rate (kg/s)
+rho_f    = 2.472E+03; % (partially enriched U-235)ORNL-TM-0728 p.8 2.243E+03; % (Th-U) density of fuel salt (kg/m^3) ORNL-TM-0728 p.8
+W_f      = 1.800180018001798e+02;%vdot_f*rho_f; % 182.78; % calcd from m_dot*cp*delT=P; vdot_f*rho_f; % fuel flow rate (kg/s)
 % tau_f_c  = tau_c; % ORNL-TM-0728 % 8.45; % transit time of fuel in core (s) ORNL-TM-1070 p.15, TDAMSRE p.5
 m_f      = W_f*tau_c; % fuel mass in core (kg)
 nn_f     = 2; % number of fuel nodes in core model
 mn_f     = m_f/nn_f; % fuel mass per node (kg)
-cp_f     = 4.2*9/5; % (MJ/deg-C) total fuel heat capacity TDAMSRE p.5
-scp_f    = 1.93E-3;%cp_f/m_f;% specific heat capacity of fuel salt (MJ/kg-C) ORNL-TM-0728 p.8
+% cp_f     = 4.2*9/5; % (MJ/deg-C) total fuel heat capacity TDAMSRE p.5
+scp_f    = 2E-3;%cp_f/m_f;% specific heat capacity of fuel salt (MJ/kg-C) ORNL-TM-0728 p.8
 
 
 % Core Upflow - DONE
@@ -95,8 +95,8 @@ k_f2     = k_f/nn_f; % fraction of total power generated in lump f2
 % m_out  = W_f; % (kg) Mass of node such that resident time is 1 sec
 
 % Initial conditions - DONE
-Tf_in  = 6.350E+02; % in °C ORNL-TM-1647 p.2
-T0_f2  = 6.628E+02; % in °C 6.461904761904777e+02; ORNL-TM-1647 p.2
+Tf_in  = 6.3222E+02; % in °C ORNL-TM-1647 p.2
+T0_f2  = 6.5444E+02; % in °C 6.461904761904777e+02; ORNL-TM-1647 p.2
 T0_f1  = Tf_in + (T0_f2-Tf_in)/2; % 6.405952380952389e+02; in °C
 T0_g1  = T0_f1+(k_g*P/hA_fg); % 6.589285714285924e+02; in °C 
 %T0_out = k_out*P/m_out/scp_f + T0_f2; % in °C
@@ -127,9 +127,9 @@ mn_p = m_p/nn_p; % fuel mass per node (kg)
 cp_p = scp_f; % fuel heat capacity (MJ/(kg-C))
 
 % SECONDARY FLOW PARAMETERS - DONE
-vdot_s   = 5.362E-02; % ORNL-TM-0728 p. 164 % 5.236E-02; % coolant volume flow rate (m^3/s) ORNL-TM-1647 p.3
+vdot_s   = 5.36265E-02; % ORNL-TM-0728 p. 164 % 5.236E-02; % coolant volume flow rate (m^3/s) ORNL-TM-1647 p.3
 rho_s    = 1.922e3; % coolant salt density (kg/m^3) ORNL-TM-0728 p.8
-W_s      = 1.005793369810108e+02; % calcd from mdot*cp*delT; vdot_s*rho_s; % coolant flow rate (kg/s) ORNL-TM-1647 p.3 
+W_s      = 1.004284528871296e+02;%vdot_s*rho_s; % calcd from mdot*cp*delT; vdot_s*rho_s; % coolant flow rate (kg/s) ORNL-TM-1647 p.3 
 
 m_s      = v_cool*in_m*rho_s; % coolant mass in PHE (kg) 
 nn_s     = 4; % number of coolant nodes in PHE
@@ -165,8 +165,8 @@ T0_p2    = Tp_in - 2*(Tp_in-T0_p4)/4; % in °C
 T0_p3    = Tp_in - 3*(Tp_in-T0_p4)/4; % in °C
 
 % Secondary nodes
-Ts_in    = 5.517E+02; % in °C ORNL-TM-1647 p.2
-T0_s4    = 5.933E+02; % in °C ORNL-TM-1647 p.2
+Ts_in    = 5.4611E+02; % in °C ORNL-TM-1647 p.2
+T0_s4    = 5.7944E+02; % in °C ORNL-TM-1647 p.2
 T0_s1    = Ts_in + (T0_s4-Ts_in)/nn_s; % in °C
 T0_s2    = Ts_in + 2*(T0_s4-Ts_in)/nn_s; % in °C
 T0_s3    = Ts_in + 3*(T0_s4-Ts_in)/nn_s; % in °C
@@ -177,7 +177,7 @@ T0_t2    = (T0_p3*hA_pn+T0_s1*hA_sn)/(hA_pn+hA_sn); % in °C
 
 % Initial conditions -  DONE
 % Primary nodes
-Trp_in   = 5.933E+02; % in °C ORNL-TM-1647 p.2
+Trp_in   = T0_s4; %5.933E+02; % in °C ORNL-TM-1647 p.2
 T0_rp    = 5.517E+02; % in °C ORNL-TM-1647 p.2
 
 % Secondary nodes -  DONE
