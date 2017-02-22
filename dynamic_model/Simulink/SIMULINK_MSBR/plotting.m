@@ -15,7 +15,7 @@ figure(6);title('Graphite Temperatures');xlabel('Time (s)');ylabel('Temperature 
 figure(7);title('Fertile Temperatures');xlabel('Time (s)');ylabel('Temperature (\circC)');legend('Bb1','Bb2','Ba1','Ba2');
 figure(8);title('Blanket Temperatures');xlabel('Time (s)');ylabel('Temperature (\circC)');legend('BL','Bm');
 
-figure;plot(tout,msbr_core_mux(:,4)*556,tout,power_demand*556,tout,measured_power*556);grid on;legend('Core Power','Demand Power','Measured Power','location','southeast');
+figure;plot(tout,msbr_core_mux(:,4),tout,power_demand,tout,measured_react_power);grid on;legend('Core Power','Demand Power','Measured Power','location','southeast');
 
 
 figure;plot(tout,msbr_br_mux(:,[3 6 7 8 9]));legend('Tb','Tr','tauR','tauB','mix');

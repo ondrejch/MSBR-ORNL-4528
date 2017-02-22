@@ -245,7 +245,6 @@ k_Bb2   = 8.500E-03/2; % fraction of total power generated in node
 k_Ba1   = 8.500E-03/2; % fraction of total power generated in node
 k_Ba2   = 8.500E-03/2; % fraction of total power generated in node
 k_core  = k_Bb1+k_Bb2+k_Ba1+k_Ba2+k_g1a+k_g2a+k_g3a+k_g4a+k_g1b+k_g2b+k_g3b+k_g4b+k_f1b1+k_f1b2+k_f1a1+k_f1a2+k_f2b1+k_f2b2+k_f2a1+k_f2a2;
-P_fuel = P*(k_f1b1+k_f1b2+k_f1a1+k_f1a2+k_f2b1+k_f2b2+k_f2a1+k_f2a2);
 
 % Blanket
 k_BL    = 1-k_core; % fraction of power generated in blanket
