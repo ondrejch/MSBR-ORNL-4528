@@ -40,7 +40,7 @@ source = timeseries(sourcedata,sourcetime);
 % REACTIVITY INSERTION
 % No reactivity insertion
 simtime = 8000;
-reactdata = [0 6e-4];
+reactdata = [0 0];
 reacttime = [0 4500];
 % Periodic 60 PCM for 50 seconds
 % simtime = 500;
@@ -423,10 +423,9 @@ tau_fehx_b = 13.5; % (sec) fertile hx to boiler
 tau_fehx_r = 17.3; % (sec) fertile hx to reheater
 tau_b_fhx = 4.2; % (sec) boiler to fuel hx
 tau_r_fhx = 11.1; % (sec) reheater to fuel hx
-%% Initial condititons for dynamic model from open loop model simulation
-% sim MSBR_SS
-% coress=msbr_core_mux(end,[4:25]);
-
+%% Control system parameters
+tau_pt_temp_sensor = 1; % (sec) pure time delay in thermocouple for MSRE!! ORNL-TM-2997, pg 23
+tau_temp_sensor  = 5; % (sec) 1st order lag time delay in thermocouple for MSRE!! ORNL-TM-2997, pg 23
 %% Useful calculations
 % Core Power
 % corepower = W_f*cp_p*(msbr_core_mux(end,22)-msbr_core_mux(end,1))

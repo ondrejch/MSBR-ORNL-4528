@@ -9,6 +9,7 @@ figure(3);title('Graphite Temperatures');xlabel('Time (s)');ylabel('Temperature 
 figure(4);title('Fuel Temperatures');xlabel('Time (s)');ylabel('Temperature (\circC)');legend('F1','F2','F3','F4');
 figure(5);title('Fertile Temperatures');xlabel('Time (s)');ylabel('Temperature (\circC)');legend('B1','B2');
 
+figure;plot(tout,msbr_core_mux(:,4)*556,tout,power_demand*556,tout,measured_power*556);grid on;legend('Core Power','Demand Power','Measured Power','location','southeast');
 
 
 figure;plot(tout,msbr_br_mux(:,[3 6 7 8 9]));legend('Tb','Tr','tauR','tauB','mix');
