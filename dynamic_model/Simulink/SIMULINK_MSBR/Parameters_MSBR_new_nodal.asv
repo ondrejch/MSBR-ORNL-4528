@@ -231,8 +231,8 @@ k_g4a    = (rkmB*m_gB+rkmf*(m_g4a+m_g4b-m_gB))/2;
 k_g4b    = (rkmB*m_gB+rkmf*(m_g4a+m_g4b-m_gB))/2; 
 %  
 % Fertile stream
-W_B =  2.690E+02; % (kg/s) mass flow rate of fertile salt
-m_B =  3.765E+03; % (kg) mass fertile salt in core
+W_B = 2.690E+02; % (kg/s) mass flow rate of fertile salt
+m_B = 3.765E+03; % (kg) mass fertile salt in core
 nn_B = 4; % number of nodes of fertile salt in core
 Cp_B = 9.207E-04; % (MJ/kg/C)specific heat capacity of fertile salt
 m_Bb1   = m_B/nn_B; % 
@@ -245,7 +245,6 @@ k_Bb2   = 8.500E-03/2; % fraction of total power generated in node
 k_Ba1   = 8.500E-03/2; % fraction of total power generated in node
 k_Ba2   = 8.500E-03/2; % fraction of total power generated in node
 k_core  = k_Bb1+k_Bb2+k_Ba1+k_Ba2+k_g1a+k_g2a+k_g3a+k_g4a+k_g1b+k_g2b+k_g3b+k_g4b+k_f1b1+k_f1b2+k_f1a1+k_f1a2+k_f2b1+k_f2b2+k_f2a1+k_f2a2;
-P_fuel = P*(k_f1b1+k_f1b2+k_f1a1+k_f1a2+k_f2b1+k_f2b2+k_f2a1+k_f2a2);
 
 % Blanket
 k_BL    = 1-k_core; % fraction of power generated in blanket
@@ -256,21 +255,20 @@ m_Bm    = W_B; % mass of fertile salt mixing node for blanket and interstitial s
 % Initial temperature conditions for Steady State at full power   **************
 Tf_in  = 537.77; % in °C
 T_b_in = 621.11; % in °C
- 
+% 
 T0_f1b1  = T0_f4;
 T0_f1b2  = T0_f4-(T0_f4-Tf_in)*(1/8); % in °C
 T0_f1a1  = T0_f4-(T0_f4-Tf_in)*(2/8); % in °C
 T0_f1a2  = T0_f4-(T0_f4-Tf_in)*(3/8); % in °C
-T0_f2a1  = T0_f4-(T0_f4-Tf_in)*(4/8); % in °C
 T0_f2a2  = T0_f4-(T0_f4-Tf_in)*(5/8); % in °C
-T0_f2b1  = T0_f4-(T0_f4-Tf_in)*(6/8); % in °C 
+T0_f2a1  = T0_f4-(T0_f4-Tf_in)*(4/8); % in °C
 T0_f2b2  = T0_f4-(T0_f4-Tf_in)*(7/8); % in °C
-
+T0_f2b1  = T0_f4-(T0_f4-Tf_in)*(6/8); % in °C 
 
 T0_Ba2   = T0_b2; % in °C
-T0_Ba1   = T0_b2-(T0_b2-T_b_in)*(1/4); % in °C
-T0_Bb2   = T0_b2-(T0_b2-T_b_in)*(2/4); % in °C
 T0_Bb1   = T0_b2-(T0_b2-T_b_in)*(3/4); % in °C
+T0_Bb2   = T0_b2-(T0_b2-T_b_in)*(2/4); % in °C
+T0_Ba1   = T0_b2-(T0_b2-T_b_in)*(1/4); % in °C
 
 %Dummy variables used for graphite node steady state temp calcs
 % A = k_g1b*P;
@@ -301,23 +299,16 @@ B = h_fgi*A_fgsleidn;
 C = h_ggi*A_ggin;
 D = k_g2b*P;
 E = h_fgo*A_fgsleodn;
-
 F = k_g3b*P;
 G = h_fgo*A_fgboren;
 H = h_ggo*A_ggon;
-I = k_g4a*P;
+I = k_g4b*P;
 J = h_Bg*A_Bgn;
 
 T0_g1b   = (2*A*(C+E) + 4*B*(C+E)*T0_f1b2 + 2*C*E*T0_f2b2 - 2*C*B*T0_f1b2)/(((2*B+C)*2*(C+E))-(2*C*B)); % in °C
 T0_g2b   = (2*E*T0_f2b2 + 2*B*(T0_g1b - T0_f1b2))/(2*(C+E)); % in °C
 T0_g1a   = (2*A*(C+E) + 4*B*(C+E)*T0_f1a2 + 2*C*E*T0_f2a2 - 2*C*B*T0_f1a2)/(((2*B+C)*2*(C+E))-(2*C*B)); % in °C
 T0_g2a   = (2*E*T0_f2a2 + 2*B*(T0_g1a - T0_f1a2))/(2*(C+E)); % in °C
-
-T0_g3a   = (2*F*(H+J) + 4*G*(H+J)*T0_f2a2 + 2*H*J*T0_Ba1 - 2*H*G*T0_f2a2)/(((2*G+H)*2*(H+J))-(2*H*G)); % in °C
-T0_g4a   = (2*J*T0_Ba1 + 2*G*(T0_g3a - T0_f2a2))/(2*(H+J)); % in °C
-T0_g3b   = (2*F*(H+J) + 4*G*(H+J)*T0_f2b2 + 2*H*J*T0_Bb1 - 2*H*G*T0_f2b2)/(((2*G+H)*2*(H+J))-(2*H*G)); % in °C
-T0_g4b   = (2*J*T0_Bb1 + 2*G*(T0_g3b - T0_f2b2))/(2*(H+J)); % in °C
-
 
 T0_BL    = T0_Ba2;
 
