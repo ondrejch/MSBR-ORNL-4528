@@ -19,7 +19,7 @@ Lam  = 3.300E-04;  % mean generation time
 lam = [1.260E-02, 3.370E-02, 1.390E-01, 3.250E-01, 1.130E+00, 2.500E+00]; 
 beta = [2.290E-04, 8.320E-04, 7.100E-04, 8.520E-04, 1.710E-04, 1.020E-04];
 beta_t = sum(beta); % total delayed neutron fraction MSBR
-rho_0 = beta_t - bigterm(beta,lam,Lam,tau_l,tau_c); % reactivity change in going from stationary to circulating fuel
+rho_0 = beta_t - bigterm(beta,lam,tau_l,tau_c); % reactivity change in going from stationary to circulating fuel
 C0(1) = ((beta(1))/Lam)*(1.0/(lam(1) - (exp(-lam(1)*tau_l) - 1.0)/tau_c));
 C0(2) = ((beta(2))/Lam)*(1.0/(lam(2) - (exp(-lam(2)*tau_l) - 1.0)/tau_c));
 C0(3) = ((beta(3))/Lam)*(1.0/(lam(3) - (exp(-lam(3)*tau_l) - 1.0)/tau_c));
@@ -152,7 +152,7 @@ A_Bg    = p_hex*l_cell*n_cell; % (m^2) B-g area
 
 
 % Core fuel inner channel (downflow)
-W_f  = 1.414E3; %calcd from m_f/tau_c 1.414E3; % fuel flow rate (kg/s)
+W_f  = 1.377E3; %calcd from m_f/tau_c 1.414E3; % fuel flow rate (kg/s)
 m_f  = 4776; %477.6; % fuel mass in core (kg) corrected error from 67-102 (might have affected responsiveness)
 nn_f = 8; % number of fuel nodes in core
 mn_f = m_f/nn_f; % fuel mass per node (kg)
@@ -231,7 +231,7 @@ k_g4a    = (rkmB*m_gB+rkmf*(m_g4a+m_g4b-m_gB))/2;
 k_g4b    = (rkmB*m_gB+rkmf*(m_g4a+m_g4b-m_gB))/2; 
 %  
 % Fertile stream
-W_B =  2.690E+02; % (kg/s) mass flow rate of fertile salt
+W_B =  2.733E02;%2.690E+02; % (kg/s) mass flow rate of fertile salt
 m_B =  3.765E+03; % (kg) mass fertile salt in core
 nn_B = 4; % number of nodes of fertile salt in core
 Cp_B = 9.207E-04; % (MJ/kg/C)specific heat capacity of fertile salt
@@ -249,7 +249,7 @@ k_core  = k_Bb1+k_Bb2+k_Ba1+k_Ba2+k_g1a+k_g2a+k_g3a+k_g4a+k_g1b+k_g2b+k_g3b+k_g4
 % Blanket
 k_BL    = 1-k_core; % fraction of power generated in blanket
 m_BL    = k_BL*m_B/(k_Bb1+k_Bb2+k_Ba1+k_Ba2); % mass fertile salt in blanket (to match energy generation density ofinterstitial fertile salt)
-W_BL    = m_BL*W_B/m_B; % mass flow rate of fertile salt in blanket (to match resident time of interstitial fertile salt)
+W_BL    = 2.703E02;%m_BL*W_B/m_B; % mass flow rate of fertile salt in blanket (to match resident time of interstitial fertile salt)
 m_Bm    = W_B; % mass of fertile salt mixing node for blanket and interstitial streams (to give resident time of 1 second)
 
 % Initial temperature conditions for Steady State at full power   **************
@@ -333,11 +333,11 @@ T0_BL    = T0_Ba2;
 %% Fuel salt/primary heat exchanger
 
 % PRIMARY FLOW PARAMETERS - DONE
-W_p  = 1.414E3; % fuel flow rate (kg/s)
+W_p  = W_f; % fuel flow rate (kg/s)
 m_p  = 3.030e3; % fuel mass in PHE (kg)
 nn_p = 4; % number of fuel nodes in PHE
 mn_p = m_p/nn_p; % fuel mass per node (kg)
-mn_m = 1.414e3; % mass primary salt in mixing node (kg)
+mn_m = W_f; % mass primary salt in mixing node (kg)
 cp_p = 2.302E-3; % fuel heat capacity (MW-s/(kg-C))
 
 % SECONDARY FLOW PARAMETERS - DONE
@@ -398,19 +398,24 @@ hA_s4 = h_s*A_phe/4; %5.929; % (tube to secondary heat transfer coeff x heat tra
 
 %% Fertile Salt Heat Exchanger
 % Secondary
-tau_s5 = 7.446E-01;
-tau_s6 = 7.446E-01;
-mcp_s5   = 2.632E+00; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
-mcp_s6   = 2.632E+00; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
+tau_s5 = 7.223E-01;
+tau_s6 = 7.223E-01;
+mcp_s5   = 2.7E+00; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
+mcp_s6   = 2.7E+00; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
 hA_s5 = 7.150E-01; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
 hA_s6 = 7.150E-01; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
+m_s5  = mcp_s5/cp_s;
+m_s6  = mcp_s6/cp_s;
 
 % Primary
-tau_pb = 7.983E-01;
+W_pb = W_B+W_BL;
+tau_pb = 7.926E-01;
 hA_pb1 = 7.150E-01; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
 hA_pb2 = 7.150E-01; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
 mcp_pb1   = 3.967E-01; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
 mcp_pb2   = 3.967E-01; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
+m_pb1 = mcp_pb1/Cp_B; % fertile salt mass in node 1 of SHE(kg)
+m_pb2 = mcp_pb2/Cp_B; % fertile salt mass in node 2 of SHE(kg)
 
 % Tubes
 cp_t = 5.873E-04; % heat capacity of tubes
