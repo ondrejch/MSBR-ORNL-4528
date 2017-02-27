@@ -194,14 +194,38 @@ if turbine_opt == 6:
    print 'turbine price is : ',turbine_price
 
 tot = turbine_price + tot_salt + tot_coolant
-print 'facility cost is ', tot, 'dollars'
+print 'facility flat cost witout loan: ', tot, 'dollars'
+
+loan_opt = int(input('pay in full ? Enter 1 for calculating cost with interest rate, or press other key to quit) '))
+
+if loan_opt == 1:
+    loan_amount = int(input('Enter how much to loan: '))
+    r_hundred = float(input('Enter the annual interest rate: '))
+    r = r_hundred/100.0
+
+    print r_hundred
+    print r
+
+    n = float(input('Enter the number of times that interest is compounded per year: '))
+    t = float(input('Enter the number of years the money is invested or borrowed for: '))
+
+    term_num = n*t               # how many terms of loan
+    term_rate = r/n              # interest rate for each term
+
+    term_payment = float((((1+term_rate)**term_num)*term_rate) /(((1+term_rate)**term_num)-1)*loan_amount)    # payment for each term
+    loan_payment = term_payment *term_num                                                                     # total payment of loan (interest + loan amount)
+    loan_cost = (tot-loan_amount) + loan_payment                                                              # total cost with loan
+    print 'facility real cost is: ', loan_cost, 'dollars'
+
+else:
+    exit
 
 
 # put table 18 from the last year(done)
 # hitec boiling pt = 816 deg C
 # resource for the turbine price
 # get generator
-
+# A = P (1 + r/n) ^ (nt)
 
 
 
