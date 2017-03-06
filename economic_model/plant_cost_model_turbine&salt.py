@@ -264,7 +264,7 @@ if loan_opt == 1:
     #plt.show()
 
 else:
-    exit
+     revenue = price * 0.9  #10% decommision
 
 
 
