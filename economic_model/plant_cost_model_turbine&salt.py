@@ -1,5 +1,20 @@
 import os
 import numpy as np
+import matplotlib.pyplot as plt
+import time
+
+
+#create some data
+#x_series = [0,1,2,3,4,5]
+#y_series_1 = [x**2 for x in x_series]
+#y_series_2 = [x**3 for x in x_series]
+
+#plot the two lines
+#plt.plot(x_series, y_series_1)
+#plt.plot(x_series, y_series_2)
+
+#plt.savefig("example.png")
+
 
 print ('SALT TYPE TABLE')
 print ('')
@@ -196,29 +211,62 @@ if turbine_opt == 6:
 tot = turbine_price + tot_salt + tot_coolant
 print 'facility flat cost witout loan: ', tot, 'dollars'
 
-loan_opt = int(input('pay in full ? Enter 1 for calculating cost with interest rate, or press other key to quit) '))
+loan_opt = int(input('pay in full ? Enter 1 for yes) '))
 
 if loan_opt == 1:
     loan_amount = int(input('Enter how much to loan: '))
+    print 'amount to loan = ', loan_amount, ' dollars'
     r_hundred = float(input('Enter the annual interest rate: '))
     r = r_hundred/100.0
-
-    print r_hundred
-    print r
+    print 'Annual interest rate = ', r, '%'
 
     n = float(input('Enter the number of times that interest is compounded per year: '))
-    t = float(input('Enter the number of years the money is invested or borrowed for: '))
-
+    print 'interest compounded time per year= ', n
+    t = float(input('Enter the number of years the money is borrowed for: '))
+    print 'years the money is borrowed for = ', t
     term_num = n*t               # how many terms of loan
     term_rate = r/n              # interest rate for each term
 
     term_payment = float((((1+term_rate)**term_num)*term_rate) /(((1+term_rate)**term_num)-1)*loan_amount)    # payment for each term
     loan_payment = term_payment *term_num                                                                     # total payment of loan (interest + loan amount)
     loan_cost = (tot-loan_amount) + loan_payment                                                              # total cost with loan
-    print 'facility real cost is: ', loan_cost, 'dollars'
+    print 'facility real cost is: ', loan_cost, ' dollars'
+    month_pay = loan_cost / t / 12
+    print 'monthly cost is: ', month_pay, ' dollars'
+    print 'enter the desire price ', price
+    revenue = (price - month_pay)*0.9   #10% to decommision cost
+
+
+    x = np.linspace(0, 1, 20)
+    y = np.random.rand(1, 20)[0]
+
+
+    #plt.ion()
+    #fig = plt.figure()
+    #ay = fig.add_subplot(111)
+    #line1, = ay.plot(x, y, 'b-')
+
+    #for i in range(0,int(t)):
+     #   y = np.random.rand(1, 20)[0]
+      #  line1.set_ydata(y)
+       # fig.canvas.draw()
+        #time.sleep(0.1)
+
+    # evenly sampled time at 200ms intervals
+    #plt.figure()
+    #x_series = [0,1,t]
+    #y_series = [0,1,revenue]
+    #plt.plot(x_series, y_series)
+    # red dashes, blue squares and green triangles
+    #plt.plot(t, t, 'r--', t, t**2, 'bs', t, t**3, 'g^')
+    #plt.ylabel('Revenue')
+    #plt.xlabel('time(years)')
+    #plt.show()
 
 else:
     exit
+
+
 
 
 # put table 18 from the last year(done)
