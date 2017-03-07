@@ -1,0 +1,54 @@
+set title "chunk of Pu in water"
+
+% surfaces
+surf 10 cyl 0 0 20.0 -1.0 1.0 % bounding cylinder of lattice
+surf 11 cyl 0 0 24.0 -4.0 4.0 % bounding cylinder of all geometry
+
+% cells:
+cell 60 0 fill 1 -10
+cell 61 0 mod -11 10
+cell 21 0 outside 11
+
+% single pin definition
+pin 5
+fuel 17.0
+mod
+
+% lattice with one pin
+lat 1 2 0 0 1 1 50.0
+5
+
+% material defitions:
+
+mat fuel 0.09
+94241.09c .95 % hella Pu-241
+92238.09c .1
+
+mat mod .04
+8016.09c .33
+1001.09c .67
+
+% pinwise power output:
+% set cpd 2 1 -1.0 1.0
+
+% specify XS libraries
+set acelib "sss_endfb7u.xsdata"
+set nfylib "sss_endfb7.nfy"
+set declib "sss_endfb7.dec"
+
+% kcode cycles:
+% num per cycle, num cycles, skipped cycles, initial guess k_eff
+set pop 10000 200 40 1
+
+% plot through z plane
+plot 3 1000 1000
+mesh 3 3000 3000
+mesh 2 2000 2000
+
+%some multiphysics shtuff
+set power 300e3 % 300 kW (t)
+%ifc "./fuel.ifc" % multiphysics interface for fuel material
+ifc "./mod.ifc" % mod ifc
+set ccmaxiter 1
+set fsp 1 20
+set comfile com.in com.out

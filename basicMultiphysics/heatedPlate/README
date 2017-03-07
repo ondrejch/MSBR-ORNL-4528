@@ -1,0 +1,11 @@
+Example multiphysics interface input to Serpent 2.1.28.
+------
+Gavin Ridley, S2017
+
+Main input --- input. A Pu-241 disk reflected by water.
+mod.ifc    ---  a type 2 MP file that contains temp and rho data for the reflector.
+fuel.ifc   ---  ^^^ same but fuel
+
+To run, you need to act as the external solver. When serpent starts waiting after running neutronics,
+go to com.in and change -1 to 10 to indicate to keep going. The simulation should then stop and print
+out results since max iterations are set to 1.
