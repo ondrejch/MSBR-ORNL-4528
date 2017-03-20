@@ -211,7 +211,7 @@ if turbine_opt == 6:
 tot = turbine_price + tot_salt + tot_coolant
 print 'facility flat cost witout loan: ', tot, 'dollars'
 
-loan_opt = int(input('pay in full ? Enter 1 for yes) '))
+loan_opt = int(input('pay in full ? Enter 1 if needed loan) '))
 
 if loan_opt == 1:
     loan_amount = int(input('Enter how much to loan: '))
@@ -233,12 +233,15 @@ if loan_opt == 1:
     print 'facility real cost is: ', loan_cost, ' dollars'
     month_pay = loan_cost / t / 12
     print 'monthly cost is: ', month_pay, ' dollars'
-    print 'enter the desire price ', price
-    revenue = (price - month_pay)*0.9   #10% to decommision cost
+    month_rev = int(input('desire monthly revenue '))
+    loan_revenue = (month_rev - month_pay) *12 * t        #revenue during period of paying loan
+    work_length = int(input('How long is the working length of the plant '))                                         #10% to decommision cost
+    revenue = ((work_length-t)*12 )- month_rev*.9  #10% to decommision cost
+    print 'total revenue ', revenue
 
 
-    x = np.linspace(0, 1, 20)
-    y = np.random.rand(1, 20)[0]
+    #x = np.linspace(0, 1, 20)
+    #y = np.random.rand(1, 20)[0]
 
 
     #plt.ion()
@@ -264,7 +267,10 @@ if loan_opt == 1:
     #plt.show()
 
 else:
-     revenue = price * 0.9  #10% decommision
+     month_rev = int(input('desire monthly revenue '))
+     work_length = int(input('How long is the working length of the plant '))
+     revenue = (month_rev*work_length*12 - tot)*.9  #10% to decommision cost
+     print 'total revenue ', revenue
 
 
 
