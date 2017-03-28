@@ -51,7 +51,7 @@ simtime = 8000;
 % Step up 60 pcm 
 % simtime = 1000;
 reactdata = [0 0];
-reacttime = [0 300];
+reacttime = [0 3000];
 % % Step down -60 pcm for 10 sec
 % simtime = 100;
 % reactdata = [0 -6e-4];
@@ -118,6 +118,7 @@ T0_g3  = 652.77; % in °C
 
 Tf_in  = 537.77; % in °C
 T_b_in = 621.11; % in °C
+
 %% Reactor Components
 
 % Geometry
@@ -153,8 +154,8 @@ A_Bg    = p_hex*l_cell*n_cell; % (m^2) B-g area
 
 
 % Core fuel inner channel (downflow)
-W_f  = 1.377E3; %calcd from m_f/tau_c 1.414E3; % fuel flow rate (kg/s)
-m_f  = 4776; %477.6; % fuel mass in core (kg) corrected error from 67-102 (might have affected responsiveness)
+W_f  = 1.373E3; %calcd from m_f/tau_c 1.414E3; % fuel flow rate (kg/s)
+m_f  = 8036; %477.6; % fuel mass in core (kg) corrected error from 67-102 (might have affected responsiveness)
 nn_f = 8; % number of fuel nodes in core
 mn_f = m_f/nn_f; % fuel mass per node (kg)
 Cp_f   = 2.302E-03; % (MJ/kg/C) specific heat capacity of the fuel
@@ -173,7 +174,7 @@ k_f1a2  = 2.210E-01/2; % (frac) fraction of total power deposited in the node
 
 % Graphite hollow cylinder
 cond_g   = 0.5612E-6; % (MW/K/m) @ 704C ORNL-P150 (graphite) thermal conductivity of graphite
-rho_g    = 1.698E+03; % (kg/m^3) density of graphite 67-102
+rho_g    = 1.842E+03; % (kg/m^3) density of graphite 67-102
 l_i      = (sle_OD+r_msle)/2 - (r_msle+sle_ID)/2; % centerline-centerline dist. b/n radial sleeve graphite nodes
 Cp_g     = 1.679E-03; % (MJ/kg/C) specific heat capacity of the graphite
 h_ggi    = cond_g/l_i; % (MW/m^2/C) heat xfer coefficient between nodes of continuous graphite
@@ -181,12 +182,12 @@ nn_gg    = 2; % number of upstream and downstream graphite nodes in hollow cylin
 A_ggin   = A_ggi/nn_gg;
 nn_fdn = nn_fup;
 A_fgsleodn  = A_fgsleod/nn_fdn;
-m_g1b    = rho_g*(pi*r_msle^2 - pi*(sle_ID/2)^2)*l_cell*n_cell/2; % 
-m_g2b    = rho_g*(pi*(sle_OD/2)^2 - pi*r_msle^2)*l_cell*n_cell/2; %  
-m_g1a    = rho_g*(pi*r_msle^2 - pi*(sle_ID/2)^2)*l_cell*n_cell/2; %
-m_g2a    = rho_g*(pi*(sle_OD/2)^2 - pi*r_msle^2)*l_cell*n_cell/2; %
+m_g1b    = (rho_g*(pi*r_msle^2 - pi*(sle_ID/2)^2)*l_cell*n_cell/2); % 
+m_g2b    = (rho_g*(pi*(sle_OD/2)^2 - pi*r_msle^2)*l_cell*n_cell/2); %  
+m_g1a    = (rho_g*(pi*r_msle^2 - pi*(sle_ID/2)^2)*l_cell*n_cell/2); %
+m_g2a    = (rho_g*(pi*(sle_OD/2)^2 - pi*r_msle^2)*l_cell*n_cell/2); %
 
-m_g_tot = (A_hex-pi*(bore_OD/2)^2+pi*(sle_OD/2)^2-pi*(sle_ID/2)^2)*rho_g*n_cell*l_cell;
+m_g_tot = ((A_hex-pi*(bore_OD/2)^2+pi*(sle_OD/2)^2-pi*(sle_ID/2)^2)*rho_g*n_cell*l_cell);
 m_gbt_ratio = mcp_g3/(mcp_g3+mcp_g2+mcp_g1); % ratio of graphite mass interacting with interstitial fertile salt in core to total graphite mass
 m_gB = m_gbt_ratio*m_g_tot; % mass of graphite interacting "only" with fertile salt
 rkmB = k_g3/m_gB; % power deposited in fertile salt graphite : mass of m_gB
@@ -220,10 +221,10 @@ h_Bg     = 2.839E-03; % heat xfer coefficent between graphite and fertile stream
 nn_Bg    = 4; % number of nodes of fertile stream
 A_Bgn    = A_Bg/nn_Bg; % nodal area for heat xfer
 % nodal masses
-m_g3a    = rho_g*(pi*r_mhex^2 - pi*(bore_OD/2)^2)*l_cell*n_cell/2; %
-m_g4a    = rho_g*(A_hex - pi*r_mhex^2)*l_cell*n_cell/2;            %
-m_g3b    = rho_g*(pi*r_mhex^2 - pi*(bore_OD/2)^2)*l_cell*n_cell/2; %
-m_g4b    = rho_g*(A_hex - pi*r_mhex^2)*l_cell*n_cell/2;            %
+m_g3a    = (rho_g*(pi*r_mhex^2 - pi*(bore_OD/2)^2)*l_cell*n_cell/2); %
+m_g4a    = (rho_g*(A_hex - pi*r_mhex^2)*l_cell*n_cell/2);            %
+m_g3b    = (rho_g*(pi*r_mhex^2 - pi*(bore_OD/2)^2)*l_cell*n_cell/2); %
+m_g4b    = (rho_g*(A_hex - pi*r_mhex^2)*l_cell*n_cell/2);            %
 
 k_g3a    = rkmf*m_g3a; 
 k_g3b    = rkmf*m_g3b;
@@ -231,10 +232,10 @@ k_g4a    = (rkmB*m_gB+rkmf*(m_g4a+m_g4b-m_gB))/2;
 k_g4b    = (rkmB*m_gB+rkmf*(m_g4a+m_g4b-m_gB))/2; 
 %  
 % Fertile stream
-W_B =  2.733E02;%2.690E+02; % (kg/s) mass flow rate of fertile salt
-m_B =  3.765E+03; % (kg) mass fertile salt in core
+W_B =  541.79;%2.690E+02; % (kg/s) mass flow rate of fertile salt
+m_B =  8371; % (kg) mass fertile salt in core
 nn_B = 4; % number of nodes of fertile salt in core
-Cp_B = 9.207E-04; % (MJ/kg/C)specific heat capacity of fertile salt
+Cp_B = 9.211E-04; % (MJ/kg/C)specific heat capacity of fertile salt
 m_Bb1   = m_B/nn_B; % 
 m_Bb2   = m_B/nn_B; % 
 m_Ba1   = m_B/nn_B; % 
@@ -317,6 +318,15 @@ T0_g4a   = (2*J*T0_Ba1 + 2*G*(T0_g3a - T0_f2a2))/(2*(H+J)); % in °C
 T0_g3b   = (2*F*(H+J) + 4*G*(H+J)*T0_f2b2 + 2*H*J*T0_Bb1 - 2*H*G*T0_f2b2)/(((2*G+H)*2*(H+J))-(2*H*G)); % in °C
 T0_g4b   = (2*J*T0_Bb1 + 2*G*(T0_g3b - T0_f2b2))/(2*(H+J)); % in °C
 
+% T0_g1b   = 6.778860891112972e+02; % in °C
+% T0_g2b   = 5.538296129453664e+02; % in °C
+% T0_g1a   = 6.383556929928781e+02; % in °C
+% T0_g2a   = 5.969257086802289e+02; % in °C
+% 
+% T0_g3a   = 6.089146264172540e+02; % in °C
+% T0_g4a   = 7.379561271985504e+02; % in °C
+% T0_g3b   = 5.655167730457430e+02; % in °C
+% T0_g4b   = 6.788233540106577e+02; % in °C
 
 T0_BL    = T0_Ba2;
 T0_Bm    = T0_BL;
@@ -335,7 +345,7 @@ T0_Bm    = T0_BL;
 
 % PRIMARY FLOW PARAMETERS - DONE
 W_p  = W_f; % fuel flow rate (kg/s)
-m_p  = 3.030e3; % fuel mass in PHE (kg)
+m_p  = 9217; % fuel mass in PHE (kg)
 nn_p = 4; % number of fuel nodes in PHE
 mn_p = m_p/nn_p; % fuel mass per node (kg)
 mn_m = W_f; % mass primary salt in mixing node (kg)
