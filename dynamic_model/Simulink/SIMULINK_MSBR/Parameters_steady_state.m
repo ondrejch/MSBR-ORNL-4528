@@ -39,7 +39,7 @@ source = timeseries(sourcedata,sourcetime);
 
 % REACTIVITY INSERTION
 % No reactivity insertion
-simtime = 8000;
+simtime = 14000;
 % periodic = [0, 0; 2500, 6e-4; 2550, 0; 2600, -6e-4; 2650, 0; 2700, 6e-4; 2750, 0; 2800, -6e-4; 2850, 0; 2900, 6e-4; 2950, 0; 3000, -6e-4; 3050, 0;]; 
 % reactdata = periodic(:,2);
 % reacttime = periodic(:,1);
