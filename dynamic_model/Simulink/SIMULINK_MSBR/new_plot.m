@@ -16,7 +16,7 @@ figure(6);xlabel('Time (s)');ylabel('Temperature (\circC)');legend('g3a','g4a','
 figure(7);xlabel('Time (s)');ylabel('Temperature (\circC)');legend('Bb1','Bb2','Ba1','Ba2');%title('Fertile Temperatures');
 figure(8);xlabel('Time (s)');ylabel('Temperature (\circC)');legend('BL','Bm');%title('Blanket Temperatures');
 
-y = (P*msbr_core_mux(:,4))-1.0279887316*P;
+y = (P*msbr_core_mux(:,4))-1.030461263746528*P;
 figure(2);plot(tout,y,[0 simtime],[0 0]);grid on;
 figure(2);xlabel('Time (s)');ylabel('\Delta P(MW)');
 

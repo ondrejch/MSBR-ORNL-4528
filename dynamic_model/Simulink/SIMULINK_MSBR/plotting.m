@@ -1,4 +1,4 @@
-figure;plot(tout,measured_react_power,tout,power_demand);grid on;legend('Core Power','Demand Power','location','southeast');
+figure;plot(tout,msbr_core_mux(:,4),tout, measured_react_power, tout,power_demand);grid on;legend('Core Power','Measured Power','Demand Power','location','southeast');
 figure(2);plot(tout,msbr_core_mux(:,[5 7 9 11 13 15]));
 figure(3);plot(tout,msbr_core_mux(:,[17 18 19 20]));
 figure(4);plot(tout,msbr_core_mux(:,[21 22 23 24]));
@@ -25,7 +25,7 @@ figure;plot(tout,rho_ext)
 
 %%useful formulae
 
-total_core_power = W_f*Cp_f*(msbr_core_mux(end,17)-Tf_in) + W_B*Cp_B*(msbr_core_mux(end,36)-T_b_in) + W_BL*Cp_B*(msbr_core_mux(end,38)-T_b_in);
+total_core_power = W_f*Cp_f*(msbr_core_mux(end,17)-msbr_core_mux(end,1)) + W_B*Cp_B*(msbr_core_mux(end,36)-msbr_core_mux(end,2)) + W_BL*Cp_B*(msbr_core_mux(end,38)-msbr_core_mux(end,2));
 
 % fuel power across core and phe
 P_fcore = W_f*Cp_f*(msbr_core_mux(end,17)-msbr_core_mux(end,1));

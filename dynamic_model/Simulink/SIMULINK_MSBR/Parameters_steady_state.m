@@ -232,7 +232,7 @@ k_g4a    = (rkmB*m_gB+rkmf*(m_g4a+m_g4b-m_gB))/2;
 k_g4b    = (rkmB*m_gB+rkmf*(m_g4a+m_g4b-m_gB))/2; 
 %  
 % Fertile stream
-W_B =  541.79;%2.690E+02; % (kg/s) mass flow rate of fertile salt
+W_B =  271.65; % (kg/s) mass flow rate of fertile salt
 m_B =  8371; % (kg) mass fertile salt in core
 nn_B = 4; % number of nodes of fertile salt in core
 Cp_B = 9.211E-04; % (MJ/kg/C)specific heat capacity of fertile salt
@@ -249,8 +249,8 @@ k_core  = k_Bb1+k_Bb2+k_Ba1+k_Ba2+k_g1a+k_g2a+k_g3a+k_g4a+k_g1b+k_g2b+k_g3b+k_g4
 
 % Blanket
 k_BL    = 1-k_core; % fraction of power generated in blanket
-m_BL    = k_BL*m_B/(k_Bb1+k_Bb2+k_Ba1+k_Ba2); % mass fertile salt in blanket (to match energy generation density ofinterstitial fertile salt)
-W_BL    = 2.703E02;%m_BL*W_B/m_B; % mass flow rate of fertile salt in blanket (to match resident time of interstitial fertile salt)
+m_BL    = 22804.35; % k_BL*m_B/(k_Bb1+k_Bb2+k_Ba1+k_Ba2); % mass fertile salt in blanket (to match energy generation density ofinterstitial fertile salt)
+W_BL    = 270.14; % mass flow rate of fertile salt in blanket (to match resident time of interstitial fertile salt)
 m_Bm    = W_B; % mass of fertile salt mixing node for blanket and interstitial streams (to give resident time of 1 second)
 
 % Initial temperature conditions for Steady State at full power   **************
@@ -329,7 +329,7 @@ T0_g4b   = (2*J*T0_Bb1 + 2*G*(T0_g3b - T0_f2b2))/(2*(H+J)); % in °C
 % T0_g4b   = 6.788233540106577e+02; % in °C
 
 T0_BL    = T0_Ba2;
-T0_Bm    = T0_BL;
+T0_Bm    = T0_Ba2;
 
 % power deposition fraction back calculations
 % kk_g1b = m_g1b*Cp_g/P*(-2*h_fg*A_fgsleidn/m_g1b/Cp_g*(T0_f1b1-T0_g1b)-h_ggi*A_ggin/m_g1b/Cp_g*(T0_g2b-T0_g1b));
