@@ -50,7 +50,7 @@ simtime = 14000;
 % reacttime = periodic(:,1);
 % Step up 60 pcm 
 % simtime = 1000;
-reactdata = [0 0];
+reactdata = [0 1e-4];
 reacttime = [0 3000];
 % % Step down -60 pcm for 10 sec
 % simtime = 100;
@@ -349,14 +349,14 @@ m_p  = 9217; % fuel mass in PHE (kg)
 nn_p = 4; % number of fuel nodes in PHE
 mn_p = m_p/nn_p; % fuel mass per node (kg)
 mn_m = W_f; % mass primary salt in mixing node (kg)
-cp_p = 2.302E-3; % fuel heat capacity (MW-s/(kg-C))
+Cp_p = Cp_f; % fuel heat capacity (MW-s/(kg-C))
 
 % SECONDARY FLOW PARAMETERS - DONE
-W_s  = 2.181E3; % coolant flow rate (kg/s)
+W_s  = 2.123485E3; % coolant flow rate (kg/s)
 m_s  = 1.588E4; % coolant mass in PHE (kg)
 nn_s = 4; % number of coolant nodes in PHE
 mn_s = m_s/nn_s; % coolant mass per node (kg)
-cp_s = 1.714E-3; % coolant heat capacity (MW-s/(kg-C)
+Cp_s = 1.714E-3; % coolant heat capacity (MW-s/(kg-C)
 
 % Initial conditions - DONE
 Tp_in  = 704.44; % in °C
@@ -379,11 +379,12 @@ A_phe = 2*4.584E+02; % area for heat transfer (primary and secondary, m^2)
 
 h_p = 1.306E-02; % heat transfer coefficient from primary to tubes
 h_s = 2.555E-02; % heat transfer coefficient from tubes to secondary
+
 % Primary Side - DONE
-mcp_p1   = mn_p*cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
-mcp_p2   = mn_p*cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
-mcp_p3   = mn_p*cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
-mcp_p4   = mn_p*cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
+mcp_p1   = mn_p*Cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
+mcp_p2   = mn_p*Cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
+mcp_p3   = mn_p*Cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
+mcp_p4   = mn_p*Cp_p; % (mass of material x heat capacity of material) of fuel salt per lump in MW-s/°C
 
 hA_p1 = h_p*A_phe/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
 hA_p2 = h_p*A_phe/4; %3.030; % (primary to tube heat transfer coeff x heat transfer area) in MW/°C
@@ -397,10 +398,10 @@ mcp_t2   = 2.158; % (mass of material x heat capacity of material) of tubes per 
 
 
 % Secondary Side - DONE
-mcp_s1   = mn_s*cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
-mcp_s2   = mn_s*cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
-mcp_s3   = mn_s*cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
-mcp_s4   = mn_s*cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
+mcp_s1   = mn_s*Cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
+mcp_s2   = mn_s*Cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
+mcp_s3   = mn_s*Cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
+mcp_s4   = mn_s*Cp_s; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
 
 hA_s1 = h_s*A_phe/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
 hA_s2 = h_s*A_phe/4; %5.929; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
@@ -415,8 +416,8 @@ mcp_s5   = 2.7E+00; % (mass of material x heat capacity of material) of coolant 
 mcp_s6   = 2.7E+00; % (mass of material x heat capacity of material) of coolant salt per lump in MW-s/°C
 hA_s5 = 7.150E-01; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
 hA_s6 = 7.150E-01; % (tube to secondary heat transfer coeff x heat transfer area) in MW/°C
-m_s5  = mcp_s5/cp_s;
-m_s6  = mcp_s6/cp_s;
+m_s5  = mcp_s5/Cp_s;
+m_s6  = mcp_s6/Cp_s;
 
 % Primary
 W_pb = W_B+W_BL;
@@ -447,8 +448,14 @@ p_r = 0.13*P; % power removed by reheater (MW)
 tau_r = 22.09; % resident time in reheater (sec)
 tau_b = 10.43; % resident time in boiler (sec)
 
-W_sb = (1-0.133)*W_s; % Coolant salt flow through boiler (kg/s)
-W_sr = 0.133*W_s; % Coolant salt flow through reheater (kg/s)
+W_sb = 461.15; % Coolant salt flow through boiler (kg/s)
+m_sb = 4808;
+W_sr = 138.6; % Coolant salt flow through reheater (kg/s)
+m_sr = 3062;
+
+% W_sb = (1-0.13)*W_s; 
+% W_sr = 0.13*W_s; 
+
 mb_cpb = 3.297E+01;
 mr_cpr = 1.050E+01;
 %% Pure time delays between components
