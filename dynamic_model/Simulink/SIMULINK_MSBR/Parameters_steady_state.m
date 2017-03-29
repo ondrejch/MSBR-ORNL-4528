@@ -39,6 +39,8 @@ source = timeseries(sourcedata,sourcetime);
 
 % REACTIVITY INSERTION
 % No reactivity insertion
+reactdata = [0 0];
+reacttime = [0 3000];
 simtime = 14000;
 % periodic = [0, 0; 2500, 6e-4; 2550, 0; 2600, -6e-4; 2650, 0; 2700, 6e-4; 2750, 0; 2800, -6e-4; 2850, 0; 2900, 6e-4; 2950, 0; 3000, -6e-4; 3050, 0;]; 
 % reactdata = periodic(:,2);
@@ -50,8 +52,8 @@ simtime = 14000;
 % reacttime = periodic(:,1);
 % Step up 60 pcm 
 % simtime = 1000;
-reactdata = [0 1e-4];
-reacttime = [0 3000];
+% reactdata = [0 1e-4];
+% reacttime = [0 3000];
 % % Step down -60 pcm for 10 sec
 % simtime = 100;
 % reactdata = [0 -6e-4];
@@ -445,19 +447,19 @@ mn_ms = mn_m; % mass salt in mixing node (kg)
 p_b = 0.87*P; % power removed by boiler (MW)
 p_r = 0.13*P; % power removed by reheater (MW)
 
-tau_r = 22.09; % resident time in reheater (sec)
-tau_b = 10.43; % resident time in boiler (sec)
+tau_r = 22.09; % resident time in reheater (sec) 67-102
+tau_b = 10.43; % resident time in boiler (sec) 67-102
 
-W_sb = 461.15; % Coolant salt flow through boiler (kg/s)
-m_sb = 4808;
-W_sr = 138.6; % Coolant salt flow through reheater (kg/s)
-m_sr = 3062;
+W_sb = 461.15; % Coolant salt flow through boiler (kg/s) ORNL 4528
+m_sb = 4808; % ORNL 4528
+W_sr = 138.6; % Coolant salt flow through reheater (kg/s) ORNL 4528
+m_sr = 3062; % ORNL 4528
 
 % W_sb = (1-0.13)*W_s; 
 % W_sr = 0.13*W_s; 
 
-mb_cpb = 3.297E+01;
-mr_cpr = 1.050E+01;
+mb_cpb =  4*m_sb*Cp_s; % 3.297E+01; 
+mr_cpr =  2*m_sr*Cp_s; % 1.050E+01; 
 %% Pure time delays between components
 
 tau_fhx_c = 1.22; % (sec) delay from fuel hx to core
