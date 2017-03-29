@@ -1,4 +1,4 @@
-figure;plot(tout,msbr_core_mux(:,4),tout,power_demand);grid on;legend('Core Power','Demand Power','location','southeast');
+figure;plot(tout,measured_react_power,tout,power_demand);grid on;legend('Core Power','Demand Power','location','southeast');
 figure(2);plot(tout,msbr_core_mux(:,[5 7 9 11 13 15]));
 figure(3);plot(tout,msbr_core_mux(:,[17 18 19 20]));
 figure(4);plot(tout,msbr_core_mux(:,[21 22 23 24]));
