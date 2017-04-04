@@ -1,0 +1,26 @@
+FIT:    data read from 'data'
+        format = z
+        #datapoints = 2
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = a*x+b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b            
+   0 0.0000000000e+00  -nan       1.57e+00    1.080869e-01   2.012723e+00
+   1 0.0000000000e+00  -nan       1.57e-01    1.080869e-01   2.012723e+00
+
+After 1 iterations the fit converged.
+final sum of squares of residuals : 0
+abs. change during last iteration : 0
+
+
+Exactly as many data points as there are parameters.
+In this degenerate case, all errors are zero by definition.
+
+Final set of parameters 
+======================= 
+
+a               = 0.108087       
+b               = 2.01272        
