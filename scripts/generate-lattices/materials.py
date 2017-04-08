@@ -26,7 +26,7 @@ rgb 130 32 144
  92234.{lib}  -0.00141193   %  U
 
 % LiF-BeF2-ThF4-PaF4 (71.0-2.0-27.0-0.0 mole%)
-mat FLiBeTh -4.39764 tmp 973.
+mat FLiBeTh -4.43711 tmp 973.
 rgb 0 157 254 
  3006.{lib}   -0.000243     %  Li6
  3007.{lib}   -4.855845     %  Li7
