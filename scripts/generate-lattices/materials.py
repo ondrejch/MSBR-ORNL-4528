@@ -16,7 +16,7 @@ def write_materials(lib):
 	mats = '''
 %______________material definitions_________________________________
 % LiF-BeF2-UF4 (68.5-31.3-0.2 mole%)
-mat FLiBeU -2.0129362 tmp 973.0
+mat FLiBeU -2.03434 tmp 973.0
 rgb 130 32 144
   3006.{lib}  -0.00000621   %  Li
   3007.{lib}  -0.14496063   %  Li

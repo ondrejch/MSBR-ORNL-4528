@@ -35,8 +35,8 @@ print @matsalt;
 #
 
 sub FlibeDens {
-    $flibeUdens = 0.108087*$myUF4_mole + 2.01272;
-    print "Flibe desnity with ",$myUF4_mole," U mole fraction [g/cm3] = ", 0.108087*$myUF4_mole + 2.01272, "\n";        
+    $flibeUdens = 0.108087*$myUF4_mole*100.0 + 2.01272;
+    print "Flibe desnity with ",$myUF4_mole," U mole fraction [g/cm3] = ", $flibeUdens, "\n";        
 }
 
 sub SaltFlibe {
