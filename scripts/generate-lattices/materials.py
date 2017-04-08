@@ -27,13 +27,13 @@ rgb 130 32 144
 
 % LiF-BeF2-ThF4-PaF4 (71.0-2.0-27.0-0.0 mole%)
 mat FLiBeTh -4.39764 tmp 973.
-rgb 0 157 254
- 3006.{lib}  -0.000486 % Li-6
- 3007.{lib}  -4.855569 % Li-7
- 4009.{lib}  -0.175712 % Be-9
- 9019.{lib} -33.892982 % F-19
-90232.{lib} -61.052533 % Th-232
-91233.{lib}  -0.022718 % Pa-233
+rgb 0 157 254 
+ 3006.{lib}   -0.000243     %  Li6
+ 3007.{lib}   -4.855845     %  Li7
+40090.{lib}   -0.175712     %  Be9
+ 9019.{lib}  -33.892970     %  F19
+90232.{lib}  -61.052512     %  Th232
+91233.{lib}   -0.022718     %  Pa233
 
 %  NUCLEAR GRAPHITE: Natural concentration of carbon
 %  DENSITY: 1.82 G/CC
