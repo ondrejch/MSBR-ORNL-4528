@@ -64,8 +64,8 @@ sub SaltFlibe {
     push @matsalt, sprintf "     %d%03d%s  -%10.8f   \$  %s\n", $ELEMENTS{$ele}, $iso, $saltmatlib, $massfrac, $ele;
   }
   $ele = 'U';
-  push @matsalt, sprintf "     %d%03d%s  -%10.8f   \$  %s\n", $ELEMENTS{$ele}, 235, $saltmatlib, $wfU233, $ele;
-  push @matsalt, sprintf "     %d%03d%s  -%10.8f   \$  %s\n", $ELEMENTS{$ele}, 238, $saltmatlib, $wfU234, $ele;
+  push @matsalt, sprintf "     %d%03d%s  -%10.8f   \$  %s\n", $ELEMENTS{$ele}, 233, $saltmatlib, $wfU233, $ele;
+  push @matsalt, sprintf "     %d%03d%s  -%10.8f   \$  %s\n", $ELEMENTS{$ele}, 234, $saltmatlib, $wfU234, $ele;
  }
 
 sub nearest
