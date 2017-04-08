@@ -8,24 +8,35 @@ use Chemistry::Isotope ':all';
 &InitElements; 				# initializes %ELEMENTS 
 my $twopi=pi2;
 
-$saltmatlib='';
-$myUF4_mole = 0.002*0.9;
+$saltmatlib='.{lib}';
+
+$myUvariation = 1.0;        # relative change uranium load
+
+$myUF4_mole = 0.002*$myUvariation; # nominal is 0.2 mole %
 $U234_and_3 = 0.140649 + 1.265844; # u234 + u233
 $U233fract = 1.265844/$U234_and_3;
 $U234fract = 0.140649/$U234_and_3;
 
 my @matsalt=();
+my $flibeUdens = -1;
 
 &FlibeDens;
 &SaltFlibe;
 
+
+print("% LiF-BeF2-UF4 (68.5-31.3-0.2 mole%)\n");
+printf("mat FLiBeU -%9.7f tmp 973.0\n", $flibeUdens);
+print ("rgb 130 32 144\n");
+print @matsalt;
+
+
 #
 #------------------- subs
 #
-print @matsalt;
 
 sub FlibeDens {
-    print "Flibe desnity with ",$myUF4_mole," U mole fraction [g/cm3] = ", 0.108087*$myUF4_mole + 2.01272, "\n";
+    $flibeUdens = 0.108087*$myUF4_mole + 2.01272;
+    print "Flibe desnity with ",$myUF4_mole," U mole fraction [g/cm3] = ", 0.108087*$myUF4_mole + 2.01272, "\n";        
 }
 
 sub SaltFlibe {
@@ -51,21 +62,20 @@ sub SaltFlibe {
   my $wfU233   = $fUF4mole * $U233fract * isotope_mass(233, 92)  / $Mmole;
   my $wfU234   = $fUF4mole * $U234fract  * isotope_mass(234, 92)  / $Mmole;
 
-  #push @matsalt,"c\nc 72%LiF - 16%BeF2 - 12%UF4 salt: \nM2";
   my $ele = 'Li';
-  push @matsalt, sprintf "     %d%03d%s  -%10.8f   \$  %s\n", $ELEMENTS{$ele}, 6, $saltmatlib, $wfLi6, $ele;
-  push @matsalt, sprintf "     %d%03d%s  -%10.8f   \$  %s\n", $ELEMENTS{$ele}, 7, $saltmatlib, $wfLi7, $ele;
+  push @matsalt, sprintf "%3d%03d%s  -%10.8f   %%  %s\n", $ELEMENTS{$ele}, 6, $saltmatlib, $wfLi6, $ele;
+  push @matsalt, sprintf "%3d%03d%s  -%10.8f   %%  %s\n", $ELEMENTS{$ele}, 7, $saltmatlib, $wfLi7, $ele;
   $ele = 'F';
-  push @matsalt, sprintf "     %d%03d%s  -%10.8f   \$  %s\n", $ELEMENTS{$ele}, 19, $saltmatlib, $wfF, $ele;
+  push @matsalt, sprintf "%3d%03d%s  -%10.8f   %%  %s\n", $ELEMENTS{$ele}, 19, $saltmatlib, $wfF, $ele;
  $ele = 'Be';
   my $isotabBe = isotope_abundance($ele);
   foreach $iso (sort keys %$isotabBe ) {
     my $massfrac = $isotabBe->{$iso}*0.01 * $wfBe;
-    push @matsalt, sprintf "     %d%03d%s  -%10.8f   \$  %s\n", $ELEMENTS{$ele}, $iso, $saltmatlib, $massfrac, $ele;
+    push @matsalt, sprintf "%3d%03d%s  -%10.8f   %%  %s\n", $ELEMENTS{$ele}, $iso, $saltmatlib, $massfrac, $ele;
   }
   $ele = 'U';
-  push @matsalt, sprintf "     %d%03d%s  -%10.8f   \$  %s\n", $ELEMENTS{$ele}, 233, $saltmatlib, $wfU233, $ele;
-  push @matsalt, sprintf "     %d%03d%s  -%10.8f   \$  %s\n", $ELEMENTS{$ele}, 234, $saltmatlib, $wfU234, $ele;
+  push @matsalt, sprintf "%3d%03d%s  -%10.8f   %%  %s\n", $ELEMENTS{$ele}, 233, $saltmatlib, $wfU233, $ele;
+  push @matsalt, sprintf "%3d%03d%s  -%10.8f   %%  %s\n", $ELEMENTS{$ele}, 234, $saltmatlib, $wfU234, $ele;
  }
 
 sub nearest
