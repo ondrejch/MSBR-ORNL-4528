@@ -39,8 +39,6 @@ source = timeseries(sourcedata,sourcetime);
 
 % REACTIVITY INSERTION
 % No reactivity insertion
-reactdata = [0 0];
-reacttime = [0 3000];
 simtime = 14000;
 % periodic = [0, 0; 2500, 6e-4; 2550, 0; 2600, -6e-4; 2650, 0; 2700, 6e-4; 2750, 0; 2800, -6e-4; 2850, 0; 2900, 6e-4; 2950, 0; 3000, -6e-4; 3050, 0;]; 
 % reactdata = periodic(:,2);
@@ -52,8 +50,8 @@ simtime = 14000;
 % reacttime = periodic(:,1);
 % Step up 60 pcm 
 % simtime = 1000;
-% reactdata = [0 1e-4];
-% reacttime = [0 3000];
+reactdata = [0 0];
+reacttime = [0 3000];
 % % Step down -60 pcm for 10 sec
 % simtime = 100;
 % reactdata = [0 -6e-4];
@@ -274,30 +272,6 @@ T0_Ba1   = T0_b2-(T0_b2-T_b_in)*(1/4); % in °C
 T0_Bb2   = T0_b2-(T0_b2-T_b_in)*(2/4); % in °C
 T0_Bb1   = T0_b2-(T0_b2-T_b_in)*(3/4); % in °C
 
-%Dummy variables used for graphite node steady state temp calcs
-% A = k_g1b*P;
-% B = 2*h_fgi*A_fgsleidn;
-% C = h_ggi*A_ggin;
-% D = k_g2b*P;
-% E = 2*h_fgo*A_fgsleodn;
-% 
-% F = k_g3b*P;
-% G = 2*h_fgo*A_fgboren;
-% H = h_ggo*A_ggon;
-% I = k_g4b*P;
-% J = 2*h_Bg*A_Bgn;
-% 
-% T0_g1b   = (A+B*T0_f1b2+C/E*(A+D+B*T0_f1b2+E*T0_f2b2))/(B+C+B*C/E); % in °C
-% T0_g2b   = (A+D+B*T0_f1b2-B*T0_g1b+E*T0_f2b2)/E; % in °C
-% T0_g1a   = (A+B*T0_f1a2+C/E*(A+D+B*T0_f1a2+E*T0_f2a2))/(B+C+B*C/E); % in °C
-% T0_g2a   = (A+D+B*T0_f1a2-B*T0_g1a+E*T0_f2a2)/E; % in °C
-% 
-% T0_g3a   = (F+G*T0_f2a2+H/J*(F+I+G*T0_f2a2+J*T0_Ba1))/(G+H+G*H/J); % in °C
-% T0_g4a   = (F+I+G*T0_f2a2-G*T0_g3a+J*T0_Ba1)/J; % in °C
-% T0_g3b   = (F+G*T0_f2b2+H/J*(F+I+G*T0_f2b2+J*T0_Bb1))/(G+H+G*H/J); % in °C
-% T0_g4b   = (F+I+G*T0_f2b2-G*T0_g3b+J*T0_Bb1)/J; % in °C 
-
-
 A = k_g1b*P;
 B = h_fgi*A_fgsleidn;
 C = h_ggi*A_ggin;
@@ -310,25 +284,26 @@ H = h_ggo*A_ggon;
 I = k_g4a*P;
 J = h_Bg*A_Bgn;
 
-T0_g1b   = (2*A*(C+E) + 4*B*(C+E)*T0_f1b2 + 2*C*E*T0_f2b2 - 2*C*B*T0_f1b2)/(((2*B+C)*2*(C+E))-(2*C*B)); % in °C
-T0_g2b   = (2*E*T0_f2b2 + 2*B*(T0_g1b - T0_f1b2))/(2*(C+E)); % in °C
-T0_g1a   = (2*A*(C+E) + 4*B*(C+E)*T0_f1a2 + 2*C*E*T0_f2a2 - 2*C*B*T0_f1a2)/(((2*B+C)*2*(C+E))-(2*C*B)); % in °C
-T0_g2a   = (2*E*T0_f2a2 + 2*B*(T0_g1a - T0_f1a2))/(2*(C+E)); % in °C
-
-T0_g3a   = (2*F*(H+J) + 4*G*(H+J)*T0_f2a2 + 2*H*J*T0_Ba1 - 2*H*G*T0_f2a2)/(((2*G+H)*2*(H+J))-(2*H*G)); % in °C
-T0_g4a   = (2*J*T0_Ba1 + 2*G*(T0_g3a - T0_f2a2))/(2*(H+J)); % in °C
-T0_g3b   = (2*F*(H+J) + 4*G*(H+J)*T0_f2b2 + 2*H*J*T0_Bb1 - 2*H*G*T0_f2b2)/(((2*G+H)*2*(H+J))-(2*H*G)); % in °C
-T0_g4b   = (2*J*T0_Bb1 + 2*G*(T0_g3b - T0_f2b2))/(2*(H+J)); % in °C
-
-% T0_g1b   = 6.778860891112972e+02; % in °C
-% T0_g2b   = 5.538296129453664e+02; % in °C
-% T0_g1a   = 6.383556929928781e+02; % in °C
-% T0_g2a   = 5.969257086802289e+02; % in °C
+% T0_g1b   = (2*A*(C+E) + 4*B*(C+E)*T0_f1b2 + 2*C*E*T0_f2b2 - 2*C*B*T0_f1b2)/(((2*B+C)*2*(C+E))-(2*C*B)); % in °C
+% T0_g2b   = (2*E*T0_f2b2 + 2*B*(T0_g1b - T0_f1b2))/(2*(C+E)); % in °C
+% T0_g1a   = (2*A*(C+E) + 4*B*(C+E)*T0_f1a2 + 2*C*E*T0_f2a2 - 2*C*B*T0_f1a2)/(((2*B+C)*2*(C+E))-(2*C*B)); % in °C
+% T0_g2a   = (2*E*T0_f2a2 + 2*B*(T0_g1a - T0_f1a2))/(2*(C+E)); % in °C
 % 
-% T0_g3a   = 6.089146264172540e+02; % in °C
-% T0_g4a   = 7.379561271985504e+02; % in °C
-% T0_g3b   = 5.655167730457430e+02; % in °C
-% T0_g4b   = 6.788233540106577e+02; % in °C
+% T0_g3a   = (2*F*(H+J) + 4*G*(H+J)*T0_f2a2 + 2*H*J*T0_Ba1 - 2*H*G*T0_f2a2)/(((2*G+H)*2*(H+J))-(2*H*G)); % in °C
+% T0_g4a   = (2*J*T0_Ba1 + 2*G*(T0_g3a - T0_f2a2))/(2*(H+J)); % in °C
+% T0_g3b   = (2*F*(H+J) + 4*G*(H+J)*T0_f2b2 + 2*H*J*T0_Bb1 - 2*H*G*T0_f2b2)/(((2*G+H)*2*(H+J))-(2*H*G)); % in °C
+% T0_g4b   = (2*J*T0_Bb1 + 2*G*(T0_g3b - T0_f2b2))/(2*(H+J)); % in °C
+
+              
+T0_g1b   = 675.07; % in °C
+T0_g2b   = 554.03; % in °C
+T0_g1a   = 636.50; % in °C
+T0_g2a   = 596.08; % in °C
+
+T0_g3a   = 607.75; % in °C
+T0_g4a   = 735.80; % in °C
+T0_g3b   = 565.40; % in °C
+T0_g4b   = 677.97; % in °C
 
 T0_BL    = T0_Ba2;
 T0_Bm    = T0_Ba2;
@@ -447,19 +422,19 @@ mn_ms = mn_m; % mass salt in mixing node (kg)
 p_b = 0.87*P; % power removed by boiler (MW)
 p_r = 0.13*P; % power removed by reheater (MW)
 
-tau_r = 22.09; % resident time in reheater (sec) 67-102
-tau_b = 10.43; % resident time in boiler (sec) 67-102
+tau_r = 22.09; % resident time in reheater (sec)
+tau_b = 10.43; % resident time in boiler (sec)
 
-W_sb = 461.15; % Coolant salt flow through boiler (kg/s) ORNL 4528
-m_sb = 4808; % ORNL 4528
-W_sr = 138.6; % Coolant salt flow through reheater (kg/s) ORNL 4528
-m_sr = 3062; % ORNL 4528
+W_sb = 461.15; % Coolant salt flow through boiler (kg/s)
+m_sb = 4808;
+W_sr = 138.6; % Coolant salt flow through reheater (kg/s)
+m_sr = 3062;
 
 % W_sb = (1-0.13)*W_s; 
 % W_sr = 0.13*W_s; 
 
-mb_cpb =  4*m_sb*Cp_s; % 3.297E+01; 
-mr_cpr =  2*m_sr*Cp_s; % 1.050E+01; 
+mb_cpb = 3.297E+01;
+mr_cpr = 1.050E+01;
 %% Pure time delays between components
 
 tau_fhx_c = 1.22; % (sec) delay from fuel hx to core

@@ -23,8 +23,17 @@ figure;plot(tout,msbr_core_mux(:,3));
 
 figure;plot(tout,rho_ext)
 
-%%useful formulae
+%% useful formulae
 
+% reactor period
+
+period = Lam; 
+for i =(1:6)
+    period = period + beta(i)/lam(i);
+end
+period
+
+% total core power
 total_core_power = W_f*Cp_f*(msbr_core_mux(end,17)-msbr_core_mux(end,1)) + W_B*Cp_B*(msbr_core_mux(end,36)-msbr_core_mux(end,2)) + W_BL*Cp_B*(msbr_core_mux(end,38)-msbr_core_mux(end,2));
 
 % fuel power across core and phe
