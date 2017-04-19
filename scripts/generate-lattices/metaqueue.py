@@ -1,4 +1,4 @@
-#!/data/apps/python/3.5.1/bin/python3
+#! python3
 #
 # Submit jobs using Grid Engine - be nice to the cluster
 # Ondrej Chvala, ochvala@utk.edu
@@ -37,13 +37,13 @@ else:
 # Get number of running and queued jobs
 def get_qsub_stats(): 
     try:
-        sp_running_jobs = subprocess.check_output("qstat | grep ochvala | grep ornl4528 | grep ' r ' | wc -l",shell=True)
+        sp_running_jobs = subprocess.check_output(checkrunning,shell=True)
         my_running_jobs = int( sp_running_jobs.decode("utf-8"))     # Convert to integers
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:
             my_running_jobs = -999
     try:
-        sp_queued_jobs  = subprocess.check_output('qstat | grep ochvala | grep ornl4528 | grep qw | wc -l',shell=True)
+        sp_queued_jobs  = subprocess.check_output(checkqueued,shell=True)
         my_queued_jobs  = int( sp_queued_jobs.decode("utf-8") )     # Convert to integers
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:
@@ -55,8 +55,8 @@ def get_qsub_stats():
 
 # Get list of jobs to run
 try:
-    list_jobs2run = subprocess.check_output("find " + jobdir + " -name msbr.inp| sed s/msbr.inp$//g | sort",shell=True).splitlines()
-#    list_jobs2run = subprocess.check_output("for d in $(find " + jobdir + " -name msbr.inp| sed s/msbr.inp$//g ); do if ! [ -s $d/msbr.inp_res.m ]; then echo $d; fi ; done",shell=True).splitlines()
+#    list_jobs2run = subprocess.check_output("find " + jobdir + " -name msbr.inp| sed s/msbr.inp$//g | sort",shell=True).splitlines()
+    list_jobs2run = subprocess.check_output("find " + jobdir + " -mindepth 4 -maxdepth 4 -type d '!' -exec test -e \"{}/msbr.inp_res.m\" ';' -print| sort",shell=True).splitlines()
 except subprocess.CalledProcessError as e:
     if e.returncode > 1:
         print("Error: cannot get # of jobs to run!")
