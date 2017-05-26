@@ -4,7 +4,7 @@ format longe
 
 %% Nuclear Model
 n_frac0 = 1; % initial fractional nuetron density n/n0 (n/cm^3/s)
-P       = 556.0; % Thermal Power in MW
+P       = 556; % Thermal Power in MW
 
 
 % Feedback co-efficients
@@ -15,7 +15,7 @@ a_b   =  1.656E-05; % fertile temperature feedback coefficient in drho/°C
 tau_c =  3.28; % core transit time (s)
 tau_l =  5.85; % external loop transit time (s)
 
-Lam  = 3.300E-04;  % mean generation time
+Lam  = 3.300E-04; % mean generation time
 lam = [1.260E-02, 3.370E-02, 1.390E-01, 3.250E-01, 1.130E+00, 2.500E+00]; 
 beta = [2.290E-04, 8.320E-04, 7.100E-04, 8.520E-04, 1.710E-04, 1.020E-04];
 beta_t = sum(beta); % total delayed neutron fraction MSBR
@@ -50,8 +50,8 @@ simtime = 14000;
 % reacttime = periodic(:,1);
 % Step up 60 pcm 
 % simtime = 1000;
-reactdata = [0 0];
-reacttime = [0 3000];
+reactdata = [0 1e-4];
+reacttime = [0 2000];
 % % Step down -60 pcm for 10 sec
 % simtime = 100;
 % reactdata = [0 -6e-4];
@@ -155,7 +155,7 @@ A_Bg    = p_hex*l_cell*n_cell; % (m^2) B-g area
 
 % Core fuel inner channel (downflow)
 W_f  = 1.373E3; %calcd from m_f/tau_c 1.414E3; % fuel flow rate (kg/s)
-m_f  = 8036; %477.6; % fuel mass in core (kg) corrected error from 67-102 (might have affected responsiveness)
+m_f  = 4503.44; %477.6; % fuel mass in core (kg) corrected error from 67-102 (might have affected responsiveness)
 nn_f = 8; % number of fuel nodes in core
 mn_f = m_f/nn_f; % fuel mass per node (kg)
 Cp_f   = 2.302E-03; % (MJ/kg/C) specific heat capacity of the fuel
@@ -166,6 +166,8 @@ m_f1b1  = mn_f; % (kg) mass in the node
 m_f1b2  = mn_f; % (kg) mass in the node
 m_f1a1  = mn_f; % (kg) mass in the node
 m_f1a2  = mn_f; % (kg) mass in the node
+
+m_fm    = W_f;
 
 k_f1b1  = 2.210E-01/2; % (frac) fraction of total power deposited in the node
 k_f1b2  = 2.210E-01/2; % (frac) fraction of total power deposited in the node
@@ -232,7 +234,7 @@ k_g4a    = (rkmB*m_gB+rkmf*(m_g4a+m_g4b-m_gB))/2;
 k_g4b    = (rkmB*m_gB+rkmf*(m_g4a+m_g4b-m_gB))/2; 
 %  
 % Fertile stream
-W_B =  271.65; % (kg/s) mass flow rate of fertile salt
+W_B =  270.895; % (kg/s) mass flow rate of fertile salt
 m_B =  8371; % (kg) mass fertile salt in core
 nn_B = 4; % number of nodes of fertile salt in core
 Cp_B = 9.211E-04; % (MJ/kg/C)specific heat capacity of fertile salt
@@ -248,15 +250,20 @@ k_Ba2   = 8.500E-03/2; % fraction of total power generated in node
 k_core  = k_Bb1+k_Bb2+k_Ba1+k_Ba2+k_g1a+k_g2a+k_g3a+k_g4a+k_g1b+k_g2b+k_g3b+k_g4b+k_f1b1+k_f1b2+k_f1a1+k_f1a2+k_f2b1+k_f2b2+k_f2a1+k_f2a2;
 
 % Blanket
-k_BL    = 1-k_core; % fraction of power generated in blanket
+k_BL1   = (1-k_core)/2; % fraction of power generated in blanket node 1
+k_BL2   = (1-k_core)/2; % fraction of power generated in blanket node 2
 m_BL    = 22804.35; % k_BL*m_B/(k_Bb1+k_Bb2+k_Ba1+k_Ba2); % mass fertile salt in blanket (to match energy generation density ofinterstitial fertile salt)
-W_BL    = 270.14; % mass flow rate of fertile salt in blanket (to match resident time of interstitial fertile salt)
-m_Bm    = W_B; % mass of fertile salt mixing node for blanket and interstitial streams (to give resident time of 1 second)
+m_BL1   = m_BL/2; % mass of blanket node 1
+m_BL2   = m_BL/2; % mass of blanket node 2
+W_BL    = 270.895; % mass flow rate of fertile salt in blanket (to match resident time of interstitial fertile salt)
+m_Bm    = W_B+W_BL; % mass of fertile salt mixing node for blanket and interstitial streams (to give resident time of 1 second)
 
 % Initial temperature conditions for Steady State at full power   **************
 Tf_in  = 537.77; % in °C
 T_b_in = 621.11; % in °C
  
+T0_fm    = T0_f4;
+
 T0_f1b1  = T0_f4;
 T0_f1b2  = T0_f4-(T0_f4-Tf_in)*(1/8); % in °C
 T0_f1a1  = T0_f4-(T0_f4-Tf_in)*(2/8); % in °C
@@ -265,7 +272,6 @@ T0_f2a1  = T0_f4-(T0_f4-Tf_in)*(4/8); % in °C
 T0_f2a2  = T0_f4-(T0_f4-Tf_in)*(5/8); % in °C
 T0_f2b1  = T0_f4-(T0_f4-Tf_in)*(6/8); % in °C 
 T0_f2b2  = T0_f4-(T0_f4-Tf_in)*(7/8); % in °C
-
 
 T0_Ba2   = T0_b2; % in °C
 T0_Ba1   = T0_b2-(T0_b2-T_b_in)*(1/4); % in °C
@@ -305,7 +311,8 @@ T0_g4a   = 735.80; % in °C
 T0_g3b   = 565.40; % in °C
 T0_g4b   = 677.97; % in °C
 
-T0_BL    = T0_Ba2;
+T0_BL2   = T0_Ba2;
+T0_BL1   = T0_Ba2-(T0_Ba2-T_b_in)/2;
 T0_Bm    = T0_Ba2;
 
 % power deposition fraction back calculations
@@ -438,10 +445,10 @@ mr_cpr = 1.050E+01;
 %% Pure time delays between components
 
 tau_fhx_c = 1.22; % (sec) delay from fuel hx to core
-tau_c_fhx = 1.32; % (sec) delay from core to fuel hx
+tau_c_fhx = 1.32-1.0; % (sec) delay from core to fuel hx
 tau_fhx_fehx = 7.88; % (sec) fuel hx to fertile hx
 tau_fehx_c = 7.0; % (sec) fertile hx to core
-tau_c_fehx = 7.0; % (sec) core to fertile hx
+tau_c_fehx = 7.0-1.0; % (sec) core to fertile hx
 tau_fehx_b = 13.5; % (sec) fertile hx to boiler
 tau_fehx_r = 17.3; % (sec) fertile hx to reheater
 tau_b_fhx = 4.2; % (sec) boiler to fuel hx
