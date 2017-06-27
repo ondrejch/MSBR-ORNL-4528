@@ -1,5 +1,7 @@
 #!/usr/bin/perl -w
 # 
+# Calculates FLiBe-U salt density depending on U mole%
+
 #use strict; use warnings;
 no warnings 'experimental::smartmatch';
 use feature qw/switch/;
@@ -10,7 +12,7 @@ my $twopi=pi2;
 
 $saltmatlib='.{lib}';
 
-$myUvariation = 1.0;        # relative change uranium load
+$myUvariation = 0.9;        # relative change uranium load
 
 $myUF4_mole = 0.002*$myUvariation; # nominal is 0.2 mole %
 $U234_and_3 = 0.140649 + 1.265844; # u234 + u233
