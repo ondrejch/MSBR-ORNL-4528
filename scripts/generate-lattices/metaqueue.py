@@ -1,6 +1,6 @@
 #! python3
 #
-# Submit jobs using Grid Engine - be nice to the cluster
+# Submit jobs in reasonable batches - be nice to the cluster
 # Ondrej Chvala, ochvala@utk.edu
 # 2016-07-16
 # GNU/GPL
