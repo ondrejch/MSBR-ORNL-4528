@@ -107,6 +107,20 @@ class Lattice:
         else:
             return -1
 
+    def get_max_fit_k_times_CR(self):
+        'Get max k*CR and x position'
+        if not self.fit_done:
+            return (-1,-1)
+        xx = np.linspace(0.8,1.3,101)
+        fom_max = -1.0
+        xx_max  = -1.0
+        for x in xx:
+            k = self.eval_fit_k(x)
+            cr= self.eval_fit_cr(x)
+            if(k>1.0 and cr>0.95):
+                fom_max = k*cr
+                xx_max  = x
+        return (fom_max, xx_max)
 
     def fit(self):                      # Fit CR(relBA) and KEFF(relBA) 
         if len(self.KEFF)<4 :
