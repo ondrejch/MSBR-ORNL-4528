@@ -33,11 +33,18 @@ class MaxKforCR:
         repr += "The [l,sf] grid is %r x %r >\n" % (len(self.lats.larr), len(self.lats.sfarr))
         return repr       
         
-    def calculate_kmap(self, my_cr, extrapolate=1):     # Returns kmap for specific CR
+    def calculate_kmap(self, my_cr, extrapolate=1, outdata=''):     
+        'Returns kmap for specific CR'
+        if outdata:
+            fout=open(outdata,'w')
         for i in range(len(self.lats.larr)):            # Loop over hex size l
             for j in range(len(self.lats.sfarr)):       # loop over salt fraction sf
                 my_l  = self.lats.larr[i]               
                 my_sf = self.lats.sfarr[j]
+                self.kmap[i,j]      = -1
+                self.latmap[i,j]    = -1
+                self.r2map[i,j]     = -1
+                self.rel_r2map[i,j] = -1
                 # Loop over all lattices at that (l,sf) coordinate
                 for my_lat_i in self.lats.find_lattice_numbers(my_l, my_sf):   # List of lattice numbers
                     my_lat   = self.lats.latlist[my_lat_i]                # Find the actual lattice object
@@ -45,11 +52,17 @@ class MaxKforCR:
                     my_rel_r2= my_lat.r2/my_lat.l
                     k_my_lat = my_lat.get_k_at_cr(my_cr, extrapolate)
                     #print(my_cr, my_l, my_sf, k_my_lat)
-                    if k_my_lat > self.kmap[i,j] :
+                    if k_my_lat > self.kmap[i,j]:
                         self.kmap[i,j]   = k_my_lat
                         self.latmap[i,j] = my_lat_i
                         self.r2map[i,j]  = my_r2
                         self.rel_r2map[i,j] = my_rel_r2
+                if outdata:
+                    print(my_l, my_sf, self.kmap[i,j], self.latmap[i,j], self.r2map[i,j], self.rel_r2map[i,j], file=fout)
+            if outdata:
+                    print(file=fout)
+        if outdata:
+            fout.close()
         return 
        
        
@@ -75,4 +88,13 @@ if __name__ == '__main__':
     # from kmax import MaxKforCR
     mk = MaxKforCR("/home/ondrejch/msbr-scan/data/run1_nlat_8938.pickle")
     # mk.calculate_kmap(0.95,0)
+    # mk.calculate_kmap(0.95,0,"data_kmax_095.dat")
+#
+# set pm3d interpolate 0,0 map
+# set pm3d interpolate 0,0 map
+# set xlabel ("Lattice apothem h_2 [cm]")
+# set ylabel ("Salt fraction")
+# set title "Maximum lattice k at CR=0.95"
+# splot [7:20][0.06:0.21][]'data_kmax_095.dat' u 1:2:($3>0.5)?$3:NaN notit
+
     
